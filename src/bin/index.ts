@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { resolve } from 'path';
 import { buildDocs } from './commands/build-docs';
 import { checkRepository } from './commands/check-repository';
 import { parseDocs } from './commands/parse-docs';
@@ -10,7 +9,6 @@ import type { Options } from './lib/types/Options';
 
 async function run() {
   const command = new Command()
-    .version(resolve('..', '..', 'package.json'))
     .option('-j, --json <path>', 'Path to the TypeDoc JSON output file.')
     .option('-v, --verbose', 'Print verbose information', false);
 
