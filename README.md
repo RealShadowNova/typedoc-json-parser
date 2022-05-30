@@ -15,18 +15,11 @@
 
 ## Description
 
-TypeDoc JSON Parser is built to format TypeDoc JSON output into a easier format to utilize.
-
-## Features
-
-- Written in TypeScript
-- Offers CommonJS, ESM, and UMD bundles
-- Fully tested
-- Extremely fast
+When creating a library in TypeScript, you will often need to create documentation. Very commonly you'll find yourself using [TypeDoc](https://typedoc.org) to generate documentation. However, TypeDoc's JSON output is not very useful for parsing. This package makes this entire process of utilizing the JSON output of TypeDoc a lot easier.
 
 ## Installation
 
-You can use the following command to install this package, or replace `npm install` with your package manager of choice.
+You can use the following command to install this package, or replace npm install -D with your package manager of choice.
 
 ```sh
 npm install -D typedoc-json-parser
