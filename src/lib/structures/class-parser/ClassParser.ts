@@ -14,6 +14,8 @@ export class ClassParser extends Parser {
 
   public readonly extendsType: TypeParser | null;
 
+  public readonly implementsType: TypeParser[];
+
   public readonly properties: ClassPropertyParser[];
 
   public readonly methods: ClassMethodParser[];
@@ -21,11 +23,12 @@ export class ClassParser extends Parser {
   public constructor(data: ClassParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, abstract, extendsType, properties, methods } = data;
+    const { external, abstract, extendsType, implementsType, properties, methods } = data;
 
     this.external = external;
     this.abstract = abstract;
     this.extendsType = extendsType;
+    this.implementsType = implementsType;
     this.properties = properties;
     this.methods = methods;
   }
@@ -36,6 +39,7 @@ export class ClassParser extends Parser {
       external: this.external,
       abstract: this.abstract,
       extendsType: this.extendsType ? this.extendsType.toJSON() : null,
+      implementsType: this.implementsType.map((implementsType) => implementsType.toJSON()),
       properties: this.properties,
       methods: this.methods
     };
@@ -71,7 +75,7 @@ export class ClassParser extends Parser {
         external: Boolean(flags.isExternal),
         abstract: Boolean(flags.isAbstract),
         extendsType: extendedTypes.length ? TypeParser.generate(extendedTypes[0], project) : null,
-        implements: implementedTypes.map((implementedType) => TypeParser.generate(implementedType, project)),
+        implementsType: implementedTypes.map((implementedType) => TypeParser.generate(implementedType, project)),
         properties,
         methods
       },
@@ -88,7 +92,7 @@ export namespace ClassParser {
 
     extendsType: TypeParser | null;
 
-    implements: TypeParser[];
+    implementsType: TypeParser[];
 
     properties: ClassPropertyParser[];
 
@@ -101,6 +105,8 @@ export namespace ClassParser {
     abstract: boolean;
 
     extendsType: TypeParser.JSON | null;
+
+    implementsType: TypeParser.JSON[];
 
     properties: ClassPropertyParser.JSON[];
 
