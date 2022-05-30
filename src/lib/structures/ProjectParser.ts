@@ -8,23 +8,70 @@ import { InterfaceParser } from './interface-parser';
 import { NamespaceParser } from './NamespaceParser';
 import { TypeAliasParser } from './TypeAliasParser';
 
+/**
+ * Parses data from {@link JSONOutput.ProjectReflection} or {@link ProjectParser.JSON}
+ * @since 1.0.0
+ *
+ * @example
+ * ```typescript
+ * const project = new ProjectParser(data);
+ * ```
+ */
 export class ProjectParser {
+  /**
+   * The identifier of this project. This is usually `0`
+   * @since 1.0.0
+   */
   public readonly id: number;
 
+  /**
+   * The name of your project.
+   *
+   * Corresponds to the `name` property in your TypeDoc configuration or the `name` property of your `package.json` file.
+   * @since 1.0.0
+   */
   public readonly name: string;
 
+  /**
+   * An array of class parsers for this project.
+   * @since 1.0.0
+   */
   public readonly classes: ClassParser[];
 
+  /**
+   * An array of constant parsers for this project.
+   * @since 1.0.0
+   */
   public readonly constants: ConstantParser[];
 
+  /**
+   * An array of enum parsers for this project.
+   * @since 1.0.0
+   */
   public readonly enums: EnumParser[];
 
+  /**
+   * An array of function parsers for this project.
+   * @since 1.0.0
+   */
   public readonly functions: FunctionParser[];
 
+  /**
+   * An array of interface parsers for this project.
+   * @since 1.0.0
+   */
   public readonly interfaces: InterfaceParser[];
 
+  /**
+   * An array of namespace parsers for this project.
+   * @since 1.0.0
+   */
   public readonly namespaces: NamespaceParser[];
 
+  /**
+   * An array of type alias parsers for this project.
+   * @since 1.0.0
+   */
   public readonly typeAliases: TypeAliasParser[];
 
   public constructor(data: Parser.Data | JSONOutput.ProjectReflection) {
@@ -56,6 +103,11 @@ export class ProjectParser {
     }
   }
 
+  /**
+   * Converts this project to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this project.
+   */
   public toJSON(): Parser.JSON {
     return {
       id: this.id,
@@ -73,42 +125,118 @@ export class ProjectParser {
 
 export namespace Parser {
   export interface Data {
+    /**
+     * The identifier of this project. This is usually `0`
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of your project.
+     *
+     * Corresponds to the `name` property in your TypeDoc configuration or the `name` property of your `package.json` file.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * An array of class parsers for this project.
+     * @since 1.0.0
+     */
     classes: ClassParser[];
 
+    /**
+     * An array of constant parsers for this project.
+     * @since 1.0.0
+     */
     constants: ConstantParser[];
 
+    /**
+     * An array of enum parsers for this project.
+     * @since 1.0.0
+     */
     enums: EnumParser[];
 
+    /**
+     * An array of function parsers for this project.
+     * @since 1.0.0
+     */
     functions: FunctionParser[];
 
+    /**
+     * An array of interface parsers for this project.
+     * @since 1.0.0
+     */
     interfaces: InterfaceParser[];
 
+    /**
+     * An array of namespace parsers for this project.
+     * @since 1.0.0
+     */
     namespaces: NamespaceParser[];
 
+    /**
+     * An array of type alias parsers for this project.
+     * @since 1.0.0
+     */
     typeAliases: TypeAliasParser[];
   }
 
   export interface JSON {
+    /**
+     * The identifier of this project. This is usually `0`
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of your project in a JSON compatible format.
+     *
+     * Corresponds to the `name` property in your TypeDoc configuration or the `name` property of your `package.json` file.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * An array of class JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     classes: ClassParser.JSON[];
 
+    /**
+     * An array of constant JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     constants: ConstantParser.JSON[];
 
+    /**
+     * An array of enum JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     enums: EnumParser.JSON[];
 
+    /**
+     * An array of function JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     functions: FunctionParser.JSON[];
 
+    /**
+     * An array of interface JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     interfaces: InterfaceParser.JSON[];
 
+    /**
+     * An array of namespace JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     namespaces: NamespaceParser.JSON[];
 
+    /**
+     * An array of type alias JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
     typeAliases: TypeAliasParser.JSON[];
   }
 }
