@@ -1,0 +1,5 @@
+name: typedoc-json-parser
+packagePath: .
+monoRepo: false
+commitMessageTemplate: 'chore(release): release {{new-version}}'
+tagTemplate: v{{new-version}}
