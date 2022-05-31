@@ -4,9 +4,21 @@ import { CommentParser, SignatureParser, SourceParser } from './misc';
 import { Parser } from './Parser';
 import type { ProjectParser } from './ProjectParser';
 
+/**
+ * Parses data from a function reflection.
+ * @since 1.0.0
+ */
 export class FunctionParser extends Parser {
+  /**
+   * Whether this function is external.
+   * @since 1.0.0
+   */
   public readonly external: boolean;
 
+  /**
+   * The signature parsers of this function.
+   * @since 1.0.0
+   */
   public readonly signatures: SignatureParser[];
 
   public constructor(data: FunctionParser.Data, project: ProjectParser) {
@@ -18,6 +30,11 @@ export class FunctionParser extends Parser {
     this.signatures = signatures;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): FunctionParser.JSON {
     return {
       ...super.toJSON(),
@@ -26,6 +43,13 @@ export class FunctionParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link FunctionParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): FunctionParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, signatures = [] } = reflection;
 
@@ -47,14 +71,30 @@ export class FunctionParser extends Parser {
 
 export namespace FunctionParser {
   export interface Data extends Parser.Data {
+    /**
+     * Whether this function is external.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The signature parsers of this function.
+     * @since 1.0.0
+     */
     signatures: SignatureParser[];
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * Whether this function is external in a JSON compatible format.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The signature parsers of this function in a JSON compatible format.
+     * @since 1.0.0
+     */
     signatures: SignatureParser.JSON[];
   }
 }
