@@ -90,7 +90,7 @@ export class CommentParser {
       {
         description: shortText ?? text ?? null,
         extendedDescription: text ?? null,
-        tags: tags?.map((tag) => ({ name: tag.tag, text: tag.text })) ?? []
+        tags: tags?.map((tag) => ({ name: tag.tag, text: tag.text.trim() })) ?? []
       },
       project
     );
