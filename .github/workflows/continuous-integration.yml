@@ -27,11 +27,8 @@ jobs:
         run: yarn lint --fix=false
 
   building:
-    name: Compile Source Code | Node v${{ matrix.node }}
+    name: Compile Source Code
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [14, 16]
     steps:
       - name: Checkout Project
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
@@ -40,7 +37,7 @@ jobs:
       - name: Use Node.js v16
         uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048 # tag=v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 16
           cache: yarn
           registry-url: https://registry.npmjs.org/
       - name: Install Dependencies
