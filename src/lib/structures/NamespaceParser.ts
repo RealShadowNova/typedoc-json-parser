@@ -10,21 +10,57 @@ import { Parser } from './Parser';
 import type { ProjectParser } from './ProjectParser';
 import { TypeAliasParser } from './TypeAliasParser';
 
+/**
+ * Parses data from a namespace reflection.
+ * @since 1.0.0
+ */
 export class NamespaceParser extends Parser {
+  /**
+   * Whether this namespace is external.
+   * @since 1.0.0
+   */
   public readonly external: boolean;
 
+  /**
+   * The class parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly classes: ClassParser[];
 
+  /**
+   * The constant parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly constants: ConstantParser[];
 
+  /**
+   * The enum parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly enums: EnumParser[];
 
+  /**
+   * The function parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly functions: FunctionParser[];
 
+  /**
+   * The interface parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly interfaces: InterfaceParser[];
 
+  /**
+   * The namespace parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly namespaces: NamespaceParser[];
 
+  /**
+   * The type alias parsers of this namespace.
+   * @since 1.0.0
+   */
   public readonly typeAliases: TypeAliasParser[];
 
   public constructor(data: NamespaceParser.Data, project: ProjectParser) {
@@ -42,6 +78,11 @@ export class NamespaceParser extends Parser {
     this.typeAliases = typeAliases;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format.
+   */
   public toJSON(): NamespaceParser.JSON {
     return {
       ...super.toJSON(),
@@ -56,6 +97,13 @@ export class NamespaceParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link NamespaceParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): NamespaceParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, children = [] } = reflection;
 
@@ -91,38 +139,102 @@ export class NamespaceParser extends Parser {
 
 export namespace NamespaceParser {
   export interface Data extends Parser.Data {
+    /**
+     * Whether this namespace is external.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The class parsers of this namespace.
+     * @since 1.0.0
+     */
     classes: ClassParser[];
 
+    /**
+     * The constant parsers of this namespace.
+     * @since 1.0.0
+     */
     constants: ConstantParser[];
 
+    /**
+     * The enum parsers of this namespace.
+     * @since 1.0.0
+     */
     enums: EnumParser[];
 
+    /**
+     * The function parsers of this namespace.
+     * @since 1.0.0
+     */
     functions: FunctionParser[];
 
+    /**
+     * The interface parsers of this namespace.
+     * @since 1.0.0
+     */
     interfaces: InterfaceParser[];
 
+    /**
+     * The namespace parsers of this namespace.
+     * @since 1.0.0
+     */
     namespaces: NamespaceParser[];
 
+    /**
+     * The type alias parsers of this namespace.
+     * @since 1.0.0
+     */
     typeAliases: TypeAliasParser[];
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * Whether this namespace is external in a JSON compatible format.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The class parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     classes: ClassParser.JSON[];
 
+    /**
+     * The constant parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     constants: ConstantParser.JSON[];
 
+    /**
+     * The enum parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     enums: EnumParser.JSON[];
 
+    /**
+     * The function parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     functions: FunctionParser.JSON[];
 
+    /**
+     * The interface parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     interfaces: InterfaceParser.JSON[];
 
+    /**
+     * The namespace parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     namespaces: JSON[];
 
+    /**
+     * The type alias parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
     typeAliases: TypeAliasParser.JSON[];
   }
 }
