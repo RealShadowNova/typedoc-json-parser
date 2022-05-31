@@ -91,7 +91,7 @@ export namespace EnumParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this enum is external in a JSON compatible format.
+     * Whether this enum is external.
      * @since 1.0.0
      */
     external: boolean;

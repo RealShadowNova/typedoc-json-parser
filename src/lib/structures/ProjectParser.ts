@@ -190,7 +190,7 @@ export namespace Parser {
     id: number;
 
     /**
-     * The name of your project in a JSON compatible format.
+     * The name of your project.
      *
      * Corresponds to the `name` property in your TypeDoc configuration or the `name` property of your `package.json` file.
      * @since 1.0.0

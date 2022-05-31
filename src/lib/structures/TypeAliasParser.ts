@@ -102,7 +102,7 @@ export namespace TypeAliasParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this type alias is external in a JSON compatible format.
+     * Whether this type alias is external.
      * @since 1.0.0
      */
     external: boolean;

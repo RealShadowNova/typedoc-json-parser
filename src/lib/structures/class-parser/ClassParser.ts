@@ -165,13 +165,13 @@ export namespace ClassParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this class is external in a JSON compatible format.
+     * Whether this class is external.
      * @since 1.0.0
      */
     external: boolean;
 
     /**
-     * Whether this class is abstract in a JSON compatible format.
+     * Whether this class is abstract.
      * @since 1.0.0
      */
     abstract: boolean;

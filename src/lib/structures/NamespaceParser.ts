@@ -190,7 +190,7 @@ export namespace NamespaceParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this namespace is external in a JSON compatible format.
+     * Whether this namespace is external.
      * @since 1.0.0
      */
     external: boolean;

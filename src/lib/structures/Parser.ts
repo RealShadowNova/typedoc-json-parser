@@ -91,13 +91,13 @@ export namespace Parser {
 
   export interface JSON {
     /**
-     * The identifier for this parser in a JSON compatible format.
+     * The identifier for this parser.
      * @since 1.0.0
      */
     id: number;
 
     /**
-     * The name for this parser in a JSON compatible format.
+     * The name for this parser.
      * @since 1.0.0
      */
     name: string;

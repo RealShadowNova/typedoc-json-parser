@@ -102,7 +102,7 @@ export namespace ConstantParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this constant is external in a JSON compatible format.
+     * Whether this constant is external.
      * @since 1.0.0
      */
     external: boolean;
@@ -114,7 +114,7 @@ export namespace ConstantParser {
     type: TypeParser.JSON;
 
     /**
-     * The value of this constant in a JSON compatible format.
+     * The value of this constant.
      * @since 1.0.0
      */
     value: string;

@@ -86,7 +86,7 @@ export namespace FunctionParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this function is external in a JSON compatible format.
+     * Whether this function is external.
      * @since 1.0.0
      */
     external: boolean;

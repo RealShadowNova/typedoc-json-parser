@@ -184,31 +184,31 @@ export namespace ClassPropertyParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * The accessibility of this property in a JSON compatible format.
+     * The accessibility of this property.
      * @since 1.0.0
      */
     accessibility: ClassParser.Accessibility;
 
     /**
-     * Whether this property is abstract in a JSON compatible format.
+     * Whether this property is abstract.
      * @since 1.0.0
      */
     abstract: boolean;
 
     /**
-     * Whether this property is static in a JSON compatible format.
+     * Whether this property is static.
      * @since 1.0.0
      */
     static: boolean;
 
     /**
-     * Whether this property is readonly in a JSON compatible format.
+     * Whether this property is readonly.
      * @since 1.0.0
      */
     readonly: boolean;
 
     /**
-     * Whether this property is optional in a JSON compatible format.
+     * Whether this property is optional.
      * @since 1.0.0
      */
     optional: boolean;

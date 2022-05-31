@@ -91,7 +91,7 @@ export namespace InterfaceParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * Whether this interface is external in a JSON compatible format.
+     * Whether this interface is external.
      * @since 1.0.0
      */
     external: boolean;

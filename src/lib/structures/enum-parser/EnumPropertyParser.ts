@@ -73,7 +73,7 @@ export namespace EnumPropertyParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * The value of this enum property in a JSON compatible format.
+     * The value of this enum property.
      * @since 1.0.0
      */
     value: string;

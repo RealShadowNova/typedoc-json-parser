@@ -121,19 +121,19 @@ export namespace ClassMethodParser {
 
   export interface JSON extends Parser.JSON {
     /**
-     * The accessibility of this method in a JSON compatible format.
+     * The accessibility of this method.
      * @since 1.0.0
      */
     accessibility: ClassParser.Accessibility;
 
     /**
-     * Whether this method is abstract in a JSON compatible format.
+     * Whether this method is abstract.
      * @since 1.0.0
      */
     abstract: boolean;
 
     /**
-     * Whether this method is static in a JSON compatible format.
+     * Whether this method is static.
      * @since 1.0.0
      */
     static: boolean;
