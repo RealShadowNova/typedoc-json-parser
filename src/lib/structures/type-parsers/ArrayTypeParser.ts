@@ -9,8 +9,6 @@ export class ArrayTypeParser implements TypeParser {
     this.type = type;
   }
 
-  public toJSON(): any;
-  public toJSON(): ArrayTypeParser.JSON;
   public toJSON(): ArrayTypeParser.JSON {
     return {
       kind: this.kind,
