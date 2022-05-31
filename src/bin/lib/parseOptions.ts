@@ -44,11 +44,5 @@ export async function parseOptions(options: Partial<Options>): Promise<Options> 
     }
   }
 
-  if (!options.json) {
-    console.log('Missing required option: --json');
-
-    process.exit(1);
-  }
-
   return options as Options;
 }
