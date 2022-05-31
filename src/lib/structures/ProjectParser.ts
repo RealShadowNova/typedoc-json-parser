@@ -11,11 +11,6 @@ import { TypeAliasParser } from './TypeAliasParser';
 /**
  * Parses data from {@link JSONOutput.ProjectReflection} or {@link ProjectParser.JSON}
  * @since 1.0.0
- *
- * @example
- * ```typescript
- * const project = new ProjectParser(data);
- * ```
  */
 export class ProjectParser {
   /**
