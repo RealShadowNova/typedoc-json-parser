@@ -22,15 +22,38 @@ import { TypeOperatorTypeParser } from './TypeOperatorTypeParser';
 import { UnionTypeParser } from './UnionTypeParser';
 import { UnknownTypeParser } from './UnknownTypeParser';
 
+/**
+ * The base interface for all type parsers.
+ * @since 1.0.0
+ */
 export interface TypeParser {
+  /**
+   * The kind of type this parser is for.
+   * @since 1.0.0
+   */
   kind: TypeParser.Kind;
 
+  /**
+   * The method to convert this type parser to a JSON compatible format.
+   * @since 1.0.0
+   */
   toJSON(): TypeParser.JSON;
 
+  /**
+   * The method to convert this type parser to a string.
+   * @since 1.0.0
+   */
   toString(): string;
 }
 
 export namespace TypeParser {
+  /**
+   * Generates a new {@link TypeParser} instance from the given data.
+   * @since 1.0.0
+   * @param type The type to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   export function generate(
     type:
       | (
@@ -202,10 +225,21 @@ export namespace TypeParser {
     }
   }
 
+  /**
+   * Wraps the given type parser depending on it's binding power.
+   * @since 1.0.0
+   * @param type The type parser to wrap.
+   * @param binding The binding power of the type parser.
+   * @returns The wrapped type parser.
+   */
   export function wrap(type: TypeParser, binding: number) {
     return BindingPowers[type.kind] < binding ? `(${type.toString()})` : type.toString();
   }
 
+  /**
+   * The kind of type parser.
+   * @since 1.0.0
+   */
   export enum Kind {
     Array = 'array',
 
@@ -248,6 +282,10 @@ export namespace TypeParser {
     Unknown = 'unknown'
   }
 
+  /**
+   * The binding powers of the type parsers.
+   * @since 1.0.0
+   */
   export const BindingPowers: Record<Kind, number> = {
     [Kind.Array]: 999,
     [Kind.Conditional]: 150,
@@ -271,6 +309,10 @@ export namespace TypeParser {
     [Kind.Unknown]: -1
   };
 
+  /**
+   * The base interface for the JSON compatible format of type parsers.
+   * @since 1.0.0
+   */
   export interface JSON {
     kind: Kind;
   }
