@@ -5,11 +5,27 @@ import { Parser } from './Parser';
 import type { ProjectParser } from './ProjectParser';
 import { TypeParser } from './type-parsers';
 
+/**
+ * Parses data from a type alias reflection.
+ * @since 1.0.0
+ */
 export class TypeAliasParser extends Parser {
+  /**
+   * Whether this type alias is external.
+   * @since 1.0.0
+   */
   public readonly external: boolean;
 
+  /**
+   * The type parameters of this type alias.
+   * @since 1.0.0
+   */
   public readonly typeParameters: TypeParameterParser[];
 
+  /**
+   * The type of this type alias.
+   * @since 1.0.0
+   */
   public readonly type: TypeParser;
 
   public constructor(data: TypeAliasParser.Data, project: ProjectParser) {
@@ -22,6 +38,11 @@ export class TypeAliasParser extends Parser {
     this.type = type;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): TypeAliasParser.JSON {
     return {
       ...super.toJSON(),
@@ -31,6 +52,13 @@ export class TypeAliasParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link TypeAliasParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): TypeAliasParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, type, typeParameter: typeParameters = [] } = reflection;
 
@@ -53,18 +81,41 @@ export class TypeAliasParser extends Parser {
 
 export namespace TypeAliasParser {
   export interface Data extends Parser.Data {
+    /**
+     * Whether this type alias is external.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The type parameters of this type alias.
+     * @since 1.0.0
+     */
     typeParameters: TypeParameterParser[];
 
+    /**
+     * The type of this type alias.
+     * @since 1.0.0
+     */
     type: TypeParser;
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * Whether this type alias is external in a JSON compatible format.
+     * @since 1.0.0
+     */
     external: boolean;
 
+    /**
+     * The type parameters of this type alias in a JSON compatible format.
+     * @since 1.0.0
+     */
     typeParameters: TypeParameterParser.JSON[];
 
+    /**
+     * The type of this type alias in a JSON compatible format.
+     */
     type: TypeParser.JSON;
   }
 }
