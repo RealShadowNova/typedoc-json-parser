@@ -6,17 +6,45 @@ import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 import { ClassParser } from './ClassParser';
 
+/**
+ * Parses data from a class property reflection.
+ * @since 1.0.0
+ */
 export class ClassPropertyParser extends Parser {
+  /**
+   * The accessibility of this property.
+   * @since 1.0.0
+   */
   public readonly accessibility: ClassParser.Accessibility;
 
+  /**
+   * Whether this property is abstract.
+   * @since 1.0.0
+   */
   public readonly abstract: boolean;
 
+  /**
+   * Whether this property is static.
+   * @since 1.0.0
+   */
   public readonly static: boolean;
 
+  /**
+   * Whether this property is readonly.
+   * @since 1.0.0
+   */
   public readonly readonly: boolean;
 
+  /**
+   * Whether this property is optional.
+   * @since 1.0.0
+   */
   public readonly optional: boolean;
 
+  /**
+   * The type parser of this property.
+   * @since 1.0.0
+   */
   public readonly type: TypeParser | null;
 
   public constructor(data: ClassPropertyParser.Data, project: ProjectParser) {
@@ -32,6 +60,11 @@ export class ClassPropertyParser extends Parser {
     this.type = type;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): ClassPropertyParser.JSON {
     return {
       ...super.toJSON(),
@@ -44,6 +77,13 @@ export class ClassPropertyParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link ClassPropertyParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type, flags } = reflection;
 
@@ -105,30 +145,78 @@ export class ClassPropertyParser extends Parser {
 
 export namespace ClassPropertyParser {
   export interface Data extends Parser.Data {
+    /**
+     * The accessibility of this property.
+     * @since 1.0.0
+     */
     accessibility: ClassParser.Accessibility;
 
+    /**
+     * Whether this property is abstract.
+     * @since 1.0.0
+     */
     abstract: boolean;
 
+    /**
+     * Whether this property is static.
+     * @since 1.0.0
+     */
     static: boolean;
 
+    /**
+     * Whether this property is readonly.
+     * @since 1.0.0
+     */
     readonly: boolean;
 
+    /**
+     * Whether this property is optional.
+     * @since 1.0.0
+     */
     optional: boolean;
 
+    /**
+     * The type parser of this property.
+     * @since 1.0.0
+     */
     type: TypeParser | null;
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The accessibility of this property in a JSON compatible format.
+     * @since 1.0.0
+     */
     accessibility: ClassParser.Accessibility;
 
+    /**
+     * Whether this property is abstract in a JSON compatible format.
+     * @since 1.0.0
+     */
     abstract: boolean;
 
+    /**
+     * Whether this property is static in a JSON compatible format.
+     * @since 1.0.0
+     */
     static: boolean;
 
+    /**
+     * Whether this property is readonly in a JSON compatible format.
+     * @since 1.0.0
+     */
     readonly: boolean;
 
+    /**
+     * Whether this property is optional in a JSON compatible format.
+     * @since 1.0.0
+     */
     optional: boolean;
 
+    /**
+     * The type parser of this property in a JSON compatible format.
+     * @since 1.0.0
+     */
     type: TypeParser.JSON | null;
   }
 }

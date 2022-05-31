@@ -5,13 +5,33 @@ import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { ClassParser } from './ClassParser';
 
+/**
+ * Parses data from a class method reflection.
+ * @since 1.0.0
+ */
 export class ClassMethodParser extends Parser {
+  /**
+   * The accessibility of this method.
+   * @since 1.0.0
+   */
   public readonly accessibility: ClassParser.Accessibility;
 
+  /**
+   * Whether this method is abstract.
+   * @since 1.0.0
+   */
   public readonly abstract: boolean;
 
+  /**
+   * Whether this method is static.
+   * @since 1.0.0
+   */
   public readonly static: boolean;
 
+  /**
+   * The signature parsers of this method.
+   * @since 1.0.0
+   */
   public readonly signatures: SignatureParser[];
 
   public constructor(data: ClassMethodParser.Data, project: ProjectParser) {
@@ -25,6 +45,11 @@ export class ClassMethodParser extends Parser {
     this.signatures = signatures;
   }
 
+  /**
+   * Convert this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): ClassMethodParser.JSON {
     return {
       ...super.toJSON(),
@@ -35,6 +60,13 @@ export class ClassMethodParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link ClassMethodParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassMethodParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, signatures = [] } = reflection;
 
@@ -62,22 +94,54 @@ export class ClassMethodParser extends Parser {
 
 export namespace ClassMethodParser {
   export interface Data extends Parser.Data {
+    /**
+     * The accessibility of this method.
+     * @since 1.0.0
+     */
     accessibility: ClassParser.Accessibility;
 
+    /**
+     * Whether this method is abstract.
+     * @since 1.0.0
+     */
     abstract: boolean;
 
+    /**
+     * Whether this method is static.
+     * @since 1.0.0
+     */
     static: boolean;
 
+    /**
+     * The signature parsers of this method.
+     * @since 1.0.0
+     */
     signatures: SignatureParser[];
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The accessibility of this method in a JSON compatible format.
+     * @since 1.0.0
+     */
     accessibility: ClassParser.Accessibility;
 
+    /**
+     * Whether this method is abstract in a JSON compatible format.
+     * @since 1.0.0
+     */
     abstract: boolean;
 
+    /**
+     * Whether this method is static in a JSON compatible format.
+     * @since 1.0.0
+     */
     static: boolean;
 
+    /**
+     * The signature parsers of this method in a JSON compatible format.
+     * @since 1.0.0
+     */
     signatures: SignatureParser.JSON[];
   }
 }
