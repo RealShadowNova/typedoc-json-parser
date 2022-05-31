@@ -5,7 +5,15 @@ import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 
+/**
+ * Parses data from an interface property reflection.
+ * @since 1.0.0
+ */
 export class InterfacePropertyParser extends Parser {
+  /**
+   * The type of this property.
+   * @since 1.0.0
+   */
   public readonly type: TypeParser;
 
   public constructor(data: InterfacePropertyParser.Data, project: ProjectParser) {
@@ -16,6 +24,11 @@ export class InterfacePropertyParser extends Parser {
     this.type = type;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): InterfacePropertyParser.JSON {
     return {
       ...super.toJSON(),
@@ -23,6 +36,13 @@ export class InterfacePropertyParser extends Parser {
     };
   }
 
+  /**
+   * Generates a new {@link InterfacePropertyParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfacePropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type } = reflection;
 
@@ -43,10 +63,18 @@ export class InterfacePropertyParser extends Parser {
 
 export namespace InterfacePropertyParser {
   export interface Data extends Parser.Data {
+    /**
+     * The type of this property.
+     * @since 1.0.0
+     */
     type: TypeParser;
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The type of this property in a JSON compatible format.
+     * @since 1.0.0
+     */
     type: TypeParser.JSON;
   }
 }
