@@ -3,13 +3,33 @@ import { ReflectionKind } from '../../types';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 
+/**
+ * Parses data from a parameter reflection.
+ * @since 1.0.0
+ */
 export class ParameterParser {
+  /**
+   * The project this parser belongs to.
+   * @since 1.0.0
+   */
   public readonly project: ProjectParser;
 
+  /**
+   * The identifier of this parser.
+   * @since 1.0.0
+   */
   public readonly id: number;
 
+  /**
+   * The name of this parameter.
+   * @since 1.0.0
+   */
   public readonly name: string;
 
+  /**
+   * The type of this parameter.
+   * @since 1.0.0
+   */
   public readonly type: TypeParser;
 
   public constructor(data: ParameterParser.Data, project: ProjectParser) {
@@ -22,6 +42,11 @@ export class ParameterParser {
     this.project = project;
   }
 
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
   public toJSON(): ParameterParser.JSON {
     return {
       id: this.id,
@@ -30,6 +55,13 @@ export class ParameterParser {
     };
   }
 
+  /**
+   * Generates a new {@link ParameterParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ParameterParser {
     const { kind, kindString = 'Unknown', id, name, type } = reflection;
 
@@ -50,18 +82,42 @@ export class ParameterParser {
 
 export namespace ParameterParser {
   export interface Data {
+    /**
+     * The identifier of this parser.
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of this parameter.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * The type of this parameter.
+     * @since 1.0.0
+     */
     type: TypeParser;
   }
 
   export interface JSON {
+    /**
+     * The identifier of this parser.
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of this parameter.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * The type of this parameter in a JSON compatible format.
+     * @since 1.0.0
+     */
     type: TypeParser.JSON;
   }
 }

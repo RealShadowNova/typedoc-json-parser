@@ -3,15 +3,39 @@ import { ReflectionKind } from '../../types';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 
+/**
+ * Parses data from a type parameter reflection.
+ * @since 1.0.0
+ */
 export class TypeParameterParser {
+  /**
+   * The project this parser belongs to.
+   * @since 1.0.0
+   */
   public readonly project: ProjectParser;
 
+  /**
+   * The identifier of this parser.
+   * @since 1.0.0
+   */
   public readonly id: number;
 
+  /**
+   * The name of this type parameter.
+   * @since 1.0.0
+   */
   public readonly name: string;
 
+  /**
+   * The type of this type parameter.
+   * @since 1.0.0
+   */
   public readonly type: TypeParser | null;
 
+  /**
+   * The default value of this type parameter.
+   * @since 1.0.0
+   */
   public readonly default: TypeParser | null;
 
   public constructor(data: TypeParameterParser.Data, project: ProjectParser) {
@@ -25,6 +49,11 @@ export class TypeParameterParser {
     this.project = project;
   }
 
+  /**
+   * Converts this type parameter to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this type parameter.
+   */
   public toJSON(): TypeParameterParser.JSON {
     return {
       id: this.id,
@@ -34,6 +63,13 @@ export class TypeParameterParser {
     };
   }
 
+  /**
+   * Generates a new {@link TypeParameterParser} instance from the given data.
+   * @since 1.0.0
+   * @param reflection The reflection to generate the parser from.
+   * @param project The project this parser belongs to.
+   * @returns The generated parser.
+   */
   public static generate(reflection: JSONOutput.TypeParameterReflection, project: ProjectParser): TypeParameterParser {
     const { kind, kindString = 'Unknown', id, name, type, default: _default } = reflection;
 
@@ -55,22 +91,54 @@ export class TypeParameterParser {
 
 export namespace TypeParameterParser {
   export interface Data {
+    /**
+     * The identifier of this parser.
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of this type parameter.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * The type of this type parameter.
+     * @since 1.0.0
+     */
     type: TypeParser | null;
 
+    /**
+     * The default value of this type parameter.
+     * @since 1.0.0
+     */
     default: TypeParser | null;
   }
 
   export interface JSON {
+    /**
+     * The identifier of this parser.
+     * @since 1.0.0
+     */
     id: number;
 
+    /**
+     * The name of this type parameter.
+     * @since 1.0.0
+     */
     name: string;
 
+    /**
+     * The type of this type parameter in a JSON compatible format.
+     * @since 1.0.0
+     */
     type: TypeParser.JSON | null;
 
+    /**
+     * The default value of this type parameter in a JSON compatible format.
+     * @since 1.0.0
+     */
     default: TypeParser.JSON | null;
   }
 }
