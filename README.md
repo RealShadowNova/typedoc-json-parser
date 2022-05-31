@@ -19,7 +19,7 @@ When creating a library in TypeScript, you will often need to create documentati
 
 ## Installation
 
-You can use the following command to install this package, or replace npm install -D with your package manager of choice.
+You can use the following command to install this package, or replace `npm install -D` with your package manager of choice.
 
 ```sh
 npm install -D typedoc-json-parser
