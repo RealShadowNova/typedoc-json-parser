@@ -45,6 +45,8 @@ export class TupleTypeParser implements TypeParser {
 
 export namespace TupleTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Tuple;
+
     /**
      * The types of this tuple type in a JSON compatible format.
      * @since 1.0.0

@@ -45,6 +45,8 @@ export class OptionalTypeParser implements TypeParser {
 
 export namespace OptionalTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Optional;
+
     /**
      * The type of this optional type in a JSON compatible format.
      * @since 1.0.0

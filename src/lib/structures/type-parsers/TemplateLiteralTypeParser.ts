@@ -53,6 +53,8 @@ export class TemplateLiteralTypeParser implements TypeParser {
 
 export namespace TemplateLiteralTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.TemplateLiteral;
+
     /**
      * The head of this template literal type.
      * @since 1.0.0

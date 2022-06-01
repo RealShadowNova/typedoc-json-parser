@@ -113,6 +113,8 @@ export class ReferenceTypeParser implements TypeParser {
 
 export namespace ReferenceTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Reference;
+
     /**
      * The id of this reference type.
      * @since 1.0.0

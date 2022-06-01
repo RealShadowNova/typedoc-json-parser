@@ -45,6 +45,8 @@ export class LiteralTypeParser implements TypeParser {
 
 export namespace LiteralTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Literal;
+
     /**
      * The value of this literal type.
      * @since 1.0.0

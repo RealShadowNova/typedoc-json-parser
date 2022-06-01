@@ -95,6 +95,19 @@ export class CommentParser {
       project
     );
   }
+
+  public static generateFromJSON(json: CommentParser.JSON, project: ProjectParser): CommentParser {
+    const { description, extendedDescription, tags } = json;
+
+    return new CommentParser(
+      {
+        description,
+        extendedDescription,
+        tags
+      },
+      project
+    );
+  }
 }
 
 export namespace CommentParser {

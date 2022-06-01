@@ -77,6 +77,23 @@ export class ConstantParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: ConstantParser.JSON, project: ProjectParser): ConstantParser {
+    const { id, name, comment, source, external, type, value } = json;
+
+    return new ConstantParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        type: TypeParser.generateFromJSON(type, project),
+        value
+      },
+      project
+    );
+  }
 }
 
 export namespace ConstantParser {

@@ -53,6 +53,8 @@ export class IndexedAccessTypeParser implements TypeParser {
 
 export namespace IndexedAccessTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.IndexedAccess;
+
     /**
      * The object type of this indexed access type in a JSON compatible format.
      * @since 1.0.0

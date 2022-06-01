@@ -45,6 +45,8 @@ export class IntersectionTypeParser implements TypeParser {
 
 export namespace IntersectionTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Intersection;
+
     /**
      * The types of this intersection type in a JSON compatible format.
      * @since 1.0.0

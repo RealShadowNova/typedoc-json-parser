@@ -122,6 +122,26 @@ export class ClassParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: ClassParser.JSON, project: ProjectParser): ClassParser {
+    const { id, name, comment, source, external, abstract, extendsType, implementsType, properties, methods } = json;
+
+    return new ClassParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        abstract,
+        extendsType: extendsType ? TypeParser.generateFromJSON(extendsType, project) : null,
+        implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType, project)),
+        properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property, project)),
+        methods: methods.map((method) => ClassMethodParser.generateFromJSON(method, project))
+      },
+      project
+    );
+  }
 }
 
 export namespace ClassParser {

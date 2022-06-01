@@ -45,6 +45,8 @@ export class UnknownTypeParser implements TypeParser {
 
 export namespace UnknownTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Unknown;
+
     /**
      * The name of this unknown type.
      * @since 1.0.0

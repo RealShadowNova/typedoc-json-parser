@@ -46,6 +46,8 @@ export class ReflectionTypeParser implements TypeParser {
 
 export namespace ReflectionTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Reflection;
+
     /**
      * The reflection of this reflection type.
      * @since 1.0.0

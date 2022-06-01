@@ -77,6 +77,23 @@ export class TypeAliasParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: TypeAliasParser.JSON, project: ProjectParser): TypeAliasParser {
+    const { id, name, comment, source, external, typeParameters, type } = json;
+
+    return new TypeAliasParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
+        type: TypeParser.generateFromJSON(type, project)
+      },
+      project
+    );
+  }
 }
 
 export namespace TypeAliasParser {

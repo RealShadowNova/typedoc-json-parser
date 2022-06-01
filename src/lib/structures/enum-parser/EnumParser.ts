@@ -72,6 +72,22 @@ export class EnumParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: EnumParser.JSON, project: ProjectParser): EnumParser {
+    const { id, name, comment, source, external, properties } = json;
+
+    return new EnumParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        properties: properties.map((property) => EnumPropertyParser.generateFromJSON(property, project))
+      },
+      project
+    );
+  }
 }
 
 export namespace EnumParser {

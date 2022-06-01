@@ -61,6 +61,8 @@ export class NamedTupleMemberTypeParser implements TypeParser {
 
 export namespace NamedTupleMemberTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.NamedTupleMember;
+
     /**
      * The name of this named tuple member.
      * @since 1.0.0

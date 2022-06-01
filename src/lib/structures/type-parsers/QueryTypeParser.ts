@@ -46,6 +46,8 @@ export class QueryTypeParser implements TypeParser {
 
 export namespace QueryTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Query;
+
     /**
      * The query of this query type.
      * @since 1.0.0

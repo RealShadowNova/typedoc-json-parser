@@ -98,6 +98,21 @@ export class SignatureParser {
       project
     );
   }
+
+  public static generateFromJSON(json: SignatureParser.JSON, project: ProjectParser): SignatureParser {
+    const { id, name, typeParameters, parameters, returnType } = json;
+
+    return new SignatureParser(
+      {
+        id,
+        name,
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
+        parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter, project)),
+        returnType: TypeParser.generateFromJSON(returnType, project)
+      },
+      project
+    );
+  }
 }
 
 export namespace SignatureParser {

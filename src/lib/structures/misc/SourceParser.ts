@@ -73,6 +73,19 @@ export class SourceParser {
       project
     );
   }
+
+  public static generateFromJSON(json: SourceParser.JSON, project: ProjectParser): SourceParser {
+    const { line, file, path } = json;
+
+    return new SourceParser(
+      {
+        line,
+        file,
+        path
+      },
+      project
+    );
+  }
 }
 
 export namespace SourceParser {

@@ -67,6 +67,22 @@ export class FunctionParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: FunctionParser.JSON, project: ProjectParser): FunctionParser {
+    const { id, name, comment, source, external, signatures } = json;
+
+    return new FunctionParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature, project))
+      },
+      project
+    );
+  }
 }
 
 export namespace FunctionParser {

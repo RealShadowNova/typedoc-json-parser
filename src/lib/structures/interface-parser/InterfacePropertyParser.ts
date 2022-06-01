@@ -59,6 +59,21 @@ export class InterfacePropertyParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: InterfacePropertyParser.JSON, project: ProjectParser): InterfacePropertyParser {
+    const { id, name, comment, source, type } = json;
+
+    return new InterfacePropertyParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        type: TypeParser.generateFromJSON(type, project)
+      },
+      project
+    );
+  }
 }
 
 export namespace InterfacePropertyParser {

@@ -45,6 +45,8 @@ export class ArrayTypeParser implements TypeParser {
 
 export namespace ArrayTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Array;
+
     /**
      * The type of this array in a JSON compatible format.
      * @since 1.0.0

@@ -72,6 +72,8 @@ export class ConditionalTypeParser implements TypeParser {
 
 export namespace ConditionalTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Conditional;
+
     /**
      * The check type of this conditional type in a JSON compatible format.
      * @since 1.0.0

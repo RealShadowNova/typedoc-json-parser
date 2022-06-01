@@ -78,6 +78,19 @@ export class ParameterParser {
       project
     );
   }
+
+  public static generateFromJSON(json: ParameterParser.JSON, project: ProjectParser): ParameterParser {
+    const { id, name, type } = json;
+
+    return new ParameterParser(
+      {
+        id,
+        name,
+        type: TypeParser.generateFromJSON(type, project)
+      },
+      project
+    );
+  }
 }
 
 export namespace ParameterParser {

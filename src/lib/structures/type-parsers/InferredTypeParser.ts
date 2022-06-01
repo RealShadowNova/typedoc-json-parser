@@ -45,6 +45,8 @@ export class InferredTypeParser implements TypeParser {
 
 export namespace InferredTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Inferred;
+
     /**
      * The type of this inferred type.
      * @since 1.0.0

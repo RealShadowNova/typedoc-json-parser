@@ -90,6 +90,24 @@ export class ClassMethodParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: ClassMethodParser.JSON, project: ProjectParser): ClassMethodParser {
+    const { id, name, comment, source, accessibility, abstract, static: _static, signatures } = json;
+
+    return new ClassMethodParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        accessibility,
+        abstract,
+        static: _static,
+        signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature, project))
+      },
+      project
+    );
+  }
 }
 
 export namespace ClassMethodParser {

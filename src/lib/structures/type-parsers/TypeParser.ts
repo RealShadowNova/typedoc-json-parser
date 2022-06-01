@@ -225,6 +225,151 @@ export namespace TypeParser {
     }
   }
 
+  export function generateFromJSON(json: JSON, project: ProjectParser): TypeParser {
+    switch (json.kind) {
+      case Kind.Array: {
+        const { type } = json as ArrayTypeParser.JSON;
+
+        return new ArrayTypeParser(generateFromJSON(type, project));
+      }
+
+      case Kind.Conditional: {
+        const { checkType, extendsType, trueType, falseType } = json as ConditionalTypeParser.JSON;
+
+        return new ConditionalTypeParser(
+          generateFromJSON(checkType, project),
+          generateFromJSON(extendsType, project),
+          generateFromJSON(trueType, project),
+          generateFromJSON(falseType, project)
+        );
+      }
+
+      case Kind.IndexedAccess: {
+        const { objectType, indexType } = json as IndexedAccessTypeParser.JSON;
+
+        return new IndexedAccessTypeParser(generateFromJSON(objectType, project), generateFromJSON(indexType, project));
+      }
+
+      case Kind.Inferred: {
+        const { type } = json as InferredTypeParser.JSON;
+
+        return new InferredTypeParser(type);
+      }
+
+      case Kind.Intersection: {
+        const { types } = json as IntersectionTypeParser.JSON;
+
+        return new IntersectionTypeParser(types.map((type) => generateFromJSON(type, project)));
+      }
+
+      case Kind.Intrinsic: {
+        const { type } = json as IntrinsicTypeParser.JSON;
+
+        return new IntrinsicTypeParser(type);
+      }
+
+      case Kind.Literal: {
+        const { value } = json as LiteralTypeParser.JSON;
+
+        return new LiteralTypeParser(value);
+      }
+
+      case Kind.Mapped: {
+        const { parameter, parameterType, nameType, templateType, optional, readonly } = json as MappedTypeParser.JSON;
+
+        return new MappedTypeParser(
+          parameter,
+          generateFromJSON(parameterType, project),
+          nameType ? generateFromJSON(nameType, project) : null,
+          generateFromJSON(templateType, project),
+          optional,
+          readonly
+        );
+      }
+
+      case Kind.NamedTupleMember: {
+        const { type, optional, name } = json as NamedTupleMemberTypeParser.JSON;
+
+        return new NamedTupleMemberTypeParser(name, generateFromJSON(type, project), optional);
+      }
+
+      case Kind.Optional: {
+        const { type } = json as OptionalTypeParser.JSON;
+
+        return new OptionalTypeParser(generateFromJSON(type, project));
+      }
+
+      case Kind.Predicate: {
+        const { asserts, name, type } = json as PredicateTypeParser.JSON;
+
+        return new PredicateTypeParser(asserts, name, type ? generateFromJSON(type, project) : null);
+      }
+
+      case Kind.Query: {
+        const { query } = json as QueryTypeParser.JSON;
+
+        return new QueryTypeParser(generateFromJSON(query, project) as ReferenceTypeParser);
+      }
+
+      case Kind.Reference: {
+        const { id, name, packageName, typeArguments } = json as ReferenceTypeParser.JSON;
+
+        return new ReferenceTypeParser(
+          id ?? null,
+          name,
+          packageName ?? null,
+          typeArguments.map((typeArgument) => generateFromJSON(typeArgument, project)),
+          project
+        );
+      }
+
+      case Kind.Reflection: {
+        const { reflection } = json as ReflectionTypeParser.JSON;
+
+        return new ReflectionTypeParser(reflection ?? null);
+      }
+
+      case Kind.Rest: {
+        const { type } = json as RestTypeParser.JSON;
+
+        return new RestTypeParser(generateFromJSON(type, project));
+      }
+
+      case Kind.TemplateLiteral: {
+        const { head, tail } = json as TemplateLiteralTypeParser.JSON;
+
+        return new TemplateLiteralTypeParser(
+          head,
+          tail.map((tail) => ({ type: generateFromJSON(tail.type, project), text: tail.text }))
+        );
+      }
+
+      case Kind.Tuple: {
+        const { types } = json as TupleTypeParser.JSON;
+
+        return new TupleTypeParser(types.map((type) => generateFromJSON(type, project)));
+      }
+
+      case Kind.TypeOperator: {
+        const { operator, type } = json as TypeOperatorTypeParser.JSON;
+
+        return new TypeOperatorTypeParser(operator, generateFromJSON(type, project));
+      }
+
+      case Kind.Union: {
+        const { types } = json as UnionTypeParser.JSON;
+
+        return new UnionTypeParser(types.map((type) => generateFromJSON(type, project)));
+      }
+
+      case Kind.Unknown: {
+        const { name } = json as UnknownTypeParser.JSON;
+
+        return new UnknownTypeParser(name);
+      }
+    }
+  }
+
   /**
    * Wraps the given type parser depending on it's binding power.
    * @since 1.0.0

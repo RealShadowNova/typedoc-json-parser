@@ -62,6 +62,8 @@ export class PredicateTypeParser implements TypeParser {
 
 export namespace PredicateTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Predicate;
+
     /**
      * Whether this predicate type asserts a value.
      * @since 1.0.0

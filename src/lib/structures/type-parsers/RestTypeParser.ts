@@ -45,6 +45,8 @@ export class RestTypeParser implements TypeParser {
 
 export namespace RestTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Rest;
+
     /**
      * The type of this rest type in a JSON compatible format.
      * @since 1.0.0

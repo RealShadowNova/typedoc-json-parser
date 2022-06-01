@@ -96,6 +96,8 @@ export class MappedTypeParser implements TypeParser {
 
 export namespace MappedTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Mapped;
+
     /**
      * The parameter name of this mapped type.
      * @since 1.0.0

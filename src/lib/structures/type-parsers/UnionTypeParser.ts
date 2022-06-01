@@ -45,6 +45,8 @@ export class UnionTypeParser implements TypeParser {
 
 export namespace UnionTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Union;
+
     /**
      * The types of this union type in a JSON compatible format.
      * @since 1.0.0

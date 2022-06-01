@@ -69,7 +69,7 @@ export class ProjectParser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
-  public constructor(data: ProjectParser.Data | JSONOutput.ProjectReflection) {
+  public constructor(data: ProjectParser.JSON | JSONOutput.ProjectReflection) {
     const { id, name } = data;
 
     this.id = id;
@@ -78,13 +78,13 @@ export class ProjectParser {
     if ('classes' in data) {
       const { classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
 
-      this.classes = classes;
-      this.constants = constants;
-      this.enums = enums;
-      this.functions = functions;
-      this.interfaces = interfaces;
-      this.namespaces = namespaces;
-      this.typeAliases = typeAliases;
+      this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
+      this.constants = constants.map((json) => ConstantParser.generateFromJSON(json, this));
+      this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
+      this.functions = functions.map((json) => FunctionParser.generateFromJSON(json, this));
+      this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJSON(json, this));
+      this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json, this));
+      this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, this));
     } else {
       const { children = [] } = data;
 
@@ -119,64 +119,6 @@ export class ProjectParser {
 }
 
 export namespace ProjectParser {
-  export interface Data {
-    /**
-     * The identifier of this project. This is usually `0`
-     * @since 1.0.0
-     */
-    id: number;
-
-    /**
-     * The name of your project.
-     *
-     * Corresponds to the `name` property in your TypeDoc configuration or the `name` property of your `package.json` file.
-     * @since 1.0.0
-     */
-    name: string;
-
-    /**
-     * An array of class parsers for this project.
-     * @since 1.0.0
-     */
-    classes: ClassParser[];
-
-    /**
-     * An array of constant parsers for this project.
-     * @since 1.0.0
-     */
-    constants: ConstantParser[];
-
-    /**
-     * An array of enum parsers for this project.
-     * @since 1.0.0
-     */
-    enums: EnumParser[];
-
-    /**
-     * An array of function parsers for this project.
-     * @since 1.0.0
-     */
-    functions: FunctionParser[];
-
-    /**
-     * An array of interface parsers for this project.
-     * @since 1.0.0
-     */
-    interfaces: InterfaceParser[];
-
-    /**
-     * An array of namespace parsers for this project.
-     * @since 1.0.0
-     */
-    namespaces: NamespaceParser[];
-
-    /**
-     * An array of type alias parsers for this project.
-     * @since 1.0.0
-     */
-    typeAliases: TypeAliasParser[];
-  }
-
   export interface JSON {
     /**
      * The identifier of this project. This is usually `0`

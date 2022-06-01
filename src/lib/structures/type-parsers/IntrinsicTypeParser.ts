@@ -45,6 +45,8 @@ export class IntrinsicTypeParser implements TypeParser {
 
 export namespace IntrinsicTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.Intrinsic;
+
     /**
      * The type of this intrinsic type.
      * @since 1.0.0

@@ -141,6 +141,26 @@ export class ClassPropertyParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: ClassPropertyParser.JSON, project: ProjectParser): ClassPropertyParser {
+    const { id, name, comment, source, accessibility, abstract, static: _static, readonly, optional, type } = json;
+
+    return new ClassPropertyParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        accessibility,
+        abstract,
+        static: _static,
+        readonly,
+        optional,
+        type: type ? TypeParser.generateFromJSON(type, project) : null
+      },
+      project
+    );
+  }
 }
 
 export namespace ClassPropertyParser {

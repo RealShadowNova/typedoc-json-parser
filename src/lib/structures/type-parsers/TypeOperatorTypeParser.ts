@@ -53,6 +53,8 @@ export class TypeOperatorTypeParser implements TypeParser {
 
 export namespace TypeOperatorTypeParser {
   export interface JSON extends TypeParser.JSON {
+    kind: TypeParser.Kind.TypeOperator;
+
     /**
      * The operator of this type operator type.
      * @since 1.0.0

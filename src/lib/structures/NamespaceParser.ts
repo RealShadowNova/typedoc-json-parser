@@ -135,6 +135,28 @@ export class NamespaceParser extends Parser {
       project
     );
   }
+
+  public static generateFromJSON(json: NamespaceParser.JSON, project: ProjectParser): NamespaceParser {
+    const { id, name, comment, source, external, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = json;
+
+    return new NamespaceParser(
+      {
+        id,
+        name,
+        comment: CommentParser.generateFromJSON(comment, project),
+        source: source ? SourceParser.generateFromJSON(source, project) : null,
+        external,
+        classes: classes.map((json) => ClassParser.generateFromJSON(json, project)),
+        constants: constants.map((json) => ConstantParser.generateFromJSON(json, project)),
+        enums: enums.map((json) => EnumParser.generateFromJSON(json, project)),
+        functions: functions.map((json) => FunctionParser.generateFromJSON(json, project)),
+        interfaces: interfaces.map((json) => InterfaceParser.generateFromJSON(json, project)),
+        namespaces: namespaces.map((json) => NamespaceParser.generateFromJSON(json, project)),
+        typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, project))
+      },
+      project
+    );
+  }
 }
 
 export namespace NamespaceParser {
