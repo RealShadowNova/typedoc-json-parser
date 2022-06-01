@@ -69,7 +69,7 @@ export class ProjectParser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
-  public constructor(data: Parser.Data | JSONOutput.ProjectReflection) {
+  public constructor(data: ProjectParser.Data | JSONOutput.ProjectReflection) {
     const { id, name } = data;
 
     this.id = id;
@@ -103,7 +103,7 @@ export class ProjectParser {
    * @since 1.0.0
    * @returns The JSON compatible format of this project.
    */
-  public toJSON(): Parser.JSON {
+  public toJSON(): ProjectParser.JSON {
     return {
       id: this.id,
       name: this.name,
@@ -118,7 +118,7 @@ export class ProjectParser {
   }
 }
 
-export namespace Parser {
+export namespace ProjectParser {
   export interface Data {
     /**
      * The identifier of this project. This is usually `0`
