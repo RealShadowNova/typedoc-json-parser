@@ -10,6 +10,7 @@ node_modules/
 dist/
 build/
 docs/
+coverage/
 
 # Ignore heapsnapshot and log files
 *.heapsnapshot
