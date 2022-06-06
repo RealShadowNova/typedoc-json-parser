@@ -11,6 +11,12 @@ import { TypeParser } from '../type-parsers';
  */
 export class InterfacePropertyParser extends Parser {
   /**
+   * Whether this interface property is readonly.
+   * @since 1.0.0
+   */
+  public readonly readonly: boolean;
+
+  /**
    * The type of this property.
    * @since 1.0.0
    */
@@ -19,8 +25,9 @@ export class InterfacePropertyParser extends Parser {
   public constructor(data: InterfacePropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { type } = data;
+    const { readonly, type } = data;
 
+    this.readonly = readonly;
     this.type = type;
   }
 
@@ -32,6 +39,7 @@ export class InterfacePropertyParser extends Parser {
   public toJSON(): InterfacePropertyParser.JSON {
     return {
       ...super.toJSON(),
+      readonly: this.readonly,
       type: this.type.toJSON()
     };
   }
@@ -44,7 +52,7 @@ export class InterfacePropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfacePropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type, flags } = reflection;
 
     if (kind !== ReflectionKind.Property) throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${kindString} (${kind})`);
 
@@ -54,6 +62,7 @@ export class InterfacePropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        readonly: Boolean(flags.isReadonly),
         type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
@@ -61,7 +70,7 @@ export class InterfacePropertyParser extends Parser {
   }
 
   public static generateFromJSON(json: InterfacePropertyParser.JSON, project: ProjectParser): InterfacePropertyParser {
-    const { id, name, comment, source, type } = json;
+    const { id, name, comment, source, readonly, type } = json;
 
     return new InterfacePropertyParser(
       {
@@ -69,6 +78,7 @@ export class InterfacePropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
+        readonly,
         type: TypeParser.generateFromJSON(type, project)
       },
       project
@@ -79,6 +89,12 @@ export class InterfacePropertyParser extends Parser {
 export namespace InterfacePropertyParser {
   export interface Data extends Parser.Data {
     /**
+     * Whether this interface property is readonly.
+     * @since 1.0.0
+     */
+    readonly: boolean;
+
+    /**
      * The type of this property.
      * @since 1.0.0
      */
@@ -86,6 +102,12 @@ export namespace InterfacePropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * Whether this interface property is readonly.
+     * @since 1.0.0
+     */
+    readonly: boolean;
+
     /**
      * The type of this property in a JSON compatible format.
      * @since 1.0.0
