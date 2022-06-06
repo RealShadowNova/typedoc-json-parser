@@ -61,7 +61,7 @@ export class SourceParser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.SourceReference, project: ProjectParser): SourceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.SourceReference, project: ProjectParser): SourceParser {
     const { line, fileName } = reflection;
 
     return new SourceParser(

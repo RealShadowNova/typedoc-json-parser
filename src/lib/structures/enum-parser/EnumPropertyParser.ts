@@ -42,7 +42,7 @@ export class EnumPropertyParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], defaultValue } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
@@ -53,8 +53,8 @@ export class EnumPropertyParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         value: defaultValue!
       },
       project

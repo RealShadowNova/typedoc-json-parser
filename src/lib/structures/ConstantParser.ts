@@ -59,7 +59,7 @@ export class ConstantParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ConstantParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ConstantParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, type, defaultValue } = reflection;
 
     if (kind !== ReflectionKind.Variable) throw new Error(`Expected Variable (${ReflectionKind.Variable}), but received ${kindString} (${kind})`);
@@ -68,10 +68,10 @@ export class ConstantParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
-        type: TypeParser.generate(type!, project),
+        type: TypeParser.generateFromTypeDoc(type!, project),
         value: defaultValue!
       },
       project

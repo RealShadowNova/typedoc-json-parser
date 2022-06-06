@@ -80,7 +80,7 @@ export class SignatureParser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.SignatureReflection, project: ProjectParser): SignatureParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection, project: ProjectParser): SignatureParser {
     const { kind, kindString = 'Unknown', id, name, typeParameter: typeParameters = [], parameters = [], type } = reflection;
 
     if (kind !== ReflectionKind.CallSignature) {
@@ -91,9 +91,9 @@ export class SignatureParser {
       {
         id,
         name,
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generate(typeParameter, project)),
-        parameters: parameters.map((parameter) => ParameterParser.generate(parameter, project)),
-        returnType: TypeParser.generate(type!, project)
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
+        parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter, project)),
+        returnType: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );

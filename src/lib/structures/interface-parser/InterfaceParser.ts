@@ -51,21 +51,21 @@ export class InterfaceParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfaceParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Interface) throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${kindString} (${kind})`);
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property)
-      .map((child) => InterfacePropertyParser.generate(child, project));
+      .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, project));
 
     return new InterfaceParser(
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         properties
       },

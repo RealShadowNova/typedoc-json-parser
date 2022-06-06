@@ -104,25 +104,35 @@ export class NamespaceParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): NamespaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): NamespaceParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Namespace) throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${kindString} (${kind})`);
 
-    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generate(child, project));
-    const constants = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => ConstantParser.generate(child, project));
-    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generate(child, project));
-    const functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generate(child, project));
-    const interfaces = children.filter((child) => child.kind === ReflectionKind.Interface).map((child) => InterfaceParser.generate(child, project));
-    const namespaces = children.filter((child) => child.kind === ReflectionKind.Namespace).map((child) => NamespaceParser.generate(child, project));
-    const typeAliases = children.filter((child) => child.kind === ReflectionKind.TypeAlias).map((child) => TypeAliasParser.generate(child, project));
+    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, project));
+    const constants = children
+      .filter((child) => child.kind === ReflectionKind.Variable)
+      .map((child) => ConstantParser.generateFromTypeDoc(child, project));
+    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, project));
+    const functions = children
+      .filter((child) => child.kind === ReflectionKind.Function)
+      .map((child) => FunctionParser.generateFromTypeDoc(child, project));
+    const interfaces = children
+      .filter((child) => child.kind === ReflectionKind.Interface)
+      .map((child) => InterfaceParser.generateFromTypeDoc(child, project));
+    const namespaces = children
+      .filter((child) => child.kind === ReflectionKind.Namespace)
+      .map((child) => NamespaceParser.generateFromTypeDoc(child, project));
+    const typeAliases = children
+      .filter((child) => child.kind === ReflectionKind.TypeAlias)
+      .map((child) => TypeAliasParser.generateFromTypeDoc(child, project));
 
     return new NamespaceParser(
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         classes,
         constants,

@@ -59,7 +59,7 @@ export class TypeAliasParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): TypeAliasParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): TypeAliasParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, type, typeParameter: typeParameters = [] } = reflection;
 
     if (kind !== ReflectionKind.TypeAlias) throw new Error(`Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${kindString} (${kind})`);
@@ -68,11 +68,11 @@ export class TypeAliasParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generate(typeParameter, project)),
-        type: TypeParser.generate(type!, project)
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
+        type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );

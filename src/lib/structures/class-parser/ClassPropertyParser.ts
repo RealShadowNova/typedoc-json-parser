@@ -84,7 +84,7 @@ export class ClassPropertyParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type, flags } = reflection;
 
     if (kind !== ReflectionKind.Property && kind !== ReflectionKind.Accessor) {
@@ -104,8 +104,8 @@ export class ClassPropertyParser extends Parser {
         {
           id,
           name,
-          comment: CommentParser.generate(comment, project),
-          source: sources.length ? SourceParser.generate(sources[0], project) : null,
+          comment: CommentParser.generateFromTypeDoc(comment, project),
+          source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
           accessibility: flags.isPrivate
             ? ClassParser.Accessibility.Private
             : flags.isProtected
@@ -115,7 +115,7 @@ export class ClassPropertyParser extends Parser {
           static: Boolean(flags.isStatic),
           readonly: Boolean(flags.isReadonly),
           optional: Boolean(flags.isOptional),
-          type: type ? TypeParser.generate(type, project) : null
+          type: type ? TypeParser.generateFromTypeDoc(type, project) : null
         },
         project
       );
@@ -125,8 +125,8 @@ export class ClassPropertyParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
           : flags.isProtected
@@ -136,7 +136,7 @@ export class ClassPropertyParser extends Parser {
         static: Boolean(flags.isStatic),
         readonly: Boolean(flags.isReadonly),
         optional: Boolean(flags.isOptional),
-        type: type ? TypeParser.generate(type, project) : null
+        type: type ? TypeParser.generateFromTypeDoc(type, project) : null
       },
       project
     );

@@ -85,7 +85,7 @@ export class ClassParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassParser {
     const {
       kind,
       kindString = 'Unknown',
@@ -103,19 +103,21 @@ export class ClassParser extends Parser {
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
-      .map((child) => ClassPropertyParser.generate(child, project));
-    const methods = children.filter((child) => child.kind === ReflectionKind.Method).map((child) => ClassMethodParser.generate(child, project));
+      .map((child) => ClassPropertyParser.generateFromTypeDoc(child, project));
+    const methods = children
+      .filter((child) => child.kind === ReflectionKind.Method)
+      .map((child) => ClassMethodParser.generateFromTypeDoc(child, project));
 
     return new ClassParser(
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         abstract: Boolean(flags.isAbstract),
-        extendsType: extendedTypes.length ? TypeParser.generate(extendedTypes[0], project) : null,
-        implementsType: implementedTypes.map((implementedType) => TypeParser.generate(implementedType, project)),
+        extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0], project) : null,
+        implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType, project)),
         properties,
         methods
       },

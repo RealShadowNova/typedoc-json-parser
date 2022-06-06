@@ -43,7 +43,7 @@ export class InterfacePropertyParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfacePropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfacePropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.Property) throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${kindString} (${kind})`);
@@ -52,9 +52,9 @@ export class InterfacePropertyParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
-        type: TypeParser.generate(type!, project)
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );

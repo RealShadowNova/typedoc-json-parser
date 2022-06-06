@@ -62,7 +62,7 @@ export class ParameterParser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ParameterParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ParameterParser {
     const { kind, kindString = 'Unknown', id, name, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
@@ -73,7 +73,7 @@ export class ParameterParser {
       {
         id,
         name,
-        type: TypeParser.generate(type!, project)
+        type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );

@@ -54,7 +54,7 @@ export namespace TypeParser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  export function generate(
+  export function generateFromTypeDoc(
     type:
       | (
           | JSONOutput.ArrayType
@@ -85,24 +85,24 @@ export namespace TypeParser {
       case 'array': {
         const { elementType } = type;
 
-        return new ArrayTypeParser(generate(elementType, project));
+        return new ArrayTypeParser(generateFromTypeDoc(elementType, project));
       }
 
       case 'conditional': {
         const { checkType, extendsType, trueType, falseType } = type;
 
         return new ConditionalTypeParser(
-          generate(checkType, project),
-          generate(extendsType, project),
-          generate(trueType, project),
-          generate(falseType, project)
+          generateFromTypeDoc(checkType, project),
+          generateFromTypeDoc(extendsType, project),
+          generateFromTypeDoc(trueType, project),
+          generateFromTypeDoc(falseType, project)
         );
       }
 
       case 'indexedAccess': {
         const { objectType, indexType } = type;
 
-        return new IndexedAccessTypeParser(generate(objectType, project), generate(indexType, project));
+        return new IndexedAccessTypeParser(generateFromTypeDoc(objectType, project), generateFromTypeDoc(indexType, project));
       }
 
       case 'inferred': {
@@ -114,7 +114,7 @@ export namespace TypeParser {
       case 'intersection': {
         const { types } = type;
 
-        return new IntersectionTypeParser(types.map((type) => generate(type, project)));
+        return new IntersectionTypeParser(types.map((type) => generateFromTypeDoc(type, project)));
       }
 
       case 'intrinsic': {
@@ -134,9 +134,9 @@ export namespace TypeParser {
 
         return new MappedTypeParser(
           parameter,
-          generate(parameterType, project),
-          nameType ? generate(nameType, project) : null,
-          generate(templateType, project),
+          generateFromTypeDoc(parameterType, project),
+          nameType ? generateFromTypeDoc(nameType, project) : null,
+          generateFromTypeDoc(templateType, project),
           (optionalModifier ?? null) as MappedTypeParser.Modifier,
           (readonlyModifier ?? null) as MappedTypeParser.Modifier
         );
@@ -145,25 +145,25 @@ export namespace TypeParser {
       case 'named-tuple-member': {
         const { element, isOptional, name } = type;
 
-        return new NamedTupleMemberTypeParser(name, generate(element, project), isOptional);
+        return new NamedTupleMemberTypeParser(name, generateFromTypeDoc(element, project), isOptional);
       }
 
       case 'optional': {
         const { elementType } = type;
 
-        return new OptionalTypeParser(generate(elementType, project));
+        return new OptionalTypeParser(generateFromTypeDoc(elementType, project));
       }
 
       case 'predicate': {
         const { asserts, name, targetType } = type;
 
-        return new PredicateTypeParser(asserts, name, targetType ? generate(targetType, project) : null);
+        return new PredicateTypeParser(asserts, name, targetType ? generateFromTypeDoc(targetType, project) : null);
       }
 
       case 'query': {
         const { queryType } = type;
 
-        return new QueryTypeParser(generate(queryType, project) as ReferenceTypeParser);
+        return new QueryTypeParser(generateFromTypeDoc(queryType, project) as ReferenceTypeParser);
       }
 
       case 'reference': {
@@ -173,7 +173,7 @@ export namespace TypeParser {
           id ?? null,
           qualifiedName ?? name,
           _package ?? null,
-          typeArguments.map((typeArgument) => generate(typeArgument, project)),
+          typeArguments.map((typeArgument) => generateFromTypeDoc(typeArgument, project)),
           project
         );
       }
@@ -187,7 +187,7 @@ export namespace TypeParser {
       case 'rest': {
         const { elementType } = type;
 
-        return new RestTypeParser(generate(elementType, project));
+        return new RestTypeParser(generateFromTypeDoc(elementType, project));
       }
 
       case 'template-literal': {
@@ -195,26 +195,26 @@ export namespace TypeParser {
 
         return new TemplateLiteralTypeParser(
           head,
-          tail.map(([type, text]) => ({ type: generate(type, project), text }))
+          tail.map(([type, text]) => ({ type: generateFromTypeDoc(type, project), text }))
         );
       }
 
       case 'tuple': {
         const { elements = [] } = type;
 
-        return new TupleTypeParser(elements.map((element) => generate(element, project)));
+        return new TupleTypeParser(elements.map((element) => generateFromTypeDoc(element, project)));
       }
 
       case 'typeOperator': {
         const { operator, target } = type;
 
-        return new TypeOperatorTypeParser(operator as TypeOperatorTypeParser.Operator, generate(target, project));
+        return new TypeOperatorTypeParser(operator as TypeOperatorTypeParser.Operator, generateFromTypeDoc(target, project));
       }
 
       case 'union': {
         const { types } = type;
 
-        return new UnionTypeParser(types.map((type) => generate(type, project)));
+        return new UnionTypeParser(types.map((type) => generateFromTypeDoc(type, project)));
       }
 
       case 'unknown': {

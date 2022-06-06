@@ -88,13 +88,23 @@ export class ProjectParser {
     } else {
       const { children = [] } = data;
 
-      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generate(child, this));
-      this.constants = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => ConstantParser.generate(child, this));
-      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generate(child, this));
-      this.functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generate(child, this));
-      this.interfaces = children.filter((child) => child.kind === ReflectionKind.Interface).map((child) => InterfaceParser.generate(child, this));
-      this.namespaces = children.filter((child) => child.kind === ReflectionKind.Namespace).map((child) => NamespaceParser.generate(child, this));
-      this.typeAliases = children.filter((child) => child.kind === ReflectionKind.TypeAlias).map((child) => TypeAliasParser.generate(child, this));
+      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
+      this.constants = children
+        .filter((child) => child.kind === ReflectionKind.Variable)
+        .map((child) => ConstantParser.generateFromTypeDoc(child, this));
+      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, this));
+      this.functions = children
+        .filter((child) => child.kind === ReflectionKind.Function)
+        .map((child) => FunctionParser.generateFromTypeDoc(child, this));
+      this.interfaces = children
+        .filter((child) => child.kind === ReflectionKind.Interface)
+        .map((child) => InterfaceParser.generateFromTypeDoc(child, this));
+      this.namespaces = children
+        .filter((child) => child.kind === ReflectionKind.Namespace)
+        .map((child) => NamespaceParser.generateFromTypeDoc(child, this));
+      this.typeAliases = children
+        .filter((child) => child.kind === ReflectionKind.TypeAlias)
+        .map((child) => TypeAliasParser.generateFromTypeDoc(child, this));
     }
   }
 

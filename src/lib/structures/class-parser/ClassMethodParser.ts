@@ -67,7 +67,7 @@ export class ClassMethodParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassMethodParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassMethodParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
@@ -76,8 +76,8 @@ export class ClassMethodParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
           : flags.isProtected
@@ -85,7 +85,7 @@ export class ClassMethodParser extends Parser {
           : ClassParser.Accessibility.Public,
         abstract: Boolean(flags.isAbstract),
         static: Boolean(flags.isStatic),
-        signatures: signatures.map((signature) => SignatureParser.generate(signature, project))
+        signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature, project))
       },
       project
     );

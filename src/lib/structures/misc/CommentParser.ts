@@ -83,7 +83,7 @@ export class CommentParser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(comment: JSONOutput.Comment, project: ProjectParser): CommentParser {
+  public static generateFromTypeDoc(comment: JSONOutput.Comment, project: ProjectParser): CommentParser {
     const { shortText, text, tags } = comment;
 
     return new CommentParser(

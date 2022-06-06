@@ -51,21 +51,21 @@ export class EnumParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generate(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumParser {
     const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Enum) throw new Error(`Expected Enum (${ReflectionKind.Enum}), but received ${kindString} (${kind})`);
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.EnumMember)
-      .map((child) => EnumPropertyParser.generate(child, project));
+      .map((child) => EnumPropertyParser.generateFromTypeDoc(child, project));
 
     return new EnumParser(
       {
         id,
         name,
-        comment: CommentParser.generate(comment, project),
-        source: sources.length ? SourceParser.generate(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         properties
       },
