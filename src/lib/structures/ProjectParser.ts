@@ -86,7 +86,9 @@ export class ProjectParser {
       this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json, this));
       this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, this));
     } else {
-      const { children = [] } = data;
+      const { kind, kindString = 'Unknown', children = [] } = data;
+
+      if (kind !== ReflectionKind.Project) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
 
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
       this.constants = children
