@@ -1,6 +1,6 @@
 import { Spinner } from '@favware/colorette-spinner';
-import { readFile, writeFile } from 'fs/promises';
-import { resolve } from 'path';
+import { readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import type { JSONOutput } from 'typedoc';
 import { ProjectParser } from '../../lib/structures/ProjectParser';
 import type { Options } from '../lib/types/Options';

@@ -1,6 +1,6 @@
 import { Spinner } from '@favware/colorette-spinner';
-import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { Options } from '../lib/types/Options';
 
 export async function checkRepository(options: Options) {
