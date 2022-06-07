@@ -31,10 +31,10 @@
     "postpack": "pinst --enable"
   },
   "dependencies": {
+    "@favware/colorette-spinner": "^1.0.0",
     "colorette": "^2.0.17",
     "commander": "^9.3.0",
     "js-yaml": "^4.1.0",
-    "ora-classic": "^5.4.2",
     "typedoc": "^0.22.17"
   },
   "devDependencies": {
