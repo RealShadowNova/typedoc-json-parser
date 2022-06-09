@@ -1,11 +1,3 @@
-import type { ClassParser } from '../class-parser/';
-import type { ConstantParser } from '../ConstantParser';
-import type { EnumParser } from '../enum-parser';
-import type { FunctionParser } from '../FunctionParser';
-import type { InterfaceParser } from '../interface-parser';
-import type { NamespaceParser } from '../NamespaceParser';
-import type { ProjectParser } from '../ProjectParser';
-import type { TypeAliasParser } from '../TypeAliasParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -43,19 +35,11 @@ export class ReferenceTypeParser implements TypeParser {
    */
   public readonly typeArguments: TypeParser[];
 
-  /**
-   * The project this reference type belongs to.
-   * @since 1.0.0
-   */
-  private project: ProjectParser;
-
-  public constructor(id: number | null, name: string, packageName: string | null, typeArguments: TypeParser[], project: ProjectParser) {
+  public constructor(id: number | null, name: string, packageName: string | null, typeArguments: TypeParser[]) {
     this.id = id;
     this.name = name;
     this.packageName = packageName;
     this.typeArguments = typeArguments;
-
-    this.project = project;
   }
 
   /**
@@ -91,23 +75,6 @@ export class ReferenceTypeParser implements TypeParser {
     const typeArguments = this.typeArguments.length > 0 ? `<${this.typeArguments.map((type) => type.toString()).join(', ')}>` : '';
 
     return `${this.packageName ? `${this.packageName}.` : ''}${this.name}${typeArguments}`;
-  }
-
-  /**
-   * Gets the type this reference type refers to.
-   * @since 1.0.0
-   */
-  public get type(): ClassParser | ConstantParser | EnumParser | FunctionParser | InterfaceParser | NamespaceParser | TypeAliasParser | null {
-    return (
-      this.project.classes.find((c) => c.id === this.id) ??
-      this.project.constants.find((c) => c.id === this.id) ??
-      this.project.enums.find((c) => c.id === this.id) ??
-      this.project.functions.find((c) => c.id === this.id) ??
-      this.project.interfaces.find((c) => c.id === this.id) ??
-      this.project.namespaces.find((c) => c.id === this.id) ??
-      this.project.typeAliases.find((c) => c.id === this.id) ??
-      null
-    );
   }
 }
 
