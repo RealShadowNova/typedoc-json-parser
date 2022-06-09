@@ -1,0 +1,24 @@
+import { Spinner } from '@favware/colorette-spinner';
+import { exec as execSync } from 'node:child_process';
+import { promisify } from 'node:util';
+import type { Options } from '../lib/types/Options';
+
+const exec = promisify(execSync);
+
+export async function buildDocs(options: Options) {
+  const spinner = new Spinner().start({ text: 'Building TypeDoc documentation' });
+
+  try {
+    await exec(`typedoc --json ${options.json}`);
+  } catch (error) {
+    const cause = error as Error;
+
+    spinner.error({ text: 'Failed to build TypeDoc documentation' });
+
+    if (options.verbose) console.log(cause.stack ?? cause.message);
+
+    process.exit(1);
+  }
+
+  spinner.success({ text: 'Successfully built TypeDoc documentation' });
+}

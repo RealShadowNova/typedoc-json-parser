@@ -1,0 +1,117 @@
+import type { CommentParser, SourceParser } from './misc';
+import type { ProjectParser } from './ProjectParser';
+
+/**
+ * The base parser for all top level exported parsers.
+ * @since 1.0.0
+ */
+export abstract class Parser {
+  /**
+   * The project parser this belongs to.
+   * @since 1.0.0
+   */
+  public readonly project: ProjectParser;
+
+  /**
+   * The identifier of this parser.
+   * @since 1.0.0
+   */
+  public readonly id: number;
+
+  /**
+   * The name of this parser.
+   * @since 1.0.0
+   */
+  public readonly name: string;
+
+  /**
+   * The comment parser for this parser.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
+   * The source parser for this parser.
+   * @since 1.0.0
+   */
+  public readonly source: SourceParser | null;
+
+  public constructor(data: Parser.Data, project: ProjectParser) {
+    const { id, name, comment, source } = data;
+
+    this.id = id;
+    this.name = name;
+    this.comment = comment;
+    this.source = source;
+
+    this.project = project;
+  }
+
+  /**
+   * Converts this parser to a JSON compatible format.
+   * @since 1.0.0
+   * @returns The JSON compatible format of this parser.
+   */
+  public toJSON(): Parser.JSON {
+    return {
+      id: this.id,
+      name: this.name,
+      comment: this.comment.toJSON(),
+      source: this.source ? this.source.toJSON() : null
+    };
+  }
+}
+
+export namespace Parser {
+  export interface Data {
+    /**
+     * The identifier for this parser.
+     * @since 1.0.0
+     */
+    id: number;
+
+    /**
+     * The name for this parser.
+     * @since 1.0.0
+     */
+    name: string;
+
+    /**
+     * The comment parser for this parser.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
+     * The source parser for this parser.
+     * @since 1.0.0
+     */
+    source: SourceParser | null;
+  }
+
+  export interface JSON {
+    /**
+     * The identifier for this parser.
+     * @since 1.0.0
+     */
+    id: number;
+
+    /**
+     * The name for this parser.
+     * @since 1.0.0
+     */
+    name: string;
+
+    /**
+     * The comment parser for this parser in a JSON compatible format.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
+    /**
+     * The source parser for this parser in a JSON compatible format.
+     * @since 1.0.0
+     */
+    source: SourceParser.JSON | null;
+  }
+}

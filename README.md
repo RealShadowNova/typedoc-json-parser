@@ -19,8 +19,68 @@ When creating a library in TypeScript, you will often need to create documentati
 
 ## Installation
 
-You can use the following command to install this package, or replace npm install -D with your package manager of choice.
+You can use the following command to install this package, or replace `npm install -D` with your package manager of choice.
 
 ```sh
 npm install -D typedoc-json-parser
 ```
+
+## CLI Usage
+
+You can provider all options through CLI flags.
+
+```sh
+Usage: typedoc-json-parser [options]
+
+Options:
+  -j, --json <path>  Path to the TypeDoc JSON output file.
+  -v, --verbose      Print verbose information (default: false)
+  -h, --help         display help for command
+```
+
+You can also set these options through a configuration file. This file should be located at your [current working directory](https://nodejs.org/api/process.html#processcwd). It should be named `.typedoc-json-parserrc`, optionally suffixed with `.json`, `.yml`, or `.yaml`.
+
+When using `.typedoc-json-parserrc` or `.typedoc-json-parserrc.json` as your config file you can also use the JSON schema to get schema validation. To do so, add the following to your config file.
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/RealShadowNova/typedoc-json-parser/main/assets/typedoc-json-parser.schema.json"
+}
+```
+
+### Example JSON file
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/RealShadowNova/typedoc-json-parser/main/assets/typedoc-json-parser.schema.json",
+  "json": "docs/api.json",
+  "verbose": true
+}
+```
+
+### Example YAML file
+
+```yaml
+json: 'docs/api.json'
+verbose: true
+```
+
+## Node.js Usage
+
+Once you have used the CLI to parse the TypeDoc JSON output, you'll want to use that data to create documentation.
+This package makes that extremely easy to do.
+
+```typescript
+import { ProjectParser } from 'typedoc-json-parser';
+import { readFile } from 'node:fs';
+import { resolve } from 'node:path';
+
+const data = JSON.parse(readFile(resolve(process.cwd(), 'docs', 'api.json'), 'utf8'));
+const project = new ProjectParser(data);
+
+// Do something with the project
+```
+
+## Documentation
+
+While currently we do not have a dedicated way to view documentation for this package, you can still use the intellisense from your IDE and read our source code.
