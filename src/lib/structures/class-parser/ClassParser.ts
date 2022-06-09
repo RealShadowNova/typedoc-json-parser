@@ -4,6 +4,7 @@ import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
+import { ClassConstructorParser } from './ClassConstructorParser';
 import { ClassMethodParser } from './ClassMethodParser';
 import { ClassPropertyParser } from './ClassPropertyParser';
 
@@ -37,6 +38,12 @@ export class ClassParser extends Parser {
   public readonly implementsType: TypeParser[];
 
   /**
+   * The constructor parser of this class.
+   * @since 1.0.0
+   */
+  public readonly construct: ClassConstructorParser;
+
+  /**
    * The property parsers of this class.
    * @since 1.0.0
    */
@@ -51,12 +58,13 @@ export class ClassParser extends Parser {
   public constructor(data: ClassParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, abstract, extendsType, implementsType, properties, methods } = data;
+    const { external, abstract, extendsType, implementsType, construct, properties, methods } = data;
 
     this.external = external;
     this.abstract = abstract;
     this.extendsType = extendsType;
     this.implementsType = implementsType;
+    this.construct = construct;
     this.properties = properties;
     this.methods = methods;
   }
@@ -73,6 +81,7 @@ export class ClassParser extends Parser {
       abstract: this.abstract,
       extendsType: this.extendsType ? this.extendsType.toJSON() : null,
       implementsType: this.implementsType.map((implementsType) => implementsType.toJSON()),
+      construct: this.construct.toJSON(),
       properties: this.properties,
       methods: this.methods
     };
@@ -101,6 +110,10 @@ export class ClassParser extends Parser {
 
     if (kind !== ReflectionKind.Class) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
 
+    const construct = children.find((child) => child.kind === ReflectionKind.Constructor);
+
+    if (construct === undefined) throw new Error(`Expected Class (${ReflectionKind.Class}) with a constructor, but there was none`);
+
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
       .map((child) => ClassPropertyParser.generateFromTypeDoc(child, project));
@@ -118,6 +131,7 @@ export class ClassParser extends Parser {
         abstract: Boolean(flags.isAbstract),
         extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0], project) : null,
         implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType, project)),
+        construct: ClassConstructorParser.generateFromTypeDoc(construct, project),
         properties,
         methods
       },
@@ -126,7 +140,7 @@ export class ClassParser extends Parser {
   }
 
   public static generateFromJSON(json: ClassParser.JSON, project: ProjectParser): ClassParser {
-    const { id, name, comment, source, external, abstract, extendsType, implementsType, properties, methods } = json;
+    const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = json;
 
     return new ClassParser(
       {
@@ -138,6 +152,7 @@ export class ClassParser extends Parser {
         abstract,
         extendsType: extendsType ? TypeParser.generateFromJSON(extendsType, project) : null,
         implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType, project)),
+        construct: ClassConstructorParser.generateFromJSON(construct, project),
         properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property, project)),
         methods: methods.map((method) => ClassMethodParser.generateFromJSON(method, project))
       },
@@ -171,6 +186,12 @@ export namespace ClassParser {
      * @since 1.0.0
      */
     implementsType: TypeParser[];
+
+    /**
+     * The constructor parser of this class.
+     * @since 1.0.0
+     */
+    construct: ClassConstructorParser;
 
     /**
      * The property parsers of this class.
@@ -209,6 +230,12 @@ export namespace ClassParser {
      * @since 1.0.0
      */
     implementsType: TypeParser.JSON[];
+
+    /**
+     * The constructor parser of this class in a JSON compatible format.
+     * @since 1.0.0
+     */
+    construct: ClassConstructorParser.JSON;
 
     /**
      * The property parsers of this class in a JSON compatible format.
