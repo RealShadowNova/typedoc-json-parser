@@ -2,6 +2,5 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["src/index.ts"],
   "json": "docs/api.json",
-  "name": "typedoc-json-parser",
   "tsconfig": "src/tsconfig.json"
 }

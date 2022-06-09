@@ -22,7 +22,22 @@ When creating a library in TypeScript, you will often need to create documentati
 You can use the following command to install this package, or replace `npm install -D` with your package manager of choice.
 
 ```sh
-npm install -D typedoc-json-parser
+npm install -D typedoc-json-parser typedoc
+```
+
+## Prerequisites
+
+Before using this package's CLI you'll need to have [TypeDoc](https://typedoc.org) setup correctly.
+
+Here is an example `typedoc.json` taken from our package's repository.
+
+```json
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "json": "docs/api.json",
+  "tsconfig": "src/tsconfig.json"
+}
 ```
 
 ## CLI Usage
