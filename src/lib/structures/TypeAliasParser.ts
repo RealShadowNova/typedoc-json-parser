@@ -72,7 +72,7 @@ export class TypeAliasParser extends Parser {
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
-        type: TypeParser.generateFromTypeDoc(type!, project)
+        type: TypeParser.generateFromTypeDoc(type!)
       },
       project
     );
@@ -89,7 +89,7 @@ export class TypeAliasParser extends Parser {
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         external,
         typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
-        type: TypeParser.generateFromJSON(type, project)
+        type: TypeParser.generateFromJSON(type)
       },
       project
     );

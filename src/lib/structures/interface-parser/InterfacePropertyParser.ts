@@ -63,7 +63,7 @@ export class InterfacePropertyParser extends Parser {
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         readonly: Boolean(flags.isReadonly),
-        type: TypeParser.generateFromTypeDoc(type!, project)
+        type: TypeParser.generateFromTypeDoc(type!)
       },
       project
     );
@@ -79,7 +79,7 @@ export class InterfacePropertyParser extends Parser {
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         readonly,
-        type: TypeParser.generateFromJSON(type, project)
+        type: TypeParser.generateFromJSON(type)
       },
       project
     );

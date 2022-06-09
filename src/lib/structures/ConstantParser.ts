@@ -71,7 +71,7 @@ export class ConstantParser extends Parser {
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
-        type: TypeParser.generateFromTypeDoc(type!, project),
+        type: TypeParser.generateFromTypeDoc(type!),
         value: defaultValue!
       },
       project
@@ -88,7 +88,7 @@ export class ConstantParser extends Parser {
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         external,
-        type: TypeParser.generateFromJSON(type, project),
+        type: TypeParser.generateFromJSON(type),
         value
       },
       project
