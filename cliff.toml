@@ -10,7 +10,7 @@ body = """
     {% if previous %}\
         {% if previous.version %}\
             (https://github.com/RealShadowNova/typedoc-json-parser/compare/{{ previous.version }}...{{ version }})\
-        {% else %}
+        {% else %}\
             (https://github.com/RealShadowNova/typedoc-json-parser/tree/{{ version }})\
         {% endif %}\
     {% endif %} \
