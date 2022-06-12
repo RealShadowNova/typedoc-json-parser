@@ -68,8 +68,7 @@ When using `.typedoc-json-parserrc` or `.typedoc-json-parserrc.json` as your con
 ```json
 {
   "$schema": "https://raw.githubusercontent.com/RealShadowNova/typedoc-json-parser/main/assets/typedoc-json-parser.schema.json",
-  "json": "docs/api.json",
-  "verbose": true
+  "json": "docs/api.json"
 }
 ```
 
@@ -77,7 +76,6 @@ When using `.typedoc-json-parserrc` or `.typedoc-json-parserrc.json` as your con
 
 ```yaml
 json: 'docs/api.json'
-verbose: true
 ```
 
 ## Node.js Usage

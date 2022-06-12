@@ -6,11 +6,6 @@
       "description": "The path to the JSON file to be parsed.",
       "type": "string",
       "default": ""
-    },
-    "verbose": {
-      "description": "Whether to print verbose information",
-      "type": "boolean",
-      "default": false
     }
   },
   "required": ["json"]
