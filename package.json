@@ -16,8 +16,7 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rimraf dist docs node_modules/.cache",
-    "docs": "typedoc",
-    "debug": "node dist/bin/index.js -v --json docs/api.json",
+    "docs": "yarn build && node dist/bin/index.js --json docs/api.json",
     "lint": "eslint src --ext ts --fix",
     "format": "prettier --write src/**/*.ts",
     "test": "jest",
