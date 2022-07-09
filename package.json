@@ -34,7 +34,7 @@
     "colorette": "^2.0.19",
     "commander": "^9.3.0",
     "js-yaml": "^4.1.0",
-    "typedoc": "^0.22.18"
+    "typedoc": "^0.23.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
