@@ -18,31 +18,31 @@ export class CommentParser {
   public readonly description: string | null;
 
   /**
-   * The extended description of this comment.
+   * The block tags of this comment.
    * @since 1.0.0
    */
-  public readonly extendedDescription: string | null;
+  public readonly blockTags: CommentParser.BlockTag[];
 
   /**
-   * The tags of this comment.
+   * The modifier tags of this comment.
    * @since 1.0.0
    */
-  public readonly tags: CommentParser.Tag[];
+  public readonly modifierTags: string[];
 
   /**
    * The filtered `@see` tags of this comment.
    * @since 1.0.0
    */
-  public get see(): CommentParser.Tag[] {
-    return this.tags.filter((tag) => tag.name === 'see');
+  public get see(): CommentParser.BlockTag[] {
+    return this.blockTags.filter((tag) => tag.name === 'see');
   }
 
   /**
    * The filtered `@example` tags of this comment.
    * @since 1.0.0
    */
-  public get example(): CommentParser.Tag[] {
-    return this.tags.filter((tag) => tag.name === 'example');
+  public get example(): CommentParser.BlockTag[] {
+    return this.blockTags.filter((tag) => tag.name === 'example');
   }
 
   /**
@@ -50,15 +50,15 @@ export class CommentParser {
    * @since 1.0.0
    */
   public get deprecated(): boolean {
-    return this.tags.some((tag) => tag.name === 'deprecated');
+    return this.modifierTags.some((tag) => tag === 'deprecated');
   }
 
   public constructor(data: CommentParser.Data, project: ProjectParser) {
-    const { description, extendedDescription, tags } = data;
+    const { description, blockTags, modifierTags } = data;
 
     this.description = description;
-    this.extendedDescription = extendedDescription;
-    this.tags = tags;
+    this.blockTags = blockTags;
+    this.modifierTags = modifierTags;
 
     this.project = project;
   }
@@ -71,8 +71,8 @@ export class CommentParser {
   public toJSON(): CommentParser.JSON {
     return {
       description: this.description,
-      extendedDescription: this.extendedDescription,
-      tags: this.tags
+      blockTags: this.blockTags,
+      modifierTags: this.modifierTags
     };
   }
 
@@ -84,26 +84,29 @@ export class CommentParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(comment: JSONOutput.Comment, project: ProjectParser): CommentParser {
-    const { shortText, text, tags } = comment;
+    const { summary, blockTags = [], modifierTags = [] } = comment;
 
     return new CommentParser(
       {
-        description: shortText ?? text ?? null,
-        extendedDescription: text ?? null,
-        tags: tags?.map((tag) => ({ name: tag.tag, text: tag.text.trim() })) ?? []
+        description: summary.length ? summary.map((summary) => summary.text).join('\n') : null,
+        blockTags: blockTags.map((tag) => ({
+          name: tag.name ?? tag.tag.replace(/@/, ''),
+          text: tag.content.map((content) => content.text).join('\n')
+        })),
+        modifierTags
       },
       project
     );
   }
 
   public static generateFromJSON(json: CommentParser.JSON, project: ProjectParser): CommentParser {
-    const { description, extendedDescription, tags } = json;
+    const { description, blockTags, modifierTags } = json;
 
     return new CommentParser(
       {
         description,
-        extendedDescription,
-        tags
+        blockTags,
+        modifierTags
       },
       project
     );
@@ -119,16 +122,16 @@ export namespace CommentParser {
     description: string | null;
 
     /**
-     * The extended description of this comment.
+     * The block tags of this comment.
      * @since 1.0.0
      */
-    extendedDescription: string | null;
+    blockTags: BlockTag[];
 
     /**
-     * The tags of this comment.
+     * The modifier tags of this comment.
      * @since 1.0.0
      */
-    tags: Tag[];
+    modifierTags: string[];
   }
 
   export interface JSON {
@@ -139,23 +142,23 @@ export namespace CommentParser {
     description: string | null;
 
     /**
-     * The extended description of this comment.
+     * The block tags of this comment.
      * @since 1.0.0
      */
-    extendedDescription: string | null;
+    blockTags: BlockTag[];
 
     /**
-     * The tags of this comment.
+     * The modifier tags of this comment.
      * @since 1.0.0
      */
-    tags: Tag[];
+    modifierTags: string[];
   }
 
   /**
    * A tag of a comment.
    * @since 1.0.0
    */
-  export interface Tag {
+  export interface BlockTag {
     /**
      * The name of this tag.
      * @since 1.0.0

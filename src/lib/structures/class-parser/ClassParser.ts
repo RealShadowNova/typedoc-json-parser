@@ -100,7 +100,7 @@ export class ClassParser extends Parser {
       kindString = 'Unknown',
       id,
       name,
-      comment = {},
+      comment = { summary: [] },
       sources = [],
       flags,
       children = [],

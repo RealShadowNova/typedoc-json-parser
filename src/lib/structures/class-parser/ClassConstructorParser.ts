@@ -39,7 +39,7 @@ export class ClassConstructorParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassConstructorParser {
-    const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], signatures = [] } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Constructor) {
       throw new Error(`Expected Constructor (${ReflectionKind.Constructor}), but received ${kindString} (${kind})`);

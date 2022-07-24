@@ -52,7 +52,7 @@ export class InterfacePropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfacePropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type, flags } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags } = reflection;
 
     if (kind !== ReflectionKind.Property) throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${kindString} (${kind})`);
 
