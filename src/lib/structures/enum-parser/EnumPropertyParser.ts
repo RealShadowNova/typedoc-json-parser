@@ -3,6 +3,7 @@ import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
+import { TypeParser } from '../type-parsers';
 
 /**
  * Parses data from an enum property reflection.
@@ -43,7 +44,7 @@ export class EnumPropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumPropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], defaultValue } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
       throw new Error(`Expected EnumMember (${ReflectionKind.EnumMember}), but received ${kindString} (${kind})`);
@@ -55,7 +56,7 @@ export class EnumPropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        value: defaultValue!
+        value: TypeParser.generateFromTypeDoc(type!).toString()
       },
       project
     );
