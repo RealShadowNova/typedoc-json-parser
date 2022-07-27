@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.0.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.0.1...v2.0.2) - (2022-07-27)
+
+## 🐛 Bug Fixes
+
+- **class-parser:** Export `ClassConstructorParser` ([9dd6dfd](https://github.com/RealShadowNova/typedoc-json-parser/commit/9dd6dfd8f9e1d356c73586af496e9c61179564ac))
+
+## 📝 Documentation
+
+- **ProjectParser:** Strip off external `{@link }` ref ([ef624b7](https://github.com/RealShadowNova/typedoc-json-parser/commit/ef624b7c74619e313394244d11a0ba537705d0e8))
+
 # [2.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.0.0...v2.0.1) - (2022-07-27)
 
 ## 🐛 Bug Fixes
