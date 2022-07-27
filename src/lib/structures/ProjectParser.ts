@@ -9,7 +9,7 @@ import { NamespaceParser } from './NamespaceParser';
 import { TypeAliasParser } from './TypeAliasParser';
 
 /**
- * Parses data from {@link JSONOutput.ProjectReflection} or {@link ProjectParser.JSON}
+ * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.JSON}
  * @since 1.0.0
  */
 export class ProjectParser {
