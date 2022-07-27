@@ -85,7 +85,7 @@ export class ClassPropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassPropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = {}, sources = [], type, flags } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags, getSignature } = reflection;
 
     if (kind !== ReflectionKind.Property && kind !== ReflectionKind.Accessor) {
       throw new Error(
@@ -94,11 +94,9 @@ export class ClassPropertyParser extends Parser {
     }
 
     if (kind === ReflectionKind.Accessor) {
-      const [getter] = reflection.getSignature ?? [];
+      if (getSignature === undefined) throw new Error(`Expected Accessor (${ReflectionKind.Accessor}) with a getter, but there was none`);
 
-      if (getter === undefined) throw new Error(`Expected Accessor (${ReflectionKind.Accessor}) with a getter, but there was none`);
-
-      const { id, name, comment = {}, type, flags } = getter;
+      const { id, name, comment = { summary: [] }, type, flags } = getSignature;
 
       return new ClassPropertyParser(
         {
