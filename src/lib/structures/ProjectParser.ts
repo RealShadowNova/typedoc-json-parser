@@ -14,6 +14,12 @@ import { TypeAliasParser } from './TypeAliasParser';
  */
 export class ProjectParser {
   /**
+   * The version of `typedoc-json-parser` used to generate this project.
+   * @since 1.0.0
+   */
+  public readonly typeDocJsonParserVersion: string = '[@versionInjector]';
+
+  /**
    * The identifier of this project. This is usually `0`
    * @since 1.0.0
    */
@@ -76,8 +82,9 @@ export class ProjectParser {
     this.name = name;
 
     if ('classes' in data) {
-      const { classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
+      const { typeDocJsonParserVersion, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
 
+      this.typeDocJsonParserVersion = typeDocJsonParserVersion;
       this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
       this.constants = constants.map((json) => ConstantParser.generateFromJSON(json, this));
       this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
@@ -117,6 +124,7 @@ export class ProjectParser {
    */
   public toJSON(): ProjectParser.JSON {
     return {
+      typeDocJsonParserVersion: this.typeDocJsonParserVersion,
       id: this.id,
       name: this.name,
       classes: this.classes.map((parser) => parser.toJSON()),
@@ -132,6 +140,12 @@ export class ProjectParser {
 
 export namespace ProjectParser {
   export interface JSON {
+    /**
+     * The version of `typedoc-json-parser` that generated this JSON object.
+     * @since 2.1.0
+     */
+    typeDocJsonParserVersion: string;
+
     /**
      * The identifier of this project. This is usually `0`
      * @since 1.0.0

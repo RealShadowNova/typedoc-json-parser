@@ -21,7 +21,7 @@
     "format": "prettier --write src/**/*.ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsc -b src && gen-esm-wrapper dist/index.js dist/index.mjs",
+    "build": "rimraf dist && tsc -b src && gen-esm-wrapper dist/index.js dist/index.mjs && node scripts/versionInjector.mjs",
     "update": "yarn upgrade-interactive",
     "bump": "cliff-jumper",
     "check-update": "cliff-jumper --dry-run",
