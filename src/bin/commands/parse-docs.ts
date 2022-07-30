@@ -7,9 +7,9 @@ import type { Options } from '../lib/types/Options';
 
 export async function parseDocs(options: Options) {
   const spinner = new Spinner().start({ text: 'Parsing TypeDoc JSON output' });
-
+  const packageJson = JSON.parse(await readFile(resolve(process.cwd(), 'package.json'), 'utf8'));
   const project = JSON.parse(await readFile(resolve(process.cwd(), options.json), 'utf-8')) as JSONOutput.ProjectReflection;
-  const parsed = new ProjectParser(project).toJSON();
+  const parsed = new ProjectParser(project, packageJson.version).toJSON();
 
   try {
     await writeFile(resolve(process.cwd(), options.json), JSON.stringify(parsed, null, 2));

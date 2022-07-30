@@ -34,6 +34,14 @@ export class ProjectParser {
   public readonly name: string;
 
   /**
+   * The version of the project being parsed.
+   *
+   * Corresponds to the `version` property in your `package.json`
+   * @since 2.2.0
+   */
+  public readonly version: string | null;
+
+  /**
    * An array of class parsers for this project.
    * @since 1.0.0
    */
@@ -75,11 +83,12 @@ export class ProjectParser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
-  public constructor(data: ProjectParser.JSON | JSONOutput.ProjectReflection) {
+  public constructor(data: ProjectParser.JSON | JSONOutput.ProjectReflection, version: string | null = null) {
     const { id, name } = data;
 
     this.id = id;
     this.name = name;
+    this.version = version;
 
     if ('classes' in data) {
       const { typeDocJsonParserVersion, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
@@ -127,6 +136,7 @@ export class ProjectParser {
       typeDocJsonParserVersion: this.typeDocJsonParserVersion,
       id: this.id,
       name: this.name,
+      version: this.version,
       classes: this.classes.map((parser) => parser.toJSON()),
       constants: this.constants.map((parser) => parser.toJSON()),
       enums: this.enums.map((parser) => parser.toJSON()),
@@ -159,6 +169,14 @@ export namespace ProjectParser {
      * @since 1.0.0
      */
     name: string;
+
+    /**
+     * The version of the project being parsed.
+     *
+     * Corresponds to the `version` property in your `package.json`
+     * @since 2.2.0
+     */
+    version: string | null;
 
     /**
      * An array of class JSON compatible objects for this project in a JSON compatible format.
