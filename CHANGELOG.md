@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.2.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.1.0...v2.2.0) - (2022-07-30)
+
+## 🚀 Features
+
+- **ProjectParser:** Add `version` property ([edddca7](https://github.com/RealShadowNova/typedoc-json-parser/commit/edddca78ad590e6ce9023f5ba655689b66c6b694))
+
 # [2.1.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.0.2...v2.1.0) - (2022-07-30)
 
 ## 🚀 Features
