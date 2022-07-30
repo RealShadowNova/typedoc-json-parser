@@ -39,7 +39,7 @@ export class ProjectParser {
    * Corresponds to the `version` property in your `package.json`
    * @since 2.2.0
    */
-  public readonly version: string | null;
+  public readonly version: string | null = null;
 
   /**
    * An array of class parsers for this project.
@@ -88,12 +88,12 @@ export class ProjectParser {
 
     this.id = id;
     this.name = name;
-    this.version = version;
 
     if ('classes' in data) {
       const { typeDocJsonParserVersion, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
 
       this.typeDocJsonParserVersion = typeDocJsonParserVersion;
+      this.version = version ?? data.version;
       this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
       this.constants = constants.map((json) => ConstantParser.generateFromJSON(json, this));
       this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
