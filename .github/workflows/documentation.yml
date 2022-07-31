@@ -95,4 +95,5 @@ jobs:
 
           git add .
           git commit -m "docs(typedoc-json-parser): build for ${TYPE} ${NAME}: ${SHA}" || true
+          git pull
           git push
