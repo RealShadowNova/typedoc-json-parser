@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.3.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.3.0...v2.3.1) - (2022-07-31)
+
+## 🐛 Bug Fixes
+
+- **deps:** Add `tslib` ([10ad4bb](https://github.com/RealShadowNova/typedoc-json-parser/commit/10ad4bb8101ed2b2aa05cac5ff5d2c02d52cf593))
+- **deps:** Update `typedoc` to `0.23.10` ([e17b77e](https://github.com/RealShadowNova/typedoc-json-parser/commit/e17b77ee2f5e0d099bb994c99072dd03da00abc0))
+
 # [2.3.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.2.1...v2.3.0) - (2022-07-31)
 
 ## 🚀 Features
