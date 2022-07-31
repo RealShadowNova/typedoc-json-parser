@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.3.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.2.1...v2.3.0) - (2022-07-31)
+
+## 🚀 Features
+
+- **SignatureParser:** Add the `comment` property ([868db5c](https://github.com/RealShadowNova/typedoc-json-parser/commit/868db5c4ad3c61daac5be622b77e4770e2ec9446))
+
 # [2.2.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v2.2.0...v2.2.1) - (2022-07-30)
 
 ## 🐛 Bug Fixes
