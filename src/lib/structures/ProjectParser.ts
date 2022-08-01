@@ -106,6 +106,7 @@ export class ProjectParser {
 
       if (kind !== ReflectionKind.Project) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
 
+      this.version = version;
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
       this.constants = children
         .filter((child) => child.kind === ReflectionKind.Variable)
