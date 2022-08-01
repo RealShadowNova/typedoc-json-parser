@@ -6,6 +6,11 @@ on:
       - main
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        required: true
 
 jobs:
   build:
@@ -20,6 +25,8 @@ jobs:
     steps:
       - name: Checkout Project
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          ref: ${{ github.event.inputs.ref || '' }}
       - name: Use Node.js v16
         uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
@@ -47,7 +54,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      NAME: ${{ needs.build.outputs.NAME }}
+      NAME: ${{ github.event.inputs.ref || needs.build.outputs.NAME }}
       TYPE: ${{ needs.build.outputs.TYPE }}
       SHA: ${{ needs.build.outputs.SHA }}
     steps:
@@ -74,14 +81,14 @@ jobs:
           path: 'out'
 
       - name: Move Documentation
-        if: ${{ env.TYPE == 'tag' }}
+        if: ${{ (github.event.inputs.ref || env.TYPE) == 'tag' }}
         env:
           SEMVER: ${{ env.NAME }}
         run: |
           mkdir -p out/typedoc-json-parser
           mv docs/api.json out/typedoc-json-parser/${SEMVER}.json
       - name: Move Documentation
-        if: ${{ env.TYPE == 'branch' }}
+        if: ${{ !github.event.inputs.ref && env.TYPE == 'branch' }}
         run: |
           mkdir -p out/typedoc-json-parser
           mv docs/api.json out/typedoc-json-parser/${NAME}.json
