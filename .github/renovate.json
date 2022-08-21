@@ -12,6 +12,10 @@
         "automerge": true
       },
       {
+        "matchPackagePatterns": ["typedoc"],
+        "groupName": "TypeDoc Dependencies"
+      },
+      {
         "matchDepTypes": ["engines"],
         "enabled": false
       }
