@@ -88,10 +88,12 @@ export class CommentParser {
 
     return new CommentParser(
       {
-        description: summary.length ? summary.map((summary) => summary.text).join('\n') : null,
+        description: summary.length
+          ? summary.map((summary) => (summary.kind === 'inline-tag' ? `{${summary.tag} ${summary.text}}` : summary.text)).join('\n')
+          : null,
         blockTags: blockTags.map((tag) => ({
           name: tag.name ?? tag.tag.replace(/@/, ''),
-          text: tag.content.map((content) => content.text).join('\n')
+          text: tag.content.map((content) => (content.kind === 'inline-tag' ? `{${content.tag} ${content.text}}` : content.text)).join('\n')
         })),
         modifierTags
       },
