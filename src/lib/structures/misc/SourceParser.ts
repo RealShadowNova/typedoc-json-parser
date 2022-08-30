@@ -31,12 +31,19 @@ export class SourceParser {
    */
   public readonly path: string;
 
+  /**
+   * The url of this source.
+   * @since 2.4.0
+   */
+  public readonly url: string | null;
+
   public constructor(data: SourceParser.Data, project: ProjectParser) {
-    const { line, file, path } = data;
+    const { line, file, path, url } = data;
 
     this.line = line;
     this.file = file;
     this.path = path;
+    this.url = url;
 
     this.project = project;
   }
@@ -50,7 +57,8 @@ export class SourceParser {
     return {
       line: this.line,
       file: this.file,
-      path: this.path
+      path: this.path,
+      url: this.url
     };
   }
 
@@ -62,26 +70,28 @@ export class SourceParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.SourceReference, project: ProjectParser): SourceParser {
-    const { line, fileName } = reflection;
+    const { line, fileName, url } = reflection;
 
     return new SourceParser(
       {
         line,
         file: basename(fileName),
-        path: dirname(fileName)
+        path: dirname(fileName),
+        url: url ?? null
       },
       project
     );
   }
 
   public static generateFromJSON(json: SourceParser.JSON, project: ProjectParser): SourceParser {
-    const { line, file, path } = json;
+    const { line, file, path, url } = json;
 
     return new SourceParser(
       {
         line,
         file,
-        path
+        path,
+        url
       },
       project
     );
@@ -107,6 +117,12 @@ export namespace SourceParser {
      * @since 1.0.0
      */
     path: string;
+
+    /**
+     * The url of this source.
+     * @since 2.4.0
+     */
+    url: string | null;
   }
 
   export interface JSON {
@@ -127,5 +143,11 @@ export namespace SourceParser {
      * @since 1.0.0
      */
     path: string;
+
+    /**
+     * The url of this source.
+     * @since 2.4.0
+     */
+    url: string | null;
   }
 }
