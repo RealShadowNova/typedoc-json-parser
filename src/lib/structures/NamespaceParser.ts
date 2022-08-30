@@ -113,16 +113,20 @@ export class NamespaceParser extends Parser {
     const constants = children
       .filter((child) => child.kind === ReflectionKind.Variable)
       .map((child) => ConstantParser.generateFromTypeDoc(child, project));
+
     const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, project));
     const functions = children
       .filter((child) => child.kind === ReflectionKind.Function)
       .map((child) => FunctionParser.generateFromTypeDoc(child, project));
+
     const interfaces = children
       .filter((child) => child.kind === ReflectionKind.Interface)
       .map((child) => InterfaceParser.generateFromTypeDoc(child, project));
+
     const namespaces = children
       .filter((child) => child.kind === ReflectionKind.Namespace)
       .map((child) => NamespaceParser.generateFromTypeDoc(child, project));
+
     const typeAliases = children
       .filter((child) => child.kind === ReflectionKind.TypeAlias)
       .map((child) => TypeAliasParser.generateFromTypeDoc(child, project));

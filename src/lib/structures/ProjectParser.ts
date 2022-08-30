@@ -111,16 +111,20 @@ export class ProjectParser {
       this.constants = children
         .filter((child) => child.kind === ReflectionKind.Variable)
         .map((child) => ConstantParser.generateFromTypeDoc(child, this));
+
       this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, this));
       this.functions = children
         .filter((child) => child.kind === ReflectionKind.Function)
         .map((child) => FunctionParser.generateFromTypeDoc(child, this));
+
       this.interfaces = children
         .filter((child) => child.kind === ReflectionKind.Interface)
         .map((child) => InterfaceParser.generateFromTypeDoc(child, this));
+
       this.namespaces = children
         .filter((child) => child.kind === ReflectionKind.Namespace)
         .map((child) => NamespaceParser.generateFromTypeDoc(child, this));
+
       this.typeAliases = children
         .filter((child) => child.kind === ReflectionKind.TypeAlias)
         .map((child) => TypeAliasParser.generateFromTypeDoc(child, this));

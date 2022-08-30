@@ -88,6 +88,7 @@ export class MappedTypeParser implements TypeParser {
   public toString(): string {
     const readonly =
       this.readonly === MappedTypeParser.Modifier.Add ? 'readonly' : this.readonly === MappedTypeParser.Modifier.Remove ? '-readonly' : '';
+
     const optional = this.optional === MappedTypeParser.Modifier.Add ? '?' : this.optional === MappedTypeParser.Modifier.Remove ? '-?' : '';
 
     return `{ ${readonly}[${this.parameter} in ${this.parameterType.toString()}]${optional}: ${this.templateType.toString()} }`;

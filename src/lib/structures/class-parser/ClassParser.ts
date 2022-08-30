@@ -117,6 +117,7 @@ export class ClassParser extends Parser {
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
       .map((child) => ClassPropertyParser.generateFromTypeDoc(child, project));
+
     const methods = children
       .filter((child) => child.kind === ReflectionKind.Method)
       .map((child) => ClassMethodParser.generateFromTypeDoc(child, project));

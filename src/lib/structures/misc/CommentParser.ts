@@ -29,6 +29,16 @@ export class CommentParser {
    */
   public readonly modifierTags: string[];
 
+  public constructor(data: CommentParser.Data, project: ProjectParser) {
+    const { description, blockTags, modifierTags } = data;
+
+    this.description = description;
+    this.blockTags = blockTags;
+    this.modifierTags = modifierTags;
+
+    this.project = project;
+  }
+
   /**
    * The filtered `@see` tags of this comment.
    * @since 1.0.0
@@ -51,16 +61,6 @@ export class CommentParser {
    */
   public get deprecated(): boolean {
     return this.modifierTags.some((tag) => tag === 'deprecated');
-  }
-
-  public constructor(data: CommentParser.Data, project: ProjectParser) {
-    const { description, blockTags, modifierTags } = data;
-
-    this.description = description;
-    this.blockTags = blockTags;
-    this.modifierTags = modifierTags;
-
-    this.project = project;
   }
 
   /**
