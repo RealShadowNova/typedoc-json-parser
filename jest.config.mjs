@@ -4,6 +4,7 @@ const config = {
   preset: 'ts-jest',
   testMatch: ['<rootDir>/tests/**/*.test.ts'],
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coveragePathIgnorePatterns: ['bin'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tests/tsconfig.json'
