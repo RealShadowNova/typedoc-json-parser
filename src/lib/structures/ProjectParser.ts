@@ -42,6 +42,12 @@ export class ProjectParser {
   public readonly version: string | null = null;
 
   /**
+   * The readme content of this project.
+   * @since 3.0.0
+   */
+  public readonly readme: string | null = null;
+
+  /**
    * An array of class parsers for this project.
    * @since 1.0.0
    */
@@ -83,11 +89,13 @@ export class ProjectParser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
-  public constructor(data: ProjectParser.JSON | JSONOutput.ProjectReflection, version: string | null = null) {
+  public constructor(options: ProjectParser.Options) {
+    const { data, version, readme } = options;
     const { id, name } = data;
 
     this.id = id;
     this.name = name;
+    this.readme = readme ?? null;
 
     if ('classes' in data) {
       const { typeDocJsonParserVersion, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
@@ -106,7 +114,7 @@ export class ProjectParser {
 
       if (kind !== ReflectionKind.Project) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
 
-      this.version = version;
+      this.version = version ?? null;
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
       this.constants = children
         .filter((child) => child.kind === ReflectionKind.Variable)
@@ -309,6 +317,7 @@ export class ProjectParser {
       id: this.id,
       name: this.name,
       version: this.version,
+      readme: this.readme,
       classes: this.classes.map((parser) => parser.toJSON()),
       constants: this.constants.map((parser) => parser.toJSON()),
       enums: this.enums.map((parser) => parser.toJSON()),
@@ -321,6 +330,26 @@ export class ProjectParser {
 }
 
 export namespace ProjectParser {
+  export interface Options {
+    /**
+     * The data for this project.
+     * @since 3.0.0
+     */
+    data: JSON | JSONOutput.ProjectReflection;
+
+    /**
+     * The version of the project being parsed.
+     * @since 3.0.0
+     */
+    version?: string;
+
+    /**
+     * The readme content of this project.
+     * @since 3.0.0
+     */
+    readme?: string;
+  }
+
   export interface JSON {
     /**
      * The version of `typedoc-json-parser` that generated this JSON object.
@@ -349,6 +378,12 @@ export namespace ProjectParser {
      * @since 2.2.0
      */
     version: string | null;
+
+    /**
+     * The readme content of this project.
+     * @since 3.0.0
+     */
+    readme: string | null;
 
     /**
      * An array of class JSON compatible objects for this project in a JSON compatible format.
