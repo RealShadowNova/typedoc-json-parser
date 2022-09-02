@@ -1,5 +1,5 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../types';
+import { ReflectionKind, SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
 import { ConstantParser } from './ConstantParser';
 import { EnumParser } from './enum-parser';
@@ -76,6 +76,121 @@ export class NamespaceParser extends Parser {
     this.interfaces = interfaces;
     this.namespaces = namespaces;
     this.typeAliases = typeAliases;
+  }
+
+  /**
+   * Search for a parser with a given query.
+   * @since 3.0.0
+   * @param query The query to search with.
+   * @returns An array of search results.
+   */
+  public search(query: string): SearchResult[] {
+    const results: SearchResult[] = [];
+    const words = query.toLowerCase().split(/(#|.)/g);
+
+    for (const classParser of this.classes) {
+      if (classParser.name.toLowerCase().includes(words[0])) {
+        if (words.length === 1) {
+          results.push(classParser);
+
+          continue;
+        }
+
+        for (const methodParser of classParser.methods) {
+          if (methodParser.name.toLowerCase().includes(words[1])) {
+            if (words.length === 2) {
+              results.push(methodParser);
+
+              continue;
+            }
+          }
+        }
+
+        for (const propertyParser of classParser.properties) {
+          if (propertyParser.name.toLowerCase().includes(words[1])) {
+            results.push(propertyParser);
+
+            continue;
+          }
+        }
+      }
+    }
+
+    for (const constantParser of this.constants) {
+      if (constantParser.name.toLowerCase().includes(words[0])) {
+        results.push(constantParser);
+
+        continue;
+      }
+    }
+
+    for (const enumParser of this.enums) {
+      if (enumParser.name.toLowerCase().includes(words[0])) {
+        if (words.length === 1) {
+          results.push(enumParser);
+
+          continue;
+        }
+
+        for (const enumMemberParser of enumParser.properties) {
+          if (enumMemberParser.name.toLowerCase().includes(words[1])) {
+            results.push(enumMemberParser);
+
+            continue;
+          }
+        }
+      }
+    }
+
+    for (const functionParser of this.functions) {
+      if (functionParser.name.toLowerCase().includes(words[0])) {
+        results.push(functionParser);
+
+        continue;
+      }
+    }
+
+    for (const interfaceParser of this.interfaces) {
+      if (interfaceParser.name.toLowerCase().includes(words[0])) {
+        if (words.length === 1) {
+          results.push(interfaceParser);
+
+          continue;
+        }
+
+        for (const propertyParser of interfaceParser.properties) {
+          if (propertyParser.name.toLowerCase().includes(words[1])) {
+            results.push(propertyParser);
+
+            continue;
+          }
+        }
+      }
+    }
+
+    for (const namespaceParser of this.namespaces) {
+      if (namespaceParser.name.toLowerCase().includes(words[0])) {
+        if (words.length === 1) {
+          results.push(namespaceParser);
+
+          continue;
+        }
+
+        const subResults = namespaceParser.search(query.substring(words[0].length));
+
+        for (const subResult of subResults) results.push(subResult);
+      }
+    }
+
+    for (const typeAliasParser of this.typeAliases) {
+      if (typeAliasParser.name.toLowerCase().includes(words[0])) {
+        results.push(typeAliasParser);
+
+        continue;
+      }
+    }
+
+    return results;
   }
 
   /**
