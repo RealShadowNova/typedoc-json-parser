@@ -3,6 +3,7 @@ import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
+import { InterfaceMethodParser } from './InterfaceMethodParser';
 import { InterfacePropertyParser } from './InterfacePropertyParser';
 
 /**
@@ -22,13 +23,20 @@ export class InterfaceParser extends Parser {
    */
   public readonly properties: InterfacePropertyParser[];
 
+  /**
+   * The method parsers of this interface.
+   * @since 3.1.0
+   */
+  public readonly methods: InterfaceMethodParser[];
+
   public constructor(data: InterfaceParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, properties } = data;
+    const { external, properties, methods } = data;
 
     this.external = external;
     this.properties = properties;
+    this.methods = methods;
   }
 
   /**
@@ -40,7 +48,8 @@ export class InterfaceParser extends Parser {
     return {
       ...super.toJSON(),
       external: this.external,
-      properties: this.properties.map((parser) => parser.toJSON())
+      properties: this.properties.map((parser) => parser.toJSON()),
+      methods: this.methods.map((parser) => parser.toJSON())
     };
   }
 
@@ -60,6 +69,10 @@ export class InterfaceParser extends Parser {
       .filter((child) => child.kind === ReflectionKind.Property)
       .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, project));
 
+    const methods = children
+      .filter((child) => child.kind === ReflectionKind.Method)
+      .map((child) => InterfaceMethodParser.generateFromTypeDoc(child, project));
+
     return new InterfaceParser(
       {
         id,
@@ -67,14 +80,15 @@ export class InterfaceParser extends Parser {
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
-        properties
+        properties,
+        methods
       },
       project
     );
   }
 
   public static generateFromJSON(json: InterfaceParser.JSON, project: ProjectParser): InterfaceParser {
-    const { id, name, comment, source, external, properties } = json;
+    const { id, name, comment, source, external, properties, methods } = json;
 
     return new InterfaceParser(
       {
@@ -83,7 +97,8 @@ export class InterfaceParser extends Parser {
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         external,
-        properties: properties.map((parser) => InterfacePropertyParser.generateFromJSON(parser, project))
+        properties: properties.map((parser) => InterfacePropertyParser.generateFromJSON(parser, project)),
+        methods: methods.map((parser) => InterfaceMethodParser.generateFromJSON(parser, project))
       },
       project
     );
@@ -103,6 +118,12 @@ export namespace InterfaceParser {
      * @since 1.0.0
      */
     properties: InterfacePropertyParser[];
+
+    /**
+     * The method parsers of this interface.
+     * @since 3.1.0
+     */
+    methods: InterfaceMethodParser[];
   }
 
   export interface JSON extends Parser.JSON {
@@ -117,5 +138,11 @@ export namespace InterfaceParser {
      * @since 1.0.0
      */
     properties: InterfacePropertyParser.JSON[];
+
+    /**
+     * The method parsers of this interface in a JSON compatible format.
+     * @since 3.1.0
+     */
+    methods: InterfaceMethodParser.JSON[];
   }
 }
