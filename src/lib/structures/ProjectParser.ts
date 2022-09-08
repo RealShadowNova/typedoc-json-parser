@@ -39,13 +39,19 @@ export class ProjectParser {
    * Corresponds to the `version` property in your `package.json`
    * @since 2.2.0
    */
-  public readonly version: string | null = null;
+  public readonly version: string | null;
 
   /**
    * The readme content of this project.
    * @since 3.0.0
    */
-  public readonly readme: string | null = null;
+  public readonly readme: string | null;
+
+  /**
+   * The changelog of this project.
+   * @since 3.2.0
+   */
+  public changelog: string | null;
 
   /**
    * An array of class parsers for this project.
@@ -90,7 +96,7 @@ export class ProjectParser {
   public readonly typeAliases: TypeAliasParser[];
 
   public constructor(options: ProjectParser.Options) {
-    const { data, version, readme } = options;
+    const { data, version, readme, changelog } = options;
     const { id, name } = data;
 
     this.id = id;
@@ -102,6 +108,7 @@ export class ProjectParser {
       this.typeDocJsonParserVersion = typeDocJsonParserVersion;
       this.version = version ?? data.version;
       this.readme = readme ?? data.readme;
+      this.changelog = changelog ?? data.changelog;
       this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
       this.constants = constants.map((json) => ConstantParser.generateFromJSON(json, this));
       this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
@@ -116,6 +123,7 @@ export class ProjectParser {
 
       this.version = version ?? null;
       this.readme = readme ?? null;
+      this.changelog = changelog ?? null;
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
       this.constants = children
         .filter((child) => child.kind === ReflectionKind.Variable)
@@ -319,6 +327,7 @@ export class ProjectParser {
       name: this.name,
       version: this.version,
       readme: this.readme,
+      changelog: this.changelog,
       classes: this.classes.map((parser) => parser.toJSON()),
       constants: this.constants.map((parser) => parser.toJSON()),
       enums: this.enums.map((parser) => parser.toJSON()),
@@ -349,6 +358,12 @@ export namespace ProjectParser {
      * @since 3.0.0
      */
     readme?: string;
+
+    /**
+     * The changelog content of this project.
+     * @since 3.2.0
+     */
+    changelog?: string;
   }
 
   export interface JSON {
@@ -385,6 +400,12 @@ export namespace ProjectParser {
      * @since 3.0.0
      */
     readme: string | null;
+
+    /**
+     * The changelog content of this project.
+     * @since 3.2.0
+     */
+    changelog: string | null;
 
     /**
      * An array of class JSON compatible objects for this project in a JSON compatible format.
