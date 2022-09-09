@@ -10,8 +10,9 @@ export async function parseDocs(options: Options) {
   const spinner = new Spinner().start({ text: 'Parsing TypeDoc JSON output' });
   const { version } = JSON.parse(await readFile(resolve(process.cwd(), 'package.json'), 'utf8'));
   const readme = existsSync(resolve(process.cwd(), 'README.md')) ? await readFile(resolve(process.cwd(), 'README.md'), 'utf8') : undefined;
+  const changelog = existsSync(resolve(process.cwd(), 'CHANGELOG.md')) ? await readFile(resolve(process.cwd(), 'CHANGELOG.md'), 'utf8') : undefined;
   const data = JSON.parse(await readFile(resolve(process.cwd(), options.json), 'utf-8')) as JSONOutput.ProjectReflection;
-  const parsed = new ProjectParser({ data, version, readme }).toJSON();
+  const parsed = new ProjectParser({ data, version, readme, changelog }).toJSON();
 
   try {
     await writeFile(resolve(process.cwd(), options.json), JSON.stringify(parsed, null, 2));
