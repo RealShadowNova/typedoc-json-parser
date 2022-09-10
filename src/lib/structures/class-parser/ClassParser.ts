@@ -116,11 +116,11 @@ export class ClassParser extends Parser {
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
-      .map((child) => ClassPropertyParser.generateFromTypeDoc(child, project));
+      .map((child) => ClassPropertyParser.generateFromTypeDoc(child, id, project));
 
     const methods = children
       .filter((child) => child.kind === ReflectionKind.Method)
-      .map((child) => ClassMethodParser.generateFromTypeDoc(child, project));
+      .map((child) => ClassMethodParser.generateFromTypeDoc(child, id, project));
 
     return new ClassParser(
       {
@@ -132,7 +132,7 @@ export class ClassParser extends Parser {
         abstract: Boolean(flags.isAbstract),
         extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0]) : null,
         implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType)),
-        construct: ClassConstructorParser.generateFromTypeDoc(construct, project),
+        construct: ClassConstructorParser.generateFromTypeDoc(construct, id, project),
         properties,
         methods
       },

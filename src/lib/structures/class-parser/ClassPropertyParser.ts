@@ -12,6 +12,12 @@ import { ClassParser } from './ClassParser';
  */
 export class ClassPropertyParser extends Parser {
   /**
+   * The id of the parent class parser.
+   * @since 3.3.0
+   */
+  public readonly parentId: number;
+
+  /**
    * The accessibility of this property.
    * @since 1.0.0
    */
@@ -50,8 +56,9 @@ export class ClassPropertyParser extends Parser {
   public constructor(data: ClassPropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { accessibility, abstract, static: _static, readonly, optional, type } = data;
+    const { parentId, accessibility, abstract, static: _static, readonly, optional, type } = data;
 
+    this.parentId = parentId;
     this.accessibility = accessibility;
     this.abstract = abstract;
     this.static = _static;
@@ -68,6 +75,7 @@ export class ClassPropertyParser extends Parser {
   public toJSON(): ClassPropertyParser.JSON {
     return {
       ...super.toJSON(),
+      parentId: this.parentId,
       accessibility: this.accessibility,
       abstract: this.abstract,
       static: this.static,
@@ -84,7 +92,7 @@ export class ClassPropertyParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): ClassPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags, getSignature } = reflection;
 
     if (kind !== ReflectionKind.Property && kind !== ReflectionKind.Accessor) {
@@ -104,6 +112,7 @@ export class ClassPropertyParser extends Parser {
           name,
           comment: CommentParser.generateFromTypeDoc(comment, project),
           source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+          parentId,
           accessibility: flags.isPrivate
             ? ClassParser.Accessibility.Private
             : flags.isProtected
@@ -125,6 +134,7 @@ export class ClassPropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        parentId,
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
           : flags.isProtected
@@ -141,7 +151,7 @@ export class ClassPropertyParser extends Parser {
   }
 
   public static generateFromJSON(json: ClassPropertyParser.JSON, project: ProjectParser): ClassPropertyParser {
-    const { id, name, comment, source, accessibility, abstract, static: _static, readonly, optional, type } = json;
+    const { id, name, comment, source, parentId, accessibility, abstract, static: _static, readonly, optional, type } = json;
 
     return new ClassPropertyParser(
       {
@@ -149,6 +159,7 @@ export class ClassPropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
+        parentId,
         accessibility,
         abstract,
         static: _static,
@@ -163,6 +174,12 @@ export class ClassPropertyParser extends Parser {
 
 export namespace ClassPropertyParser {
   export interface Data extends Parser.Data {
+    /**
+     * The id of the parent class parser.
+     * @since 3.3.0
+     */
+    parentId: number;
+
     /**
      * The accessibility of this property.
      * @since 1.0.0
@@ -201,6 +218,12 @@ export namespace ClassPropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The id of the parent class parser.
+     * @since 3.3.0
+     */
+    parentId: number;
+
     /**
      * The accessibility of this property.
      * @since 1.0.0

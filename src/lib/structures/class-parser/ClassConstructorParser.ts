@@ -3,8 +3,15 @@ import { ReflectionKind } from '../../types';
 import { CommentParser, ParameterParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
+import type { ClassParser } from './ClassParser';
 
 export class ClassConstructorParser extends Parser {
+  /**
+   * The id of the parent class parser.
+   * @since 3.3.0
+   */
+  public readonly parentId: number;
+
   /**
    * The parameter parsers of this constructor.
    * @since 1.0.0
@@ -14,9 +21,14 @@ export class ClassConstructorParser extends Parser {
   public constructor(data: ClassConstructorParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { parameters } = data;
+    const { parentId, parameters } = data;
 
+    this.parentId = parentId;
     this.parameters = parameters;
+  }
+
+  public get parent(): ClassParser {
+    return this.project.find(this.parentId) as ClassParser;
   }
 
   /**
@@ -27,6 +39,7 @@ export class ClassConstructorParser extends Parser {
   public toJSON(): ClassConstructorParser.JSON {
     return {
       ...super.toJSON(),
+      parentId: this.parentId,
       parameters: this.parameters.map((parameter) => parameter.toJSON())
     };
   }
@@ -38,7 +51,7 @@ export class ClassConstructorParser extends Parser {
    * @param project The project to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassConstructorParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): ClassConstructorParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Constructor) {
@@ -55,6 +68,7 @@ export class ClassConstructorParser extends Parser {
       {
         id,
         name,
+        parentId,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter, project))
@@ -64,12 +78,13 @@ export class ClassConstructorParser extends Parser {
   }
 
   public static generateFromJSON(data: ClassConstructorParser.JSON, project: ProjectParser): ClassConstructorParser {
-    const { id, name, comment, source, parameters } = data;
+    const { id, name, comment, source, parentId, parameters } = data;
 
     return new ClassConstructorParser(
       {
         id,
         name,
+        parentId,
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter, project))
@@ -82,6 +97,12 @@ export class ClassConstructorParser extends Parser {
 export namespace ClassConstructorParser {
   export interface Data extends Parser.Data {
     /**
+     * The id of the parent class parser.
+     * @since 3.3.0
+     */
+    parentId: number;
+
+    /**
      * The parameter parsers of this constructor.
      * @since 1.0.0
      */
@@ -89,6 +110,12 @@ export namespace ClassConstructorParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The id of the parent class parser.
+     * @since 3.3.0
+     */
+    parentId: number;
+
     /**
      * The parameter parsers of this constructor.
      * @since 1.0.0
