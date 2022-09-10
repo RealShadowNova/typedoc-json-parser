@@ -47,7 +47,17 @@ export class IndexedAccessTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `${this.objectType.toString()}[${this.indexType.toString()}]`;
+    return IndexedAccessTypeParser.formatToString(this);
+  }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 3.3.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString(parser: IndexedAccessTypeParser): string {
+    return `${parser.objectType.toString()}[${parser.indexType.toString()}]`;
   }
 }
 

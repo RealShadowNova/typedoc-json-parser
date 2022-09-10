@@ -40,7 +40,17 @@ export class ReflectionTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return !this.reflection?.children && this.reflection?.signatures ? 'Function' : 'Object';
+    return ReflectionTypeParser.formatToString(this);
+  }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 3.3.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString(parser: ReflectionTypeParser): string {
+    return !parser.reflection?.children && parser.reflection?.signatures ? 'Function' : 'Object';
   }
 }
 

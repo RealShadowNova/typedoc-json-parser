@@ -72,10 +72,20 @@ export class ReferenceTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    const typeArguments = this.typeArguments.length > 0 ? `<${this.typeArguments.map((type) => type.toString()).join(', ')}>` : '';
-
-    return `${this.packageName ? `${this.packageName}.` : ''}${this.name}${typeArguments}`;
+    return ReferenceTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 3.3.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: ReferenceTypeParser): string => {
+    const typeArguments = parser.typeArguments.length > 0 ? `<${parser.typeArguments.map((type) => type.toString()).join(', ')}>` : '';
+
+    return `${parser.packageName ? `${parser.packageName}.` : ''}${parser.name}${typeArguments}`;
+  };
 }
 
 export namespace ReferenceTypeParser {

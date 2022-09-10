@@ -39,7 +39,17 @@ export class ArrayTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `${TypeParser.wrap(this.type, TypeParser.BindingPowers[TypeParser.Kind.Array])}[]`;
+    return ArrayTypeParser.formatToString(this);
+  }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 3.3.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString(parser: ArrayTypeParser): string {
+    return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Array])}[]`;
   }
 }
 

@@ -39,7 +39,17 @@ export class IntersectionTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return this.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Intersection])).join(' & ');
+    return IntersectionTypeParser.formatToString(this);
+  }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 3.3.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString(parser: IntersectionTypeParser): string {
+    return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Intersection])).join(' & ');
   }
 }
 
