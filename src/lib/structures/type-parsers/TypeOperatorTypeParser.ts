@@ -52,7 +52,7 @@ export class TypeOperatorTypeParser implements TypeParser {
 
   /**
    * Formats this type parser to a string.
-   * @since 3.3.0
+   * @since 4.0.0
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
