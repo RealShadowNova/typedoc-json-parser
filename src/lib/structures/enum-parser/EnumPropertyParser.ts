@@ -55,8 +55,12 @@ export class EnumPropertyParser extends Parser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `${this.name} = ${this.value}`;
+    return EnumPropertyParser.formatMessage(this);
   }
+
+  public static formatMessage = (parser: EnumPropertyParser): string => {
+    return `${parser.name} = ${parser.value}`;
+  };
 
   /**
    * Generates a new {@link EnumPropertyParser} instance from the given data.
