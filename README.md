@@ -84,12 +84,12 @@ Once you have used the CLI to parse the TypeDoc JSON output, you'll want to use 
 This package makes that extremely easy to do.
 
 ```typescript
-import { ProjectParser } from 'typedoc-json-parser';
 import { readFile } from 'node:fs';
 import { resolve } from 'node:path';
+import { ProjectParser } from 'typedoc-json-parser';
 
 const data = JSON.parse(readFile(resolve(process.cwd(), 'docs', 'api.json'), 'utf8'));
-const project = new ProjectParser(data);
+const project = new ProjectParser({ data });
 
 // Do something with the project
 ```
