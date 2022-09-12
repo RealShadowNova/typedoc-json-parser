@@ -67,11 +67,11 @@ export class InterfaceParser extends Parser {
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property)
-      .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, project));
+      .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, id, project));
 
     const methods = children
       .filter((child) => child.kind === ReflectionKind.Method)
-      .map((child) => InterfaceMethodParser.generateFromTypeDoc(child, project));
+      .map((child) => InterfaceMethodParser.generateFromTypeDoc(child, id, project));
 
     return new InterfaceParser(
       {
