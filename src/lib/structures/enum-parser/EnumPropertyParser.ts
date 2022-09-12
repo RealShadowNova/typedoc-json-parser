@@ -4,12 +4,19 @@ import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
+import type { EnumParser } from './EnumParser';
 
 /**
  * Parses data from an enum property reflection.
  * @since 1.0.0
  */
 export class EnumPropertyParser extends Parser {
+  /**
+   * The id of the parent enum parser.
+   * @since 4.0.0
+   */
+  public readonly parentId: number;
+
   /**
    * The value of this enum property.
    * @since 1.0.0
@@ -19,9 +26,14 @@ export class EnumPropertyParser extends Parser {
   public constructor(data: EnumPropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { value } = data;
+    const { parentId, value } = data;
 
+    this.parentId = parentId;
     this.value = value;
+  }
+
+  public get parent(): EnumParser {
+    return this.project.find(this.parentId) as EnumParser;
   }
 
   /**
@@ -32,6 +44,7 @@ export class EnumPropertyParser extends Parser {
   public toJSON(): EnumPropertyParser.JSON {
     return {
       ...super.toJSON(),
+      parentId: this.parentId,
       value: this.value
     };
   }
@@ -43,7 +56,7 @@ export class EnumPropertyParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): EnumPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
@@ -56,6 +69,7 @@ export class EnumPropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        parentId,
         value: TypeParser.generateFromTypeDoc(type!).toString()
       },
       project
@@ -63,7 +77,7 @@ export class EnumPropertyParser extends Parser {
   }
 
   public static generateFromJSON(json: EnumPropertyParser.JSON, project: ProjectParser): EnumPropertyParser {
-    const { id, name, comment, source, value } = json;
+    const { id, name, comment, source, parentId, value } = json;
 
     return new EnumPropertyParser(
       {
@@ -71,6 +85,7 @@ export class EnumPropertyParser extends Parser {
         name,
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
+        parentId,
         value
       },
       project
@@ -81,6 +96,12 @@ export class EnumPropertyParser extends Parser {
 export namespace EnumPropertyParser {
   export interface Data extends Parser.Data {
     /**
+     * The id of the parent enum parser.
+     * @since 4.0.0
+     */
+    parentId: number;
+
+    /**
      * The value of this enum property.
      * @since 1.0.0
      */
@@ -88,6 +109,12 @@ export namespace EnumPropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The id of the parent enum parser.
+     * @since 4.0.0
+     */
+    parentId: number;
+
     /**
      * The value of this enum property.
      * @since 1.0.0
