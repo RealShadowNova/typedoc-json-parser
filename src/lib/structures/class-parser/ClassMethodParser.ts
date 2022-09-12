@@ -11,6 +11,12 @@ import { ClassParser } from './ClassParser';
  */
 export class ClassMethodParser extends Parser {
   /**
+   * The id of the parent class parser.
+   * @since 4.0.0
+   */
+  public readonly parentId: number;
+
+  /**
    * The accessibility of this method.
    * @since 1.0.0
    */
@@ -37,12 +43,21 @@ export class ClassMethodParser extends Parser {
   public constructor(data: ClassMethodParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { accessibility, abstract, static: _static, signatures } = data;
+    const { parentId, accessibility, abstract, static: _static, signatures } = data;
 
+    this.parentId = parentId;
     this.accessibility = accessibility;
     this.abstract = abstract;
     this.static = _static;
     this.signatures = signatures;
+  }
+
+  /**
+   * The parent class parser.
+   * @since 4.0.0
+   */
+  public get parent(): ClassParser {
+    return this.project.find(this.parentId) as ClassParser;
   }
 
   /**
@@ -53,6 +68,7 @@ export class ClassMethodParser extends Parser {
   public toJSON(): ClassMethodParser.JSON {
     return {
       ...super.toJSON(),
+      parentId: this.parentId,
       accessibility: this.accessibility,
       abstract: this.abstract,
       static: this.static,
@@ -67,7 +83,7 @@ export class ClassMethodParser extends Parser {
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassMethodParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): ClassMethodParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
@@ -78,6 +94,7 @@ export class ClassMethodParser extends Parser {
         name,
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        parentId,
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
           : flags.isProtected
@@ -92,7 +109,7 @@ export class ClassMethodParser extends Parser {
   }
 
   public static generateFromJSON(json: ClassMethodParser.JSON, project: ProjectParser): ClassMethodParser {
-    const { id, name, comment, source, accessibility, abstract, static: _static, signatures } = json;
+    const { id, name, comment, source, parentId, accessibility, abstract, static: _static, signatures } = json;
 
     return new ClassMethodParser(
       {
@@ -100,6 +117,7 @@ export class ClassMethodParser extends Parser {
         name,
         comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
+        parentId,
         accessibility,
         abstract,
         static: _static,
@@ -112,6 +130,12 @@ export class ClassMethodParser extends Parser {
 
 export namespace ClassMethodParser {
   export interface Data extends Parser.Data {
+    /**
+     * The id of the parent class parser.
+     * @since 4.0.0
+     */
+    parentId: number;
+
     /**
      * The accessibility of this method.
      * @since 1.0.0
@@ -138,6 +162,12 @@ export namespace ClassMethodParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The id of the parent class parser.
+     * @since 4.0.0
+     */
+    parentId: number;
+
     /**
      * The accessibility of this method.
      * @since 1.0.0
