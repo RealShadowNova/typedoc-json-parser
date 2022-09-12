@@ -50,6 +50,25 @@ export class EnumPropertyParser extends Parser {
   }
 
   /**
+   * Converts this parser to a string representation.
+   * @since 4.0.0
+   * @returns The string representation of this parser.
+   */
+  public toString(): string {
+    return EnumPropertyParser.formatMessage(this);
+  }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatMessage = (parser: EnumPropertyParser): string => {
+    return `${parser.name} = ${parser.value}`;
+  };
+
+  /**
    * Generates a new {@link EnumPropertyParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
