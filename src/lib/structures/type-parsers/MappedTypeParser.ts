@@ -86,13 +86,23 @@ export class MappedTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    const readonly =
-      this.readonly === MappedTypeParser.Modifier.Add ? 'readonly' : this.readonly === MappedTypeParser.Modifier.Remove ? '-readonly' : '';
-
-    const optional = this.optional === MappedTypeParser.Modifier.Add ? '?' : this.optional === MappedTypeParser.Modifier.Remove ? '-?' : '';
-
-    return `{ ${readonly}[${this.parameter} in ${this.parameterType.toString()}]${optional}: ${this.templateType.toString()} }`;
+    return MappedTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: MappedTypeParser): string => {
+    const readonly =
+      parser.readonly === MappedTypeParser.Modifier.Add ? 'readonly' : parser.readonly === MappedTypeParser.Modifier.Remove ? '-readonly' : '';
+
+    const optional = parser.optional === MappedTypeParser.Modifier.Add ? '?' : parser.optional === MappedTypeParser.Modifier.Remove ? '-?' : '';
+
+    return `{ ${readonly}[${parser.parameter} in ${parser.parameterType.toString()}]${optional}: ${parser.templateType.toString()} }`;
+  };
 }
 
 export namespace MappedTypeParser {

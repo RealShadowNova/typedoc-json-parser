@@ -56,8 +56,18 @@ export class PredicateTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return this.asserts ? `asserts ${this.name}` : `${this.name} is ${this.type!.toString()}`;
+    return PredicateTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: PredicateTypeParser): string => {
+    return parser.asserts ? `asserts ${parser.name}` : `${parser.name} is ${parser.type!.toString()}`;
+  };
 }
 
 export namespace PredicateTypeParser {

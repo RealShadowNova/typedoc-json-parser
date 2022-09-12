@@ -39,8 +39,18 @@ export class TupleTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `[${this.types.map((type) => type.toString()).join(', ')}]`;
+    return TupleTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: TupleTypeParser): string => {
+    return `[${parser.types.map((type) => type.toString()).join(', ')}]`;
+  };
 }
 
 export namespace TupleTypeParser {

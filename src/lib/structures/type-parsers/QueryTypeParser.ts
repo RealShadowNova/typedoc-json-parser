@@ -40,8 +40,18 @@ export class QueryTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `typeof ${this.query.toString()}`;
+    return QueryTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: QueryTypeParser): string => {
+    return `typeof ${parser.query.toString()}`;
+  };
 }
 
 export namespace QueryTypeParser {

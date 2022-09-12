@@ -55,8 +55,18 @@ export class NamedTupleMemberTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return `${this.name}${this.optional ? '?' : ''}: ${this.type.toString()}`;
+    return NamedTupleMemberTypeParser.formatToString(this);
   }
+
+  /**
+   * Formats this type parser to a string.
+   * @since 4.0.0
+   * @param parser The parser to format.
+   * @returns The string representation of this parser.
+   */
+  public static formatToString = (parser: NamedTupleMemberTypeParser): string => {
+    return `${parser.name}${parser.optional ? '?' : ''}: ${parser.type.toString()}`;
+  };
 }
 
 export namespace NamedTupleMemberTypeParser {
