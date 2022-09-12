@@ -48,9 +48,9 @@ export class IntrinsicTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: IntrinsicTypeParser): string {
+  public static formatToString = (parser: IntrinsicTypeParser): string => {
     return parser.type;
-  }
+  };
 }
 
 export namespace IntrinsicTypeParser {

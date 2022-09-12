@@ -48,9 +48,9 @@ export class LiteralTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: LiteralTypeParser): string {
+  public static formatToString = (parser: LiteralTypeParser): string => {
     return parser.value;
-  }
+  };
 }
 
 export namespace LiteralTypeParser {

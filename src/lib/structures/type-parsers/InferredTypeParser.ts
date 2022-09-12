@@ -48,9 +48,9 @@ export class InferredTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: InferredTypeParser): string {
+  public static formatToString = (parser: InferredTypeParser): string => {
     return `infer ${parser.type}`;
-  }
+  };
 }
 
 export namespace InferredTypeParser {

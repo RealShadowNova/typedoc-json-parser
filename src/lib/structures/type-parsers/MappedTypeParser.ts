@@ -95,14 +95,14 @@ export class MappedTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: MappedTypeParser): string {
+  public static formatToString = (parser: MappedTypeParser): string => {
     const readonly =
       parser.readonly === MappedTypeParser.Modifier.Add ? 'readonly' : parser.readonly === MappedTypeParser.Modifier.Remove ? '-readonly' : '';
 
     const optional = parser.optional === MappedTypeParser.Modifier.Add ? '?' : parser.optional === MappedTypeParser.Modifier.Remove ? '-?' : '';
 
     return `{ ${readonly}[${parser.parameter} in ${parser.parameterType.toString()}]${optional}: ${parser.templateType.toString()} }`;
-  }
+  };
 }
 
 export namespace MappedTypeParser {

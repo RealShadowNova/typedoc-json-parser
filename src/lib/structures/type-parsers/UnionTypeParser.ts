@@ -48,9 +48,9 @@ export class UnionTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: UnionTypeParser): string {
+  public static formatToString = (parser: UnionTypeParser): string => {
     return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Union])).join(' | ');
-  }
+  };
 }
 
 export namespace UnionTypeParser {

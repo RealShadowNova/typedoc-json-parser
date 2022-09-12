@@ -48,9 +48,9 @@ export class TupleTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: TupleTypeParser): string {
+  public static formatToString = (parser: TupleTypeParser): string => {
     return `[${parser.types.map((type) => type.toString()).join(', ')}]`;
-  }
+  };
 }
 
 export namespace TupleTypeParser {

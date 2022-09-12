@@ -56,9 +56,9 @@ export class TemplateLiteralTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: TemplateLiteralTypeParser): string {
+  public static formatToString = (parser: TemplateLiteralTypeParser): string => {
     return `\`${parser.head}${parser.tail.map((tail) => `\${${tail.type.toString()}}${tail.text}`).join('')}\``;
-  }
+  };
 }
 
 export namespace TemplateLiteralTypeParser {

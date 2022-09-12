@@ -49,9 +49,9 @@ export class QueryTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: QueryTypeParser): string {
+  public static formatToString = (parser: QueryTypeParser): string => {
     return `typeof ${parser.query.toString()}`;
-  }
+  };
 }
 
 export namespace QueryTypeParser {

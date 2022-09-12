@@ -48,9 +48,9 @@ export class RestTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: RestTypeParser): string {
+  public static formatToString = (parser: RestTypeParser): string => {
     return `...${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Rest])}`;
-  }
+  };
 }
 
 export namespace RestTypeParser {
