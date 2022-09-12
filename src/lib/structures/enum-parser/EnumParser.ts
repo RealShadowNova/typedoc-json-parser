@@ -58,7 +58,7 @@ export class EnumParser extends Parser {
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.EnumMember)
-      .map((child) => EnumPropertyParser.generateFromTypeDoc(child, project));
+      .map((child) => EnumPropertyParser.generateFromTypeDoc(child, id, project));
 
     return new EnumParser(
       {
