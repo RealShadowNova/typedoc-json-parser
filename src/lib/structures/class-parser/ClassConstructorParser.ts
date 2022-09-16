@@ -49,6 +49,25 @@ export class ClassConstructorParser extends Parser {
   }
 
   /**
+   * Converts this parser to a string representation.
+   * @since 4.0.0
+   * @returns The string representation of this parser.
+   */
+  public toString(): string {
+    return ClassConstructorParser.formatToString(this);
+  }
+
+  /**
+   * Generates a string representation of the given {@link ClassConstructorParser} instance.
+   * @since 4.0.0
+   * @param parser The parser to generate the string representation of.
+   * @returns The string representation of the given parser.
+   */
+  public static formatToString = (parser: ClassConstructorParser): string => {
+    return `new ${parser.parent.name}(${parser.parameters.map((parameter) => parameter.name).join(', ')})`;
+  };
+
+  /**
    * Generates a new {@link ClassConstructorParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
