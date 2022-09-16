@@ -19,8 +19,8 @@
     "docs": "yarn build && node dist/bin/index.js --json docs/api.json",
     "lint": "eslint src --ext ts --fix",
     "format": "prettier --write src/**/*.ts",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "vitest run",
+    "test:coverage": "yarn test --coverage",
     "build": "rimraf dist && tsc -b src && gen-esm-wrapper dist/index.js dist/index.mjs && node scripts/versionInjector.mjs",
     "update": "yarn upgrade-interactive",
     "bump": "cliff-jumper",
@@ -50,6 +50,7 @@
     "@types/rimraf": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
+    "@vitest/coverage-c8": "^0.23.2",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -63,7 +64,8 @@
     "pretty-quick": "^3.1.3",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.0",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.3",
+    "vitest": "^0.23.2"
   },
   "repository": {
     "type": "git",
