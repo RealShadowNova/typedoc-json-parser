@@ -1,6 +1,6 @@
 export * from './ArrayTypeParser';
 export * from './ConditionalTypeParser';
-export * from './IndexedAccessType';
+export * from './IndexedAccessTypeParser';
 export * from './InferredTypeParser';
 export * from './IntersectionTypeParser';
 export * from './IntrinsicTypeParser';

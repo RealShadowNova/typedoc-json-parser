@@ -3,7 +3,7 @@ import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema
 import type { ProjectParser } from '../ProjectParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
 import { ConditionalTypeParser } from './ConditionalTypeParser';
-import { IndexedAccessTypeParser } from './IndexedAccessType';
+import { IndexedAccessTypeParser } from './IndexedAccessTypeParser';
 import { InferredTypeParser } from './InferredTypeParser';
 import { IntersectionTypeParser } from './IntersectionTypeParser';
 import { IntrinsicTypeParser } from './IntrinsicTypeParser';
