@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class LiteralTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -17,8 +24,12 @@ export class LiteralTypeParser implements TypeParser {
    */
   public readonly value: string;
 
-  public constructor(value: string) {
+  public constructor(data: LiteralTypeParser.Data, project: ProjectParser) {
+    const { value } = data;
+
     this.value = value;
+
+    this.project = project;
   }
 
   /**
@@ -54,6 +65,14 @@ export class LiteralTypeParser implements TypeParser {
 }
 
 export namespace LiteralTypeParser {
+  export interface Data {
+    /**
+     * The value of this literal type.
+     * @since 5.0.0
+     */
+    value: string;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Literal;
 

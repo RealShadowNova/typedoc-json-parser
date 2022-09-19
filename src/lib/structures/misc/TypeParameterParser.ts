@@ -81,8 +81,8 @@ export class TypeParameterParser {
       {
         id,
         name,
-        type: type ? TypeParser.generateFromTypeDoc(type) : null,
-        default: _default ? TypeParser.generateFromTypeDoc(_default) : null
+        type: type ? TypeParser.generateFromTypeDoc(type, project) : null,
+        default: _default ? TypeParser.generateFromTypeDoc(_default, project) : null
       },
       project
     );
@@ -95,8 +95,8 @@ export class TypeParameterParser {
       {
         id,
         name,
-        type: type ? TypeParser.generateFromJSON(type) : null,
-        default: _default ? TypeParser.generateFromJSON(_default) : null
+        type: type ? TypeParser.generateFromJSON(type, project) : null,
+        default: _default ? TypeParser.generateFromJSON(_default, project) : null
       },
       project
     );

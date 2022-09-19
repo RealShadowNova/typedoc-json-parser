@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,11 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ConditionalTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -35,11 +41,15 @@ export class ConditionalTypeParser implements TypeParser {
    */
   public readonly falseType: TypeParser;
 
-  public constructor(checkType: TypeParser, extendsType: TypeParser, trueType: TypeParser, falseType: TypeParser) {
+  public constructor(data: ConditionalTypeParser.Data, project: ProjectParser) {
+    const { checkType, extendsType, trueType, falseType } = data;
+
     this.checkType = checkType;
     this.extendsType = extendsType;
     this.trueType = trueType;
     this.falseType = falseType;
+
+    this.project = project;
   }
 
   /**
@@ -81,6 +91,32 @@ export class ConditionalTypeParser implements TypeParser {
 }
 
 export namespace ConditionalTypeParser {
+  export interface Data {
+    /**
+     * The check type of this conditional type.
+     * @since 5.0.0
+     */
+    checkType: TypeParser;
+
+    /**
+     * The extends type of this conditional type.
+     * @since 5.0.0
+     */
+    extendsType: TypeParser;
+
+    /**
+     * The type of this conditional type when the check type is true.
+     * @since 5.0.0
+     */
+    trueType: TypeParser;
+
+    /**
+     * The type of this conditional type when the check type is false.
+     * @since 5.0.0
+     */
+    falseType: TypeParser;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Conditional;
 
@@ -104,6 +140,7 @@ export namespace ConditionalTypeParser {
 
     /**
      * The type of this conditional type when the check type is false in a JSON compatible format.
+     * @since 1.0.0
      */
     falseType: TypeParser.JSON;
   }

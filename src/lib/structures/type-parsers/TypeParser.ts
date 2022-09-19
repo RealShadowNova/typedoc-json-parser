@@ -1,5 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
+import type { ProjectParser } from '../ProjectParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
 import { ConditionalTypeParser } from './ConditionalTypeParser';
 import { IndexedAccessTypeParser } from './IndexedAccessType';
@@ -26,6 +27,12 @@ import { UnknownTypeParser } from './UnknownTypeParser';
  * @since 1.0.0
  */
 export interface TypeParser {
+  /**
+   * The project parser this type parser belongs to.
+   * @since 5.0.0
+   */
+  project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -77,291 +84,348 @@ export namespace TypeParser {
           | JSONOutput.TemplateLiteralType
           | NamedTupleMemberType
         )
-      | JSONOutput.SomeType
+      | JSONOutput.SomeType,
+    project: ProjectParser
   ): TypeParser {
     switch (type.type) {
       case 'array': {
         const { elementType } = type;
 
-        return new ArrayTypeParser(generateFromTypeDoc(elementType));
+        return new ArrayTypeParser({ type: generateFromTypeDoc(elementType, project) }, project);
       }
 
       case 'conditional': {
         const { checkType, extendsType, trueType, falseType } = type;
 
         return new ConditionalTypeParser(
-          generateFromTypeDoc(checkType),
-          generateFromTypeDoc(extendsType),
-          generateFromTypeDoc(trueType),
-          generateFromTypeDoc(falseType)
+          {
+            checkType: generateFromTypeDoc(checkType, project),
+            extendsType: generateFromTypeDoc(extendsType, project),
+            trueType: generateFromTypeDoc(trueType, project),
+            falseType: generateFromTypeDoc(falseType, project)
+          },
+          project
         );
       }
 
       case 'indexedAccess': {
         const { objectType, indexType } = type;
 
-        return new IndexedAccessTypeParser(generateFromTypeDoc(objectType), generateFromTypeDoc(indexType));
+        return new IndexedAccessTypeParser(
+          {
+            objectType: generateFromTypeDoc(objectType, project),
+            indexType: generateFromTypeDoc(indexType, project)
+          },
+          project
+        );
       }
 
       case 'inferred': {
         const { name } = type;
 
-        return new InferredTypeParser(name);
+        return new InferredTypeParser({ type: name }, project);
       }
 
       case 'intersection': {
         const { types } = type;
 
-        return new IntersectionTypeParser(types.map((type) => generateFromTypeDoc(type)));
+        return new IntersectionTypeParser({ types: types.map((type) => generateFromTypeDoc(type, project)) }, project);
       }
 
       case 'intrinsic': {
         const { name } = type;
 
-        return new IntrinsicTypeParser(name);
+        return new IntrinsicTypeParser({ type: name }, project);
       }
 
       case 'literal': {
         const { value } = type;
 
-        return new LiteralTypeParser((typeof value === 'object' && value !== null ? value.value : value)?.toString() ?? 'null');
+        return new LiteralTypeParser({ value: (typeof value === 'object' && value !== null ? value.value : value)?.toString() ?? 'null' }, project);
       }
 
       case 'mapped': {
         const { parameter, parameterType, nameType, templateType, optionalModifier, readonlyModifier } = type;
 
         return new MappedTypeParser(
-          parameter,
-          generateFromTypeDoc(parameterType),
-          nameType ? generateFromTypeDoc(nameType) : null,
-          generateFromTypeDoc(templateType),
-          (optionalModifier ?? null) as MappedTypeParser.Modifier,
-          (readonlyModifier ?? null) as MappedTypeParser.Modifier
+          {
+            parameter,
+            parameterType: generateFromTypeDoc(parameterType, project),
+            nameType: nameType ? generateFromTypeDoc(nameType, project) : null,
+            templateType: generateFromTypeDoc(templateType, project),
+            optional: (optionalModifier ?? null) as MappedTypeParser.Modifier,
+            readonly: (readonlyModifier ?? null) as MappedTypeParser.Modifier
+          },
+          project
         );
       }
 
       case 'named-tuple-member': {
         const { element, isOptional, name } = type;
 
-        return new NamedTupleMemberTypeParser(name, generateFromTypeDoc(element), isOptional);
+        return new NamedTupleMemberTypeParser(
+          {
+            name,
+            type: generateFromTypeDoc(element, project),
+            optional: isOptional ?? false
+          },
+          project
+        );
       }
 
       case 'optional': {
         const { elementType } = type;
 
-        return new OptionalTypeParser(generateFromTypeDoc(elementType));
+        return new OptionalTypeParser({ type: generateFromTypeDoc(elementType, project) }, project);
       }
 
       case 'predicate': {
         const { asserts, name, targetType } = type;
 
-        return new PredicateTypeParser(asserts, name, targetType ? generateFromTypeDoc(targetType) : null);
+        return new PredicateTypeParser(
+          {
+            asserts,
+            name,
+            type: targetType ? generateFromTypeDoc(targetType, project) : null
+          },
+          project
+        );
       }
 
       case 'query': {
         const { queryType } = type;
 
-        return new QueryTypeParser(generateFromTypeDoc(queryType) as ReferenceTypeParser);
+        return new QueryTypeParser({ query: generateFromTypeDoc(queryType, project) as ReferenceTypeParser }, project);
       }
 
       case 'reference': {
         const { id, name, package: _package, qualifiedName, typeArguments = [] } = type;
 
         return new ReferenceTypeParser(
-          id ?? null,
-          qualifiedName ?? name,
-          _package ?? null,
-          typeArguments.map((typeArgument) => generateFromTypeDoc(typeArgument))
+          {
+            id: id ?? null,
+            name: qualifiedName ?? name,
+            packageName: _package ?? null,
+            typeArguments: typeArguments.map((type) => generateFromTypeDoc(type, project))
+          },
+          project
         );
       }
 
       case 'reflection': {
         const { declaration } = type;
 
-        return new ReflectionTypeParser(declaration ?? null);
+        return new ReflectionTypeParser({ reflection: declaration ?? null }, project);
       }
 
       case 'rest': {
         const { elementType } = type;
 
-        return new RestTypeParser(generateFromTypeDoc(elementType));
+        return new RestTypeParser({ type: generateFromTypeDoc(elementType, project) }, project);
       }
 
       case 'template-literal': {
         const { head, tail } = type;
 
         return new TemplateLiteralTypeParser(
-          head,
-          tail.map(([type, text]) => ({ type: generateFromTypeDoc(type), text }))
+          {
+            head,
+            tail: tail.map(([type, text]) => ({ type: generateFromTypeDoc(type, project), text }))
+          },
+          project
         );
       }
 
       case 'tuple': {
         const { elements = [] } = type;
 
-        return new TupleTypeParser(elements.map((element) => generateFromTypeDoc(element)));
+        return new TupleTypeParser({ types: elements.map((type) => generateFromTypeDoc(type, project)) }, project);
       }
 
       case 'typeOperator': {
         const { operator, target } = type;
 
-        return new TypeOperatorTypeParser(operator as TypeOperatorTypeParser.Operator, generateFromTypeDoc(target));
+        return new TypeOperatorTypeParser(
+          {
+            operator: operator as TypeOperatorTypeParser.Operator,
+            type: generateFromTypeDoc(target, project)
+          },
+          project
+        );
       }
 
       case 'union': {
         const { types } = type;
 
-        return new UnionTypeParser(types.map((type) => generateFromTypeDoc(type)));
+        return new UnionTypeParser({ types: types.map((type) => generateFromTypeDoc(type, project)) }, project);
       }
 
       case 'unknown': {
         const { name } = type;
 
-        return new UnknownTypeParser(name);
+        return new UnknownTypeParser({ name }, project);
       }
     }
   }
 
-  export function generateFromJSON(json: JSON): TypeParser {
+  export function generateFromJSON(json: JSON, project: ProjectParser): TypeParser {
     switch (json.kind) {
       case Kind.Array: {
         const { type } = json as ArrayTypeParser.JSON;
 
-        return new ArrayTypeParser(generateFromJSON(type));
+        return new ArrayTypeParser({ type: generateFromJSON(type, project) }, project);
       }
 
       case Kind.Conditional: {
         const { checkType, extendsType, trueType, falseType } = json as ConditionalTypeParser.JSON;
 
         return new ConditionalTypeParser(
-          generateFromJSON(checkType),
-          generateFromJSON(extendsType),
-          generateFromJSON(trueType),
-          generateFromJSON(falseType)
+          {
+            checkType: generateFromJSON(checkType, project),
+            extendsType: generateFromJSON(extendsType, project),
+            trueType: generateFromJSON(trueType, project),
+            falseType: generateFromJSON(falseType, project)
+          },
+          project
         );
       }
 
       case Kind.IndexedAccess: {
         const { objectType, indexType } = json as IndexedAccessTypeParser.JSON;
 
-        return new IndexedAccessTypeParser(generateFromJSON(objectType), generateFromJSON(indexType));
+        return new IndexedAccessTypeParser(
+          {
+            objectType: generateFromJSON(objectType, project),
+            indexType: generateFromJSON(indexType, project)
+          },
+          project
+        );
       }
 
       case Kind.Inferred: {
         const { type } = json as InferredTypeParser.JSON;
 
-        return new InferredTypeParser(type);
+        return new InferredTypeParser({ type }, project);
       }
 
       case Kind.Intersection: {
         const { types } = json as IntersectionTypeParser.JSON;
 
-        return new IntersectionTypeParser(types.map((type) => generateFromJSON(type)));
+        return new IntersectionTypeParser({ types: types.map((type) => generateFromJSON(type, project)) }, project);
       }
 
       case Kind.Intrinsic: {
         const { type } = json as IntrinsicTypeParser.JSON;
 
-        return new IntrinsicTypeParser(type);
+        return new IntrinsicTypeParser({ type }, project);
       }
 
       case Kind.Literal: {
         const { value } = json as LiteralTypeParser.JSON;
 
-        return new LiteralTypeParser(value);
+        return new LiteralTypeParser({ value }, project);
       }
 
       case Kind.Mapped: {
         const { parameter, parameterType, nameType, templateType, optional, readonly } = json as MappedTypeParser.JSON;
 
         return new MappedTypeParser(
-          parameter,
-          generateFromJSON(parameterType),
-          nameType ? generateFromJSON(nameType) : null,
-          generateFromJSON(templateType),
-          optional,
-          readonly
+          {
+            parameter,
+            parameterType: generateFromJSON(parameterType, project),
+            nameType: nameType ? generateFromJSON(nameType, project) : null,
+            templateType: generateFromJSON(templateType, project),
+            optional,
+            readonly
+          },
+          project
         );
       }
 
       case Kind.NamedTupleMember: {
         const { type, optional, name } = json as NamedTupleMemberTypeParser.JSON;
 
-        return new NamedTupleMemberTypeParser(name, generateFromJSON(type), optional);
+        return new NamedTupleMemberTypeParser({ name, type: generateFromJSON(type, project), optional }, project);
       }
 
       case Kind.Optional: {
         const { type } = json as OptionalTypeParser.JSON;
 
-        return new OptionalTypeParser(generateFromJSON(type));
+        return new OptionalTypeParser({ type: generateFromJSON(type, project) }, project);
       }
 
       case Kind.Predicate: {
         const { asserts, name, type } = json as PredicateTypeParser.JSON;
 
-        return new PredicateTypeParser(asserts, name, type ? generateFromJSON(type) : null);
+        return new PredicateTypeParser({ asserts, name, type: type ? generateFromJSON(type, project) : null }, project);
       }
 
       case Kind.Query: {
         const { query } = json as QueryTypeParser.JSON;
 
-        return new QueryTypeParser(generateFromJSON(query) as ReferenceTypeParser);
+        return new QueryTypeParser({ query: generateFromJSON(query, project) as ReferenceTypeParser }, project);
       }
 
       case Kind.Reference: {
         const { id, name, packageName, typeArguments } = json as ReferenceTypeParser.JSON;
 
         return new ReferenceTypeParser(
-          id ?? null,
-          name,
-          packageName ?? null,
-          typeArguments.map((typeArgument) => generateFromJSON(typeArgument))
+          {
+            id,
+            name,
+            packageName: packageName ?? null,
+            typeArguments: typeArguments.map((type) => generateFromJSON(type, project))
+          },
+          project
         );
       }
 
       case Kind.Reflection: {
         const { reflection } = json as ReflectionTypeParser.JSON;
 
-        return new ReflectionTypeParser(reflection ?? null);
+        return new ReflectionTypeParser({ reflection }, project);
       }
 
       case Kind.Rest: {
         const { type } = json as RestTypeParser.JSON;
 
-        return new RestTypeParser(generateFromJSON(type));
+        return new RestTypeParser({ type: generateFromJSON(type, project) }, project);
       }
 
       case Kind.TemplateLiteral: {
         const { head, tail } = json as TemplateLiteralTypeParser.JSON;
 
         return new TemplateLiteralTypeParser(
-          head,
-          tail.map((tail) => ({ type: generateFromJSON(tail.type), text: tail.text }))
+          {
+            head,
+            tail: tail.map((tail) => ({ type: generateFromJSON(tail.type, project), text: tail.text }))
+          },
+          project
         );
       }
 
       case Kind.Tuple: {
         const { types } = json as TupleTypeParser.JSON;
 
-        return new TupleTypeParser(types.map((type) => generateFromJSON(type)));
+        return new TupleTypeParser({ types: types.map((type) => generateFromJSON(type, project)) }, project);
       }
 
       case Kind.TypeOperator: {
         const { operator, type } = json as TypeOperatorTypeParser.JSON;
 
-        return new TypeOperatorTypeParser(operator, generateFromJSON(type));
+        return new TypeOperatorTypeParser({ operator, type: generateFromJSON(type, project) }, project);
       }
 
       case Kind.Union: {
         const { types } = json as UnionTypeParser.JSON;
 
-        return new UnionTypeParser(types.map((type) => generateFromJSON(type)));
+        return new UnionTypeParser({ types: types.map((type) => generateFromJSON(type, project)) }, project);
       }
 
       case Kind.Unknown: {
         const { name } = json as UnknownTypeParser.JSON;
 
-        return new UnknownTypeParser(name);
+        return new UnknownTypeParser({ name }, project);
       }
     }
   }
@@ -455,6 +519,10 @@ export namespace TypeParser {
    * @since 1.0.0
    */
   export interface JSON {
+    /**
+     * The kind of type parser this is.
+     * @since 1.0.0
+     */
     kind: Kind;
   }
 }

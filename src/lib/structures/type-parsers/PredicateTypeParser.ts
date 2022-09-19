@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class PredicateTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -30,10 +37,14 @@ export class PredicateTypeParser implements TypeParser {
    */
   public readonly type: TypeParser | null;
 
-  public constructor(asserts: boolean, name: string, type: TypeParser | null) {
+  public constructor(data: PredicateTypeParser.Data, project: ProjectParser) {
+    const { asserts, name, type } = data;
+
     this.asserts = asserts;
     this.name = name;
     this.type = type;
+
+    this.project = project;
   }
 
   /**
@@ -71,6 +82,28 @@ export class PredicateTypeParser implements TypeParser {
 }
 
 export namespace PredicateTypeParser {
+  export interface Data {
+    /**
+     * Whether this predicate type asserts a value.
+     * @since 5.0.0
+     */
+    asserts: boolean;
+
+    /**
+     * The name of this predicate type.
+     * @since 5.0.0
+     */
+    name: string;
+
+    /**
+     * The type of this predicate type.
+     *
+     * If this {@link PredicateTypeParser.asserts} is `false` this will not be `null`
+     * @since 5.0.0
+     */
+    type: TypeParser | null;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Predicate;
 
@@ -90,6 +123,7 @@ export namespace PredicateTypeParser {
      * The type of this predicate type in a JSON compatible format.
      *
      * If this {@link PredicateTypeParser.asserts} is `false` this will not be `null`
+     * @since 1.0.0
      */
     type: TypeParser.JSON | null;
   }

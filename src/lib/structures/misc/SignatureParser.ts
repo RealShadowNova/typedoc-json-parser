@@ -112,7 +112,7 @@ export class SignatureParser {
         comment: CommentParser.generateFromTypeDoc(comment, project),
         typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
         parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter, project)),
-        returnType: TypeParser.generateFromTypeDoc(type!)
+        returnType: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );
@@ -128,7 +128,7 @@ export class SignatureParser {
         comment: CommentParser.generateFromJSON(comment, project),
         typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
         parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter, project)),
-        returnType: TypeParser.generateFromJSON(returnType)
+        returnType: TypeParser.generateFromJSON(returnType, project)
       },
       project
     );

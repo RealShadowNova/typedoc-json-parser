@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class NamedTupleMemberTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The name of this named tuple member.
    * @since 1.0.0
@@ -29,10 +36,14 @@ export class NamedTupleMemberTypeParser implements TypeParser {
    */
   public readonly optional: boolean;
 
-  public constructor(name: string, type: TypeParser, optional: boolean) {
+  public constructor(data: NamedTupleMemberTypeParser.Data, project: ProjectParser) {
+    const { name, type, optional } = data;
+
     this.name = name;
     this.type = type;
     this.optional = optional;
+
+    this.project = project;
   }
 
   /**
@@ -70,6 +81,26 @@ export class NamedTupleMemberTypeParser implements TypeParser {
 }
 
 export namespace NamedTupleMemberTypeParser {
+  export interface Data {
+    /**
+     * The name of this named tuple member.
+     * @since 5.0.0
+     */
+    name: string;
+
+    /**
+     * The type of this named tuple member.
+     * @since 5.0.0
+     */
+    type: TypeParser;
+
+    /**
+     * Whether this named tuple member is optional.
+     * @since 5.0.0
+     */
+    optional: boolean;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.NamedTupleMember;
 

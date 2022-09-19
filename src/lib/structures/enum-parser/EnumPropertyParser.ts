@@ -89,7 +89,7 @@ export class EnumPropertyParser extends Parser {
         comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         parentId,
-        value: TypeParser.generateFromTypeDoc(type!).toString()
+        value: TypeParser.generateFromTypeDoc(type!, project).toString()
       },
       project
     );

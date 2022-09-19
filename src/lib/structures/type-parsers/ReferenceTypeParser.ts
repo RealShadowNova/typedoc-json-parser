@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ReferenceTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -35,11 +42,15 @@ export class ReferenceTypeParser implements TypeParser {
    */
   public readonly typeArguments: TypeParser[];
 
-  public constructor(id: number | null, name: string, packageName: string | null, typeArguments: TypeParser[]) {
+  public constructor(data: ReferenceTypeParser.Data, project: ProjectParser) {
+    const { id, name, packageName, typeArguments } = data;
+
     this.id = id;
     this.name = name;
     this.packageName = packageName;
     this.typeArguments = typeArguments;
+
+    this.project = project;
   }
 
   /**
@@ -89,6 +100,32 @@ export class ReferenceTypeParser implements TypeParser {
 }
 
 export namespace ReferenceTypeParser {
+  export interface Data {
+    /**
+     * The id of this reference type.
+     * @since 5.0.0
+     */
+    id: number | null;
+
+    /**
+     * The name of this reference type.
+     * @since 5.0.0
+     */
+    name: string;
+
+    /**
+     * The package name of this reference type.
+     * @since 5.0.0
+     */
+    packageName: string | null;
+
+    /**
+     * The type arguments of this reference type.
+     * @since 5.0.0
+     */
+    typeArguments: TypeParser[];
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Reference;
 
@@ -112,6 +149,7 @@ export namespace ReferenceTypeParser {
 
     /**
      * The type arguments of this reference type in a JSON compatible format.
+     * @since 1.0.0
      */
     typeArguments: TypeParser.JSON[];
   }

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class MappedTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -47,20 +54,17 @@ export class MappedTypeParser implements TypeParser {
    */
   public readonly optional: MappedTypeParser.Modifier | null;
 
-  public constructor(
-    parameter: string,
-    parameterType: TypeParser,
-    nameType: TypeParser | null,
-    templateType: TypeParser,
-    readonly: MappedTypeParser.Modifier | null,
-    optional: MappedTypeParser.Modifier | null
-  ) {
+  public constructor(data: MappedTypeParser.Data, project: ProjectParser) {
+    const { parameter, parameterType, nameType, templateType, readonly, optional } = data;
+
     this.parameter = parameter;
     this.parameterType = parameterType;
     this.nameType = nameType;
     this.templateType = templateType;
     this.readonly = readonly;
     this.optional = optional;
+
+    this.project = project;
   }
 
   /**
@@ -106,6 +110,44 @@ export class MappedTypeParser implements TypeParser {
 }
 
 export namespace MappedTypeParser {
+  export interface Data {
+    /**
+     * The parameter name of this mapped type.
+     * @since 5.0.0
+     */
+    parameter: string;
+
+    /**
+     * The parameter type of this mapped type.
+     * @since 5.0.0
+     */
+    parameterType: TypeParser;
+
+    /**
+     * The name type of this mapped type.
+     * @since 5.0.0
+     */
+    nameType: TypeParser | null;
+
+    /**
+     * The template type of this mapped type.
+     * @since 5.0.0
+     */
+    templateType: TypeParser;
+
+    /**
+     * The readonly modifier of this mapped type.
+     * @since 5.0.0
+     */
+    readonly: Modifier | null;
+
+    /**
+     * The optional modifier of this mapped type.
+     * @since 5.0.0
+     */
+    optional: Modifier | null;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Mapped;
 
