@@ -73,7 +73,7 @@ export class ParameterParser {
       {
         id,
         name,
-        type: TypeParser.generateFromTypeDoc(type!)
+        type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );
@@ -86,7 +86,7 @@ export class ParameterParser {
       {
         id,
         name,
-        type: TypeParser.generateFromJSON(type)
+        type: TypeParser.generateFromJSON(type, project)
       },
       project
     );

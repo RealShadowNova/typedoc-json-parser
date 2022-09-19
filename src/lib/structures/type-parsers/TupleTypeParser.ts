@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class TupleTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -17,8 +24,12 @@ export class TupleTypeParser implements TypeParser {
    */
   public readonly types: TypeParser[];
 
-  public constructor(types: TypeParser[]) {
+  public constructor(data: TupleTypeParser.Data, project: ProjectParser) {
+    const { types } = data;
+
     this.types = types;
+
+    this.project = project;
   }
 
   /**
@@ -54,6 +65,14 @@ export class TupleTypeParser implements TypeParser {
 }
 
 export namespace TupleTypeParser {
+  export interface Data {
+    /**
+     * The types of this tuple type.
+     * @since 5.0.0
+     */
+    types: TypeParser[];
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Tuple;
 

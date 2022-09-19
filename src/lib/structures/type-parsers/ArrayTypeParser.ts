@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -5,6 +6,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ArrayTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -17,8 +24,12 @@ export class ArrayTypeParser implements TypeParser {
    */
   public readonly type: TypeParser;
 
-  public constructor(type: TypeParser) {
+  public constructor(data: ArrayTypeParser.Data, project: ProjectParser) {
+    const { type } = data;
+
     this.type = type;
+
+    this.project = project;
   }
 
   /**
@@ -54,6 +65,14 @@ export class ArrayTypeParser implements TypeParser {
 }
 
 export namespace ArrayTypeParser {
+  export interface Data {
+    /**
+     * The type of this array type.
+     * @since 5.0.0
+     */
+    type: TypeParser;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Array;
 

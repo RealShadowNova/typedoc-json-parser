@@ -81,7 +81,7 @@ export class InterfacePropertyParser extends Parser {
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         parentId,
         readonly: Boolean(flags.isReadonly),
-        type: TypeParser.generateFromTypeDoc(type!)
+        type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
     );
@@ -98,7 +98,7 @@ export class InterfacePropertyParser extends Parser {
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         parentId,
         readonly,
-        type: TypeParser.generateFromJSON(type)
+        type: TypeParser.generateFromJSON(type, project)
       },
       project
     );

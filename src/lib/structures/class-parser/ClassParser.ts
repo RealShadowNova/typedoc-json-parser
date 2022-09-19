@@ -130,8 +130,8 @@ export class ClassParser extends Parser {
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         abstract: Boolean(flags.isAbstract),
-        extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0]) : null,
-        implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType)),
+        extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0], project) : null,
+        implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType, project)),
         construct: ClassConstructorParser.generateFromTypeDoc(construct, id, project),
         properties,
         methods
@@ -151,8 +151,8 @@ export class ClassParser extends Parser {
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         external,
         abstract,
-        extendsType: extendsType ? TypeParser.generateFromJSON(extendsType) : null,
-        implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType)),
+        extendsType: extendsType ? TypeParser.generateFromJSON(extendsType, project) : null,
+        implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType, project)),
         construct: ClassConstructorParser.generateFromJSON(construct, project),
         properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property, project)),
         methods: methods.map((method) => ClassMethodParser.generateFromJSON(method, project))

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import type { ReferenceTypeParser } from './ReferenceTypeParser';
 import { TypeParser } from './TypeParser';
 
@@ -6,6 +7,12 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class QueryTypeParser implements TypeParser {
+  /**
+   * The project parser this parser belongs to.
+   * @since 5.0.0
+   */
+  public readonly project: ProjectParser;
+
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -18,8 +25,12 @@ export class QueryTypeParser implements TypeParser {
    */
   public readonly query: ReferenceTypeParser;
 
-  public constructor(query: ReferenceTypeParser) {
+  public constructor(data: QueryTypeParser.Data, project: ProjectParser) {
+    const { query } = data;
+
     this.query = query;
+
+    this.project = project;
   }
 
   /**
@@ -55,11 +66,19 @@ export class QueryTypeParser implements TypeParser {
 }
 
 export namespace QueryTypeParser {
+  export interface Data {
+    /**
+     * The query of this query type.
+     * @since 5.0.0
+     */
+    query: ReferenceTypeParser;
+  }
+
   export interface JSON extends TypeParser.JSON {
     kind: TypeParser.Kind.Query;
 
     /**
-     * The query of this query type.
+     * The query of this query type in a JSON compatible format.
      * @since 1.0.0
      */
     query: ReferenceTypeParser.JSON;

@@ -130,7 +130,7 @@ export class ClassPropertyParser extends Parser {
           static: Boolean(flags.isStatic),
           readonly: Boolean(flags.isReadonly),
           optional: Boolean(flags.isOptional),
-          type: type ? TypeParser.generateFromTypeDoc(type) : null
+          type: type ? TypeParser.generateFromTypeDoc(type, project) : null
         },
         project
       );
@@ -152,7 +152,7 @@ export class ClassPropertyParser extends Parser {
         static: Boolean(flags.isStatic),
         readonly: Boolean(flags.isReadonly),
         optional: Boolean(flags.isOptional),
-        type: type ? TypeParser.generateFromTypeDoc(type) : null
+        type: type ? TypeParser.generateFromTypeDoc(type, project) : null
       },
       project
     );
@@ -173,7 +173,7 @@ export class ClassPropertyParser extends Parser {
         static: _static,
         readonly,
         optional,
-        type: type ? TypeParser.generateFromJSON(type) : null
+        type: type ? TypeParser.generateFromJSON(type, project) : null
       },
       project
     );
