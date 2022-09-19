@@ -60,9 +60,9 @@ export class ReflectionTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: ReflectionTypeParser): string => {
+  public static formatToString(parser: ReflectionTypeParser): string {
     return !parser.reflection?.children && parser.reflection?.signatures ? 'Function' : 'Object';
-  };
+  }
 }
 
 export namespace ReflectionTypeParser {

@@ -59,9 +59,9 @@ export class ArrayTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: ArrayTypeParser): string => {
+  public static formatToString(parser: ArrayTypeParser): string {
     return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Array])}[]`;
-  };
+  }
 }
 
 export namespace ArrayTypeParser {

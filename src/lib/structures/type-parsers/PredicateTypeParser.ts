@@ -76,9 +76,9 @@ export class PredicateTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: PredicateTypeParser): string => {
+  public static formatToString(parser: PredicateTypeParser): string {
     return parser.asserts ? `asserts ${parser.name}` : `${parser.name} is ${parser.type!.toString()}`;
-  };
+  }
 }
 
 export namespace PredicateTypeParser {

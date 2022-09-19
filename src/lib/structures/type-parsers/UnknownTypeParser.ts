@@ -59,9 +59,9 @@ export class UnknownTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: UnknownTypeParser): string => {
+  public static formatToString(parser: UnknownTypeParser): string {
     return parser.name;
-  };
+  }
 }
 
 export namespace UnknownTypeParser {

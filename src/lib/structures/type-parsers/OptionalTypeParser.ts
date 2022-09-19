@@ -59,9 +59,9 @@ export class OptionalTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: OptionalTypeParser): string => {
+  public static formatToString(parser: OptionalTypeParser): string {
     return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Optional])}?`;
-  };
+  }
 }
 
 export namespace OptionalTypeParser {

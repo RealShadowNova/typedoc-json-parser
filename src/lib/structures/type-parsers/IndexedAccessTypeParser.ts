@@ -67,9 +67,9 @@ export class IndexedAccessTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: IndexedAccessTypeParser): string => {
+  public static formatToString(parser: IndexedAccessTypeParser): string {
     return `${parser.objectType.toString()}[${parser.indexType.toString()}]`;
-  };
+  }
 }
 
 export namespace IndexedAccessTypeParser {

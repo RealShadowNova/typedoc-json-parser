@@ -67,9 +67,9 @@ export class TypeOperatorTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: TypeOperatorTypeParser): string => {
+  public static formatToString(parser: TypeOperatorTypeParser): string {
     return `${parser.operator} ${parser.type.toString()}`;
-  };
+  }
 }
 
 export namespace TypeOperatorTypeParser {

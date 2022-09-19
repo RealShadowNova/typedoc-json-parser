@@ -75,9 +75,9 @@ export class NamedTupleMemberTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: NamedTupleMemberTypeParser): string => {
+  public static formatToString(parser: NamedTupleMemberTypeParser): string {
     return `${parser.name}${parser.optional ? '?' : ''}: ${parser.type.toString()}`;
-  };
+  }
 }
 
 export namespace NamedTupleMemberTypeParser {

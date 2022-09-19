@@ -82,12 +82,12 @@ export class ConditionalTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: ConditionalTypeParser): string => {
+  public static formatToString(parser: ConditionalTypeParser): string {
     return `${TypeParser.wrap(
       parser.checkType,
       TypeParser.BindingPowers[TypeParser.Kind.Conditional]
     )} extends ${parser.extendsType.toString()} ? ${parser.trueType.toString()} : ${parser.falseType.toString()}`;
-  };
+  }
 }
 
 export namespace ConditionalTypeParser {

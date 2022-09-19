@@ -92,11 +92,11 @@ export class ReferenceTypeParser implements TypeParser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatToString = (parser: ReferenceTypeParser): string => {
+  public static formatToString(parser: ReferenceTypeParser): string {
     const typeArguments = parser.typeArguments.length > 0 ? `<${parser.typeArguments.map((type) => type.toString()).join(', ')}>` : '';
 
     return `${parser.packageName ? `${parser.packageName}.` : ''}${parser.name}${typeArguments}`;
-  };
+  }
 }
 
 export namespace ReferenceTypeParser {
