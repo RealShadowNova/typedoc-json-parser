@@ -4,7 +4,8 @@ export default defineConfig({
   test: {
     globals: true,
     coverage: {
-      reporter: ['text', 'lcov', 'clover']
+      reporter: ['text', 'lcov', 'clover'],
+      exclude: ['**/node_modules/**', '**/dist/**', '**/tests/**']
     }
   },
   esbuild: {

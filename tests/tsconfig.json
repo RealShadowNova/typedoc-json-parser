@@ -4,7 +4,7 @@
     "rootDir": "./",
     "outDir": "./build",
     "tsBuildInfoFile": "./build/.tsbuildinfo",
-    "types": ["vitest/types"]
+    "types": ["vitest/globals"]
   },
   "include": ["./"],
   "references": [{ "path": "../src" }]
