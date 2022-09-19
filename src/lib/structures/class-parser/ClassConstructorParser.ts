@@ -63,9 +63,9 @@ export class ClassConstructorParser extends Parser {
    * @param parser The parser to generate the string representation of.
    * @returns The string representation of the given parser.
    */
-  public static formatToString = (parser: ClassConstructorParser): string => {
+  public static formatToString(parser: ClassConstructorParser): string {
     return `new ${parser.parent.name}(${parser.parameters.map((parameter) => parameter.name).join(', ')})`;
-  };
+  }
 
   /**
    * Generates a new {@link ClassConstructorParser} instance from the given data.
