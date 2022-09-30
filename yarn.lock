@@ -2422,6 +2422,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.4.1":
+  version: 9.4.1
+  resolution: "commander@npm:9.4.1"
+  checksum: bfb18e325a5bdf772763c2213d5c7d9e77144d944124e988bcd8e5e65fb6d45d5d4e86b09155d0f2556c9a59c31e428720e57968bcd050b2306e910a0bf3cf13
+  languageName: node
+  linkType: hard
+
 "compare-func@npm:^2.0.0":
   version: 2.0.0
   resolution: "compare-func@npm:2.0.0"
@@ -6657,7 +6664,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.38.1
     "@vitest/coverage-c8": ^0.23.4
     colorette: ^2.0.19
-    commander: ^9.4.0
+    commander: ^9.4.1
     eslint: ^8.24.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
@@ -6673,7 +6680,7 @@ __metadata:
     rimraf: ^3.0.2
     ts-jest: ^29.0.3
     tslib: ^2.4.0
-    typedoc: ^0.23.14
+    typedoc: ^0.23.15
     typescript: ^4.8.4
     vitest: ^0.23.4
   bin:
@@ -6681,9 +6688,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"typedoc@npm:^0.23.14":
-  version: 0.23.14
-  resolution: "typedoc@npm:0.23.14"
+"typedoc@npm:^0.23.15":
+  version: 0.23.15
+  resolution: "typedoc@npm:0.23.15"
   dependencies:
     lunr: ^2.3.9
     marked: ^4.0.19
@@ -6693,7 +6700,7 @@ __metadata:
     typescript: 4.6.x || 4.7.x || 4.8.x
   bin:
     typedoc: bin/typedoc
-  checksum: 4037dc0db4aa8b205ac505bdc191de404ea2da3eb8dabbf8172851c239b85a96fbfd81503dc2d4789066d6901d76c552abc73ee04a239763b69b90587d44527b
+  checksum: 2313bcda09755332e15e40fb2e72ac8d72447abfcd60f7c555d3a232ad1fe3596afd87ddcfbdf17eb081fc65f1cbf43b02e05adf38e6ade55f64d475da4271d7
   languageName: node
   linkType: hard
 
