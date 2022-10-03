@@ -18,7 +18,7 @@ export class ProjectParser {
    * The version of `typedoc-json-parser` used to generate this project.
    * @since 1.0.0
    */
-  public readonly typeDocJsonParserVersion: string = '[@versionInjector]';
+  public readonly typeDocJsonParserVersion: string = ProjectParser.version;
 
   /**
    * The identifier of this project. This is usually `0`
@@ -354,6 +354,8 @@ export class ProjectParser {
       typeAliases: this.typeAliases.map((parser) => parser.toJSON())
     };
   }
+
+  public static version = '[@versionInjector]';
 }
 
 export namespace ProjectParser {
