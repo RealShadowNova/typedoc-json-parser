@@ -1,4 +1,4 @@
-import { red, yellow } from 'colorette';
+import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind, SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
@@ -110,15 +110,27 @@ export class ProjectParser {
 
       if (incomingTypeDocVersion[0] !== currentTypeDocVersion[0]) {
         console.warn(
-          red(`typedoc-json-parser major version mismatch. Expected ${currentTypeDocVersion[0]}, but received ${incomingTypeDocVersion[0]}`)
+          red(
+            `${bold('[WARNING]')} typedoc-json-parser major version mismatch. Expected ${currentTypeDocVersion[0]}, but received ${
+              incomingTypeDocVersion[0]
+            }`
+          )
         );
       } else if (incomingTypeDocVersion[1] !== currentTypeDocVersion[1]) {
         console.warn(
-          yellow(`typedoc-json-parser minor version mismatch. Expected ${currentTypeDocVersion[1]}, but received ${incomingTypeDocVersion[1]}`)
+          yellow(
+            `${bold('[WARNING]')} typedoc-json-parser minor version mismatch. Expected ${currentTypeDocVersion[1]}, but received ${
+              incomingTypeDocVersion[1]
+            }`
+          )
         );
       } else if (incomingTypeDocVersion[2] !== currentTypeDocVersion[2]) {
         console.warn(
-          yellow(`typedoc-json-parser patch version mismatch. Expected ${currentTypeDocVersion[2]}, but received ${incomingTypeDocVersion[2]}`)
+          yellow(
+            `${bold('[WARNING]')} typedoc-json-parser patch version mismatch. Expected ${currentTypeDocVersion[2]}, but received ${
+              incomingTypeDocVersion[2]
+            }`
+          )
         );
       }
 
