@@ -2,6 +2,7 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
+import { CommentParser } from './CommentParser';
 
 /**
  * Parses data from a parameter reflection.
@@ -27,16 +28,23 @@ export class ParameterParser {
   public readonly name: string;
 
   /**
+   * The comment of this parameter.
+   * @since 5.3.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * The type of this parameter.
    * @since 1.0.0
    */
   public readonly type: TypeParser;
 
   public constructor(data: ParameterParser.Data, project: ProjectParser) {
-    const { id, name, type } = data;
+    const { id, name, comment, type } = data;
 
     this.id = id;
     this.name = name;
+    this.comment = comment;
     this.type = type;
 
     this.project = project;
@@ -51,6 +59,7 @@ export class ParameterParser {
     return {
       id: this.id,
       name: this.name,
+      comment: this.comment.toJSON(),
       type: this.type.toJSON()
     };
   }
@@ -63,7 +72,7 @@ export class ParameterParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ParameterParser {
-    const { kind, kindString = 'Unknown', id, name, type } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
       throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${kindString} (${kind})`);
@@ -73,6 +82,7 @@ export class ParameterParser {
       {
         id,
         name,
+        comment: CommentParser.generateFromTypeDoc(comment, project),
         type: TypeParser.generateFromTypeDoc(type!, project)
       },
       project
@@ -80,12 +90,13 @@ export class ParameterParser {
   }
 
   public static generateFromJSON(json: ParameterParser.JSON, project: ProjectParser): ParameterParser {
-    const { id, name, type } = json;
+    const { id, name, comment, type } = json;
 
     return new ParameterParser(
       {
         id,
         name,
+        comment: CommentParser.generateFromJSON(comment, project),
         type: TypeParser.generateFromJSON(type, project)
       },
       project
@@ -108,6 +119,12 @@ export namespace ParameterParser {
     name: string;
 
     /**
+     * The comment of this parameter.
+     * @since 5.3.0
+     */
+    comment: CommentParser;
+
+    /**
      * The type of this parameter.
      * @since 1.0.0
      */
@@ -126,6 +143,12 @@ export namespace ParameterParser {
      * @since 1.0.0
      */
     name: string;
+
+    /**
+     * The comment of this parameter.
+     * @since 5.3.0
+     */
+    comment: CommentParser.JSON;
 
     /**
      * The type of this parameter in a JSON compatible format.
