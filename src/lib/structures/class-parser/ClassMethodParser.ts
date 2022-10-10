@@ -1,6 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import { CommentParser, SignatureParser, SourceParser } from '../misc';
+import { SignatureParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { ClassParser } from './ClassParser';
@@ -84,7 +84,7 @@ export class ClassMethodParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): ClassMethodParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
+    const { kind, kindString = 'Unknown', id, name, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
 
@@ -92,7 +92,6 @@ export class ClassMethodParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         parentId,
         accessibility: flags.isPrivate
@@ -109,13 +108,12 @@ export class ClassMethodParser extends Parser {
   }
 
   public static generateFromJSON(json: ClassMethodParser.JSON, project: ProjectParser): ClassMethodParser {
-    const { id, name, comment, source, parentId, accessibility, abstract, static: _static, signatures } = json;
+    const { id, name, source, parentId, accessibility, abstract, static: _static, signatures } = json;
 
     return new ClassMethodParser(
       {
         id,
         name,
-        comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         parentId,
         accessibility,

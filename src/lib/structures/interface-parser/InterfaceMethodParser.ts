@@ -1,6 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import { CommentParser, SignatureParser, SourceParser } from '../misc';
+import { SignatureParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import type { InterfaceParser } from './InterfaceParser';
@@ -60,7 +60,7 @@ export class InterfaceMethodParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): InterfaceMethodParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], signatures = [] } = reflection;
+    const { kind, kindString = 'Unknown', id, name, sources = [], signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
 
@@ -68,7 +68,6 @@ export class InterfaceMethodParser extends Parser {
       {
         id,
         name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         parentId,
         signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature, project))
@@ -78,13 +77,12 @@ export class InterfaceMethodParser extends Parser {
   }
 
   public static generateFromJSON(json: InterfaceMethodParser.JSON, project: ProjectParser): InterfaceMethodParser {
-    const { id, name, comment, source, parentId, signatures } = json;
+    const { id, name, source, parentId, signatures } = json;
 
     return new InterfaceMethodParser(
       {
         id,
         name,
-        comment: CommentParser.generateFromJSON(comment, project),
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         parentId,
         signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature, project))

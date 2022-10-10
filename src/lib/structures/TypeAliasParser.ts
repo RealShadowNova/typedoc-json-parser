@@ -11,6 +11,12 @@ import { TypeParser } from './type-parsers';
  */
 export class TypeAliasParser extends Parser {
   /**
+   * The comment parser of this type alias.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this type alias is external.
    * @since 1.0.0
    */
@@ -31,8 +37,9 @@ export class TypeAliasParser extends Parser {
   public constructor(data: TypeAliasParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, typeParameters, type } = data;
+    const { comment, external, typeParameters, type } = data;
 
+    this.comment = comment;
     this.external = external;
     this.typeParameters = typeParameters;
     this.type = type;
@@ -46,6 +53,7 @@ export class TypeAliasParser extends Parser {
   public toJSON(): TypeAliasParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       typeParameters: this.typeParameters.map((typeParameter) => typeParameter.toJSON()),
       type: this.type.toJSON()
@@ -99,6 +107,12 @@ export class TypeAliasParser extends Parser {
 export namespace TypeAliasParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this type alias.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this type alias is external.
      * @since 1.0.0
      */
@@ -118,6 +132,12 @@ export namespace TypeAliasParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this type alias.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this type alias is external.
      * @since 1.0.0

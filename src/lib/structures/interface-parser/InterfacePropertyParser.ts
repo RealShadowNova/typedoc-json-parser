@@ -12,6 +12,12 @@ import type { InterfaceParser } from './InterfaceParser';
  */
 export class InterfacePropertyParser extends Parser {
   /**
+   * The comment parser of this property.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * The id of the parent interface parser.
    * @since 4.0.0
    */
@@ -32,8 +38,9 @@ export class InterfacePropertyParser extends Parser {
   public constructor(data: InterfacePropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { parentId, readonly, type } = data;
+    const { comment, parentId, readonly, type } = data;
 
+    this.comment = comment;
     this.parentId = parentId;
     this.readonly = readonly;
     this.type = type;
@@ -55,6 +62,7 @@ export class InterfacePropertyParser extends Parser {
   public toJSON(): InterfacePropertyParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       parentId: this.parentId,
       readonly: this.readonly,
       type: this.type.toJSON()
@@ -108,6 +116,12 @@ export class InterfacePropertyParser extends Parser {
 export namespace InterfacePropertyParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * The id of the parent interface parser.
      * @since 4.0.0
      */
@@ -127,6 +141,12 @@ export namespace InterfacePropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * The id of the parent interface parser.
      * @since 4.0.0

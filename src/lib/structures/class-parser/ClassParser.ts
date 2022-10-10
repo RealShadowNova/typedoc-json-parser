@@ -14,6 +14,12 @@ import { ClassPropertyParser } from './ClassPropertyParser';
  */
 export class ClassParser extends Parser {
   /**
+   * The comment parser of this class.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this class is external.
    * @since 1.0.0
    */
@@ -58,8 +64,9 @@ export class ClassParser extends Parser {
   public constructor(data: ClassParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, abstract, extendsType, implementsType, construct, properties, methods } = data;
+    const { comment, external, abstract, extendsType, implementsType, construct, properties, methods } = data;
 
+    this.comment = comment;
     this.external = external;
     this.abstract = abstract;
     this.extendsType = extendsType;
@@ -77,6 +84,7 @@ export class ClassParser extends Parser {
   public toJSON(): ClassParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       abstract: this.abstract,
       extendsType: this.extendsType ? this.extendsType.toJSON() : null,
@@ -165,6 +173,12 @@ export class ClassParser extends Parser {
 export namespace ClassParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this class.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this class is external.
      * @since 1.0.0
      */
@@ -208,6 +222,12 @@ export namespace ClassParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this class.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this class is external.
      * @since 1.0.0

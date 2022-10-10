@@ -10,6 +10,12 @@ import type { ProjectParser } from './ProjectParser';
  */
 export class FunctionParser extends Parser {
   /**
+   * The comment parser of this function.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this function is external.
    * @since 1.0.0
    */
@@ -24,8 +30,9 @@ export class FunctionParser extends Parser {
   public constructor(data: FunctionParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, signatures } = data;
+    const { comment, external, signatures } = data;
 
+    this.comment = comment;
     this.external = external;
     this.signatures = signatures;
   }
@@ -38,6 +45,7 @@ export class FunctionParser extends Parser {
   public toJSON(): FunctionParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       signatures: this.signatures.map((signature) => signature.toJSON())
     };
@@ -88,6 +96,12 @@ export class FunctionParser extends Parser {
 export namespace FunctionParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this function.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this function is external.
      * @since 1.0.0
      */
@@ -101,6 +115,12 @@ export namespace FunctionParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this function.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this function is external.
      * @since 1.0.0

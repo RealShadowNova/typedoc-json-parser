@@ -12,6 +12,12 @@ import { InterfacePropertyParser } from './InterfacePropertyParser';
  */
 export class InterfaceParser extends Parser {
   /**
+   * The comment parser of this interface.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this interface is external.
    * @since 1.0.0
    */
@@ -32,8 +38,9 @@ export class InterfaceParser extends Parser {
   public constructor(data: InterfaceParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, properties, methods } = data;
+    const { comment, external, properties, methods } = data;
 
+    this.comment = comment;
     this.external = external;
     this.properties = properties;
     this.methods = methods;
@@ -47,6 +54,7 @@ export class InterfaceParser extends Parser {
   public toJSON(): InterfaceParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       properties: this.properties.map((parser) => parser.toJSON()),
       methods: this.methods.map((parser) => parser.toJSON())
@@ -108,6 +116,12 @@ export class InterfaceParser extends Parser {
 export namespace InterfaceParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this interface.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this interface is external.
      * @since 1.0.0
      */
@@ -127,6 +141,12 @@ export namespace InterfaceParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this interface.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this interface is external.
      * @since 1.0.0

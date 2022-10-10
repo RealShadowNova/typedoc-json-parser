@@ -16,6 +16,12 @@ import { TypeAliasParser } from './TypeAliasParser';
  */
 export class NamespaceParser extends Parser {
   /**
+   * The comment parser of this namespace.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this namespace is external.
    * @since 1.0.0
    */
@@ -66,8 +72,9 @@ export class NamespaceParser extends Parser {
   public constructor(data: NamespaceParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
+    const { comment, external, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
 
+    this.comment = comment;
     this.external = external;
     this.classes = classes;
     this.constants = constants;
@@ -253,6 +260,7 @@ export class NamespaceParser extends Parser {
   public toJSON(): NamespaceParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       classes: this.classes.map((parser) => parser.toJSON()),
       constants: this.constants.map((parser) => parser.toJSON()),
@@ -343,6 +351,12 @@ export class NamespaceParser extends Parser {
 export namespace NamespaceParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this namespace.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this namespace is external.
      * @since 1.0.0
      */
@@ -392,6 +406,12 @@ export namespace NamespaceParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this namespace.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this namespace is external.
      * @since 1.0.0
