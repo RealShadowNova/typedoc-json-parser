@@ -113,12 +113,6 @@ export namespace VariableParser {
     comment: CommentParser;
 
     /**
-     * The comment parser of this constant.
-     * @since 1.0.0
-     */
-    comment: CommentParser;
-
-    /**
      * Whether this variable is external.
      * @since 1.0.0
      */
@@ -140,12 +134,6 @@ export namespace VariableParser {
   export interface JSON extends Parser.JSON {
     /**
      * The comment parser of this constant.
-     * @since 1.0.0
-     */
-    comment: CommentParser.JSON;
-
-    /**
-     * The comment parser of this variable.
      * @since 1.0.0
      */
     comment: CommentParser.JSON;
