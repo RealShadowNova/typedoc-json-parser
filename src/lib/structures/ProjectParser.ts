@@ -206,7 +206,7 @@ export class ProjectParser {
     for (const enumParser of this.enums) {
       if (enumParser.id === id) return enumParser;
 
-      for (const propertyParser of enumParser.properties) if (propertyParser.id === id) return propertyParser;
+      for (const propertyParser of enumParser.members) if (propertyParser.id === id) return propertyParser;
     }
 
     for (const functionParser of this.functions) if (functionParser.id === id) return functionParser;
@@ -276,7 +276,7 @@ export class ProjectParser {
           continue;
         }
 
-        for (const enumMemberParser of enumParser.properties) {
+        for (const enumMemberParser of enumParser.members) {
           if (enumMemberParser.name.toLowerCase().includes(words[1])) {
             results.push(enumMemberParser);
 

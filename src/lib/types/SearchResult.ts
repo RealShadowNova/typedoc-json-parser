@@ -1,5 +1,5 @@
 import type { ClassConstructorParser, ClassMethodParser, ClassParser, ClassPropertyParser } from '../structures/class-parser';
-import type { EnumParser, EnumPropertyParser } from '../structures/enum-parser';
+import type { EnumMemberParser, EnumParser } from '../structures/enum-parser';
 import type { FunctionParser } from '../structures/FunctionParser';
 import type { InterfaceParser, InterfacePropertyParser } from '../structures/interface-parser';
 import type { ParameterParser, SignatureParser, TypeParameterParser } from '../structures/misc';
@@ -17,7 +17,7 @@ export type SearchResult =
   | ClassPropertyParser
   | VariableParser
   | EnumParser
-  | EnumPropertyParser
+  | EnumMemberParser
   | FunctionParser
   | InterfaceParser
   | InterfacePropertyParser

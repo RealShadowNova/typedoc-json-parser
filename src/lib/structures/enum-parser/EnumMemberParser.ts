@@ -10,7 +10,7 @@ import type { EnumParser } from './EnumParser';
  * Parses data from an enum property reflection.
  * @since 1.0.0
  */
-export class EnumPropertyParser extends Parser {
+export class EnumMemberParser extends Parser {
   /**
    * The comment parser of this property.
    * @since 1.0.0
@@ -29,7 +29,7 @@ export class EnumPropertyParser extends Parser {
    */
   public readonly value: string;
 
-  public constructor(data: EnumPropertyParser.Data, project: ProjectParser) {
+  public constructor(data: EnumMemberParser.Data, project: ProjectParser) {
     super(data, project);
 
     const { comment, parentId, value } = data;
@@ -48,7 +48,7 @@ export class EnumPropertyParser extends Parser {
    * @since 1.0.0
    * @returns The JSON compatible format of this parser.
    */
-  public toJSON(): EnumPropertyParser.JSON {
+  public toJSON(): EnumMemberParser.JSON {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -63,7 +63,7 @@ export class EnumPropertyParser extends Parser {
    * @returns The string representation of this parser.
    */
   public toString(): string {
-    return EnumPropertyParser.formatMessage(this);
+    return EnumMemberParser.formatMessage(this);
   }
 
   /**
@@ -72,25 +72,25 @@ export class EnumPropertyParser extends Parser {
    * @param parser The parser to format.
    * @returns The string representation of this parser.
    */
-  public static formatMessage = (parser: EnumPropertyParser): string => {
+  public static formatMessage = (parser: EnumMemberParser): string => {
     return `${parser.name} = ${parser.value}`;
   };
 
   /**
-   * Generates a new {@link EnumPropertyParser} instance from the given data.
+   * Generates a new {@link EnumMemberParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): EnumPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): EnumMemberParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
       throw new Error(`Expected EnumMember (${ReflectionKind.EnumMember}), but received ${kindString} (${kind})`);
     }
 
-    return new EnumPropertyParser(
+    return new EnumMemberParser(
       {
         id,
         name,
@@ -103,10 +103,10 @@ export class EnumPropertyParser extends Parser {
     );
   }
 
-  public static generateFromJSON(json: EnumPropertyParser.JSON, project: ProjectParser): EnumPropertyParser {
+  public static generateFromJSON(json: EnumMemberParser.JSON, project: ProjectParser): EnumMemberParser {
     const { id, name, comment, source, parentId, value } = json;
 
-    return new EnumPropertyParser(
+    return new EnumMemberParser(
       {
         id,
         name,
@@ -120,7 +120,7 @@ export class EnumPropertyParser extends Parser {
   }
 }
 
-export namespace EnumPropertyParser {
+export namespace EnumMemberParser {
   export interface Data extends Parser.Data {
     /**
      * The comment parser of this property.
