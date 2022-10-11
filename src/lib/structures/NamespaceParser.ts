@@ -1,7 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind, SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
-import { ConstantParser } from './ConstantParser';
 import { EnumParser } from './enum-parser';
 import { FunctionParser } from './FunctionParser';
 import { InterfaceParser } from './interface-parser';
@@ -9,6 +8,7 @@ import { CommentParser, SourceParser } from './misc';
 import { Parser } from './Parser';
 import type { ProjectParser } from './ProjectParser';
 import { TypeAliasParser } from './TypeAliasParser';
+import { VariableParser } from './VariableParser';
 
 /**
  * Parses data from a namespace reflection.
@@ -32,12 +32,6 @@ export class NamespaceParser extends Parser {
    * @since 1.0.0
    */
   public readonly classes: ClassParser[];
-
-  /**
-   * The constant parsers of this namespace.
-   * @since 1.0.0
-   */
-  public readonly constants: ConstantParser[];
 
   /**
    * The enum parsers of this namespace.
@@ -69,20 +63,26 @@ export class NamespaceParser extends Parser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
+  /**
+   * The variable parsers of this namespace.
+   * @since 1.0.0
+   */
+  public readonly variables: VariableParser[];
+
   public constructor(data: NamespaceParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { comment, external, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
+    const { comment, external, classes, enums, functions, interfaces, namespaces, typeAliases, variables } = data;
 
     this.comment = comment;
     this.external = external;
     this.classes = classes;
-    this.constants = constants;
     this.enums = enums;
     this.functions = functions;
     this.interfaces = interfaces;
     this.namespaces = namespaces;
     this.typeAliases = typeAliases;
+    this.variables = variables;
   }
 
   /**
@@ -110,7 +110,6 @@ export class NamespaceParser extends Parser {
       for (const propertyParser of classParser.properties) if (propertyParser.id === id) return propertyParser;
     }
 
-    for (const constantParser of this.constants) if (constantParser.id === id) return constantParser;
     for (const enumParser of this.enums) {
       if (enumParser.id === id) return enumParser;
 
@@ -133,6 +132,7 @@ export class NamespaceParser extends Parser {
     }
 
     for (const typeAliasParser of this.typeAliases) if (typeAliasParser.id === id) return typeAliasParser;
+    for (const variableParser of this.variables) if (variableParser.id === id) return variableParser;
 
     return null;
   }
@@ -172,14 +172,6 @@ export class NamespaceParser extends Parser {
             continue;
           }
         }
-      }
-    }
-
-    for (const constantParser of this.constants) {
-      if (constantParser.name.toLowerCase().includes(words[0])) {
-        results.push(constantParser);
-
-        continue;
       }
     }
 
@@ -249,6 +241,14 @@ export class NamespaceParser extends Parser {
       }
     }
 
+    for (const variableParser of this.variables) {
+      if (variableParser.name.toLowerCase().includes(words[0])) {
+        results.push(variableParser);
+
+        continue;
+      }
+    }
+
     return results;
   }
 
@@ -263,12 +263,12 @@ export class NamespaceParser extends Parser {
       comment: this.comment.toJSON(),
       external: this.external,
       classes: this.classes.map((parser) => parser.toJSON()),
-      constants: this.constants.map((parser) => parser.toJSON()),
       enums: this.enums.map((parser) => parser.toJSON()),
       functions: this.functions.map((parser) => parser.toJSON()),
       interfaces: this.interfaces.map((parser) => parser.toJSON()),
       namespaces: this.namespaces.map((parser) => parser.toJSON()),
-      typeAliases: this.typeAliases.map((parser) => parser.toJSON())
+      typeAliases: this.typeAliases.map((parser) => parser.toJSON()),
+      variables: this.variables.map((parser) => parser.toJSON())
     };
   }
 
@@ -285,10 +285,6 @@ export class NamespaceParser extends Parser {
     if (kind !== ReflectionKind.Namespace) throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${kindString} (${kind})`);
 
     const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, project));
-    const constants = children
-      .filter((child) => child.kind === ReflectionKind.Variable)
-      .map((child) => ConstantParser.generateFromTypeDoc(child, project));
-
     const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, project));
     const functions = children
       .filter((child) => child.kind === ReflectionKind.Function)
@@ -306,6 +302,10 @@ export class NamespaceParser extends Parser {
       .filter((child) => child.kind === ReflectionKind.TypeAlias)
       .map((child) => TypeAliasParser.generateFromTypeDoc(child, project));
 
+    const variables = children
+      .filter((child) => child.kind === ReflectionKind.Variable)
+      .map((child) => VariableParser.generateFromTypeDoc(child, project));
+
     return new NamespaceParser(
       {
         id,
@@ -314,19 +314,19 @@ export class NamespaceParser extends Parser {
         source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
         external: Boolean(flags.isExternal),
         classes,
-        constants,
         enums,
         functions,
         interfaces,
         namespaces,
-        typeAliases
+        typeAliases,
+        variables
       },
       project
     );
   }
 
   public static generateFromJSON(json: NamespaceParser.JSON, project: ProjectParser): NamespaceParser {
-    const { id, name, comment, source, external, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = json;
+    const { id, name, comment, source, external, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = json;
 
     return new NamespaceParser(
       {
@@ -336,12 +336,12 @@ export class NamespaceParser extends Parser {
         source: source ? SourceParser.generateFromJSON(source, project) : null,
         external,
         classes: classes.map((json) => ClassParser.generateFromJSON(json, project)),
-        constants: constants.map((json) => ConstantParser.generateFromJSON(json, project)),
         enums: enums.map((json) => EnumParser.generateFromJSON(json, project)),
         functions: functions.map((json) => FunctionParser.generateFromJSON(json, project)),
         interfaces: interfaces.map((json) => InterfaceParser.generateFromJSON(json, project)),
         namespaces: namespaces.map((json) => NamespaceParser.generateFromJSON(json, project)),
-        typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, project))
+        typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, project)),
+        variables: variables.map((json) => VariableParser.generateFromJSON(json, project))
       },
       project
     );
@@ -367,12 +367,6 @@ export namespace NamespaceParser {
      * @since 1.0.0
      */
     classes: ClassParser[];
-
-    /**
-     * The constant parsers of this namespace.
-     * @since 1.0.0
-     */
-    constants: ConstantParser[];
 
     /**
      * The enum parsers of this namespace.
@@ -403,6 +397,12 @@ export namespace NamespaceParser {
      * @since 1.0.0
      */
     typeAliases: TypeAliasParser[];
+
+    /**
+     * The variable parsers of this namespace.
+     * @since 1.0.0
+     */
+    variables: VariableParser[];
   }
 
   export interface JSON extends Parser.JSON {
@@ -423,12 +423,6 @@ export namespace NamespaceParser {
      * @since 1.0.0
      */
     classes: ClassParser.JSON[];
-
-    /**
-     * The constant parsers of this namespace in a JSON compatible format.
-     * @since 1.0.0
-     */
-    constants: ConstantParser.JSON[];
 
     /**
      * The enum parsers of this namespace in a JSON compatible format.
@@ -459,5 +453,11 @@ export namespace NamespaceParser {
      * @since 1.0.0
      */
     typeAliases: TypeAliasParser.JSON[];
+
+    /**
+     * The variable parsers of this namespace in a JSON compatible format.
+     * @since 1.0.0
+     */
+    variables: VariableParser.JSON[];
   }
 }
