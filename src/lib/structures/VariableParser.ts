@@ -6,35 +6,35 @@ import type { ProjectParser } from './ProjectParser';
 import { TypeParser } from './type-parsers';
 
 /**
- * Parses data from a constant reflection.
+ * Parses data from a variable reflection.
  * @since 1.0.0
  */
-export class ConstantParser extends Parser {
+export class VariableParser extends Parser {
   /**
-   * The comment parser of this constant.
+   * The comment parser of this variable.
    * @since 1.0.0
    */
   public readonly comment: CommentParser;
 
   /**
-   * Whether this constant is external.
+   * Whether this variable is external.
    * @since 1.0.0
    */
   public readonly external: boolean;
 
   /**
-   * The type of this constant.
+   * The type of this variable.
    * @since 1.0.0
    */
   public readonly type: TypeParser;
 
   /**
-   * The value of this constant.
+   * The value of this variable.
    * @since 1.0.0
    */
   public readonly value: string;
 
-  public constructor(data: ConstantParser.Data, project: ProjectParser) {
+  public constructor(data: VariableParser.Data, project: ProjectParser) {
     super(data, project);
 
     const { comment, external, type, value } = data;
@@ -50,7 +50,7 @@ export class ConstantParser extends Parser {
    * @since 1.0.0
    * @returns The JSON compatible format of this parser.
    */
-  public toJSON(): ConstantParser.JSON {
+  public toJSON(): VariableParser.JSON {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -61,18 +61,18 @@ export class ConstantParser extends Parser {
   }
 
   /**
-   * Generates a new {@link ConstantParser} instance from the given data.
+   * Generates a new {@link VariableParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
    * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ConstantParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): VariableParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, type, defaultValue } = reflection;
 
     if (kind !== ReflectionKind.Variable) throw new Error(`Expected Variable (${ReflectionKind.Variable}), but received ${kindString} (${kind})`);
 
-    return new ConstantParser(
+    return new VariableParser(
       {
         id,
         name,
@@ -86,10 +86,10 @@ export class ConstantParser extends Parser {
     );
   }
 
-  public static generateFromJSON(json: ConstantParser.JSON, project: ProjectParser): ConstantParser {
+  public static generateFromJSON(json: VariableParser.JSON, project: ProjectParser): VariableParser {
     const { id, name, comment, source, external, type, value } = json;
 
-    return new ConstantParser(
+    return new VariableParser(
       {
         id,
         name,
@@ -104,8 +104,14 @@ export class ConstantParser extends Parser {
   }
 }
 
-export namespace ConstantParser {
+export namespace VariableParser {
   export interface Data extends Parser.Data {
+    /**
+     * The comment parser of this variable.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
     /**
      * The comment parser of this constant.
      * @since 1.0.0
@@ -113,19 +119,19 @@ export namespace ConstantParser {
     comment: CommentParser;
 
     /**
-     * Whether this constant is external.
+     * Whether this variable is external.
      * @since 1.0.0
      */
     external: boolean;
 
     /**
-     * The type of this constant.
+     * The type of this variable.
      * @since 1.0.0
      */
     type: TypeParser;
 
     /**
-     * The value of this constant.
+     * The value of this variable.
      * @since 1.0.0
      */
     value: string;
@@ -139,19 +145,25 @@ export namespace ConstantParser {
     comment: CommentParser.JSON;
 
     /**
-     * Whether this constant is external.
+     * The comment parser of this variable.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
+    /**
+     * Whether this variable is external.
      * @since 1.0.0
      */
     external: boolean;
 
     /**
-     * The type of this constant in a JSON compatible format.
+     * The type of this variable in a JSON compatible format.
      * @since 1.0.0
      */
     type: TypeParser.JSON;
 
     /**
-     * The value of this constant.
+     * The value of this variable.
      * @since 1.0.0
      */
     value: string;

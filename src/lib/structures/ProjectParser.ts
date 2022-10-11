@@ -2,12 +2,12 @@ import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind, SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
-import { ConstantParser } from './ConstantParser';
 import { EnumParser } from './enum-parser';
 import { FunctionParser } from './FunctionParser';
 import { InterfaceParser } from './interface-parser';
 import { NamespaceParser } from './NamespaceParser';
 import { TypeAliasParser } from './TypeAliasParser';
+import { VariableParser } from './VariableParser';
 
 /**
  * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.JSON}
@@ -61,12 +61,6 @@ export class ProjectParser {
   public readonly classes: ClassParser[];
 
   /**
-   * An array of constant parsers for this project.
-   * @since 1.0.0
-   */
-  public readonly constants: ConstantParser[];
-
-  /**
    * An array of enum parsers for this project.
    * @since 1.0.0
    */
@@ -96,6 +90,12 @@ export class ProjectParser {
    */
   public readonly typeAliases: TypeAliasParser[];
 
+  /**
+   * An array of variable parsers for this project.
+   * @since 1.0.0
+   */
+  public readonly variables: VariableParser[];
+
   public constructor(options: ProjectParser.Options) {
     const { data, version, readme, changelog } = options;
     const { id, name } = data;
@@ -104,7 +104,7 @@ export class ProjectParser {
     this.name = name;
 
     if ('classes' in data) {
-      const { typeDocJsonParserVersion, classes, constants, enums, functions, interfaces, namespaces, typeAliases } = data;
+      const { typeDocJsonParserVersion, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = data;
       const incomingTypeDocVersion = typeDocJsonParserVersion.split('.').map(Number) as [number, number, number];
       const currentTypeDocVersion = this.typeDocJsonParserVersion.split('.').map(Number) as [number, number, number];
 
@@ -139,12 +139,12 @@ export class ProjectParser {
       this.readme = readme ?? data.readme;
       this.changelog = changelog ?? data.changelog;
       this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
-      this.constants = constants.map((json) => ConstantParser.generateFromJSON(json, this));
       this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
       this.functions = functions.map((json) => FunctionParser.generateFromJSON(json, this));
       this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJSON(json, this));
       this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json, this));
       this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, this));
+      this.variables = variables.map((json) => VariableParser.generateFromJSON(json, this));
     } else {
       const { kind, kindString = 'Unknown', children = [] } = data;
 
@@ -154,9 +154,6 @@ export class ProjectParser {
       this.readme = readme ?? null;
       this.changelog = changelog ?? null;
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
-      this.constants = children
-        .filter((child) => child.kind === ReflectionKind.Variable)
-        .map((child) => ConstantParser.generateFromTypeDoc(child, this));
 
       this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, this));
       this.functions = children
@@ -174,6 +171,10 @@ export class ProjectParser {
       this.typeAliases = children
         .filter((child) => child.kind === ReflectionKind.TypeAlias)
         .map((child) => TypeAliasParser.generateFromTypeDoc(child, this));
+
+      this.variables = children
+        .filter((child) => child.kind === ReflectionKind.Variable)
+        .map((child) => VariableParser.generateFromTypeDoc(child, this));
     }
   }
 
@@ -202,7 +203,6 @@ export class ProjectParser {
       for (const propertyParser of classParser.properties) if (propertyParser.id === id) return propertyParser;
     }
 
-    for (const constantParser of this.constants) if (constantParser.id === id) return constantParser;
     for (const enumParser of this.enums) {
       if (enumParser.id === id) return enumParser;
 
@@ -225,6 +225,7 @@ export class ProjectParser {
     }
 
     for (const typeAliasParser of this.typeAliases) if (typeAliasParser.id === id) return typeAliasParser;
+    for (const variableParser of this.variables) if (variableParser.id === id) return variableParser;
 
     return null;
   }
@@ -264,14 +265,6 @@ export class ProjectParser {
             continue;
           }
         }
-      }
-    }
-
-    for (const constantParser of this.constants) {
-      if (constantParser.name.toLowerCase().includes(words[0])) {
-        results.push(constantParser);
-
-        continue;
       }
     }
 
@@ -341,6 +334,14 @@ export class ProjectParser {
       }
     }
 
+    for (const variableParser of this.variables) {
+      if (variableParser.name.toLowerCase().includes(words[0])) {
+        results.push(variableParser);
+
+        continue;
+      }
+    }
+
     return results;
   }
 
@@ -358,12 +359,12 @@ export class ProjectParser {
       readme: this.readme,
       changelog: this.changelog,
       classes: this.classes.map((parser) => parser.toJSON()),
-      constants: this.constants.map((parser) => parser.toJSON()),
       enums: this.enums.map((parser) => parser.toJSON()),
       functions: this.functions.map((parser) => parser.toJSON()),
       interfaces: this.interfaces.map((parser) => parser.toJSON()),
       namespaces: this.namespaces.map((parser) => parser.toJSON()),
-      typeAliases: this.typeAliases.map((parser) => parser.toJSON())
+      typeAliases: this.typeAliases.map((parser) => parser.toJSON()),
+      variables: this.variables.map((parser) => parser.toJSON())
     };
   }
 
@@ -445,12 +446,6 @@ export namespace ProjectParser {
     classes: ClassParser.JSON[];
 
     /**
-     * An array of constant JSON compatible objects for this project in a JSON compatible format.
-     * @since 1.0.0
-     */
-    constants: ConstantParser.JSON[];
-
-    /**
      * An array of enum JSON compatible objects for this project in a JSON compatible format.
      * @since 1.0.0
      */
@@ -479,5 +474,11 @@ export namespace ProjectParser {
      * @since 1.0.0
      */
     typeAliases: TypeAliasParser.JSON[];
+
+    /**
+     * An array of variable JSON compatible objects for this project in a JSON compatible format.
+     * @since 1.0.0
+     */
+    variables: VariableParser.JSON[];
   }
 }
