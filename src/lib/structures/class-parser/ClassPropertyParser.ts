@@ -12,6 +12,12 @@ import { ClassParser } from './ClassParser';
  */
 export class ClassPropertyParser extends Parser {
   /**
+   * The comment parser of this property.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * The id of the parent class parser.
    * @since 4.0.0
    */
@@ -56,8 +62,9 @@ export class ClassPropertyParser extends Parser {
   public constructor(data: ClassPropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { parentId, accessibility, abstract, static: _static, readonly, optional, type } = data;
+    const { comment, parentId, accessibility, abstract, static: _static, readonly, optional, type } = data;
 
+    this.comment = comment;
     this.parentId = parentId;
     this.accessibility = accessibility;
     this.abstract = abstract;
@@ -83,6 +90,7 @@ export class ClassPropertyParser extends Parser {
   public toJSON(): ClassPropertyParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       parentId: this.parentId,
       accessibility: this.accessibility,
       abstract: this.abstract,
@@ -183,6 +191,12 @@ export class ClassPropertyParser extends Parser {
 export namespace ClassPropertyParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * The id of the parent class parser.
      * @since 4.0.0
      */
@@ -226,6 +240,12 @@ export namespace ClassPropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * The id of the parent class parser.
      * @since 4.0.0

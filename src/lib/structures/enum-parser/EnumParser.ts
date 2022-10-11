@@ -11,6 +11,12 @@ import { EnumPropertyParser } from './EnumPropertyParser';
  */
 export class EnumParser extends Parser {
   /**
+   * The comment parser of this enum.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this enum is external.
    * @since 1.0.0
    */
@@ -25,8 +31,9 @@ export class EnumParser extends Parser {
   public constructor(data: EnumParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, properties } = data;
+    const { comment, external, properties } = data;
 
+    this.comment = comment;
     this.external = external;
     this.properties = properties;
   }
@@ -39,6 +46,7 @@ export class EnumParser extends Parser {
   public toJSON(): EnumParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       properties: this.properties
     };
@@ -93,6 +101,12 @@ export class EnumParser extends Parser {
 export namespace EnumParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this enum.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this enum is external.
      * @since 1.0.0
      */
@@ -106,6 +120,12 @@ export namespace EnumParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this enum.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this enum is external.
      * @since 1.0.0

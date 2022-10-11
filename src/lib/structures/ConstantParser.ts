@@ -11,6 +11,12 @@ import { TypeParser } from './type-parsers';
  */
 export class ConstantParser extends Parser {
   /**
+   * The comment parser of this constant.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * Whether this constant is external.
    * @since 1.0.0
    */
@@ -31,8 +37,9 @@ export class ConstantParser extends Parser {
   public constructor(data: ConstantParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { external, type, value } = data;
+    const { comment, external, type, value } = data;
 
+    this.comment = comment;
     this.external = external;
     this.type = type;
     this.value = value;
@@ -46,6 +53,7 @@ export class ConstantParser extends Parser {
   public toJSON(): ConstantParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       external: this.external,
       type: this.type.toJSON(),
       value: this.value
@@ -99,6 +107,12 @@ export class ConstantParser extends Parser {
 export namespace ConstantParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this constant.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * Whether this constant is external.
      * @since 1.0.0
      */
@@ -118,6 +132,12 @@ export namespace ConstantParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this constant.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * Whether this constant is external.
      * @since 1.0.0

@@ -12,6 +12,12 @@ import type { EnumParser } from './EnumParser';
  */
 export class EnumPropertyParser extends Parser {
   /**
+   * The comment parser of this property.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * The id of the parent enum parser.
    * @since 4.0.0
    */
@@ -26,8 +32,9 @@ export class EnumPropertyParser extends Parser {
   public constructor(data: EnumPropertyParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { parentId, value } = data;
+    const { comment, parentId, value } = data;
 
+    this.comment = comment;
     this.parentId = parentId;
     this.value = value;
   }
@@ -44,6 +51,7 @@ export class EnumPropertyParser extends Parser {
   public toJSON(): EnumPropertyParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       parentId: this.parentId,
       value: this.value
     };
@@ -115,6 +123,12 @@ export class EnumPropertyParser extends Parser {
 export namespace EnumPropertyParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * The id of the parent enum parser.
      * @since 4.0.0
      */
@@ -128,6 +142,12 @@ export namespace EnumPropertyParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this property.
+     * @since 1.0.0
+     */
+    comment: CommentParser.JSON;
+
     /**
      * The id of the parent enum parser.
      * @since 4.0.0

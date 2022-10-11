@@ -1,4 +1,4 @@
-import type { CommentParser, SourceParser } from './misc';
+import type { SourceParser } from './misc';
 import type { ProjectParser } from './ProjectParser';
 
 /**
@@ -25,23 +25,16 @@ export abstract class Parser {
   public readonly name: string;
 
   /**
-   * The comment parser for this parser.
-   * @since 1.0.0
-   */
-  public readonly comment: CommentParser;
-
-  /**
    * The source parser for this parser.
    * @since 1.0.0
    */
   public readonly source: SourceParser | null;
 
   public constructor(data: Parser.Data, project: ProjectParser) {
-    const { id, name, comment, source } = data;
+    const { id, name, source } = data;
 
     this.id = id;
     this.name = name;
-    this.comment = comment;
     this.source = source;
 
     this.project = project;
@@ -56,7 +49,6 @@ export abstract class Parser {
     return {
       id: this.id,
       name: this.name,
-      comment: this.comment.toJSON(),
       source: this.source ? this.source.toJSON() : null
     };
   }
@@ -77,12 +69,6 @@ export namespace Parser {
     name: string;
 
     /**
-     * The comment parser for this parser.
-     * @since 1.0.0
-     */
-    comment: CommentParser;
-
-    /**
      * The source parser for this parser.
      * @since 1.0.0
      */
@@ -101,12 +87,6 @@ export namespace Parser {
      * @since 1.0.0
      */
     name: string;
-
-    /**
-     * The comment parser for this parser in a JSON compatible format.
-     * @since 1.0.0
-     */
-    comment: CommentParser.JSON;
 
     /**
      * The source parser for this parser in a JSON compatible format.

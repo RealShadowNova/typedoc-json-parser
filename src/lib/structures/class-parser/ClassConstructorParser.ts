@@ -7,6 +7,12 @@ import type { ClassParser } from './ClassParser';
 
 export class ClassConstructorParser extends Parser {
   /**
+   * The comment parser of this constructor.
+   * @since 1.0.0
+   */
+  public readonly comment: CommentParser;
+
+  /**
    * The id of the parent class parser.
    * @since 4.0.0
    */
@@ -21,8 +27,9 @@ export class ClassConstructorParser extends Parser {
   public constructor(data: ClassConstructorParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { parentId, parameters } = data;
+    const { comment, parentId, parameters } = data;
 
+    this.comment = comment;
     this.parentId = parentId;
     this.parameters = parameters;
   }
@@ -43,6 +50,7 @@ export class ClassConstructorParser extends Parser {
   public toJSON(): ClassConstructorParser.JSON {
     return {
       ...super.toJSON(),
+      comment: this.comment.toJSON(),
       parentId: this.parentId,
       parameters: this.parameters.map((parameter) => parameter.toJSON())
     };
@@ -120,6 +128,12 @@ export class ClassConstructorParser extends Parser {
 export namespace ClassConstructorParser {
   export interface Data extends Parser.Data {
     /**
+     * The comment parser of this constructor.
+     * @since 1.0.0
+     */
+    comment: CommentParser;
+
+    /**
      * The id of the parent class parser.
      * @since 4.0.0
      */
@@ -133,6 +147,12 @@ export namespace ClassConstructorParser {
   }
 
   export interface JSON extends Parser.JSON {
+    /**
+     * The comment parser of this constructor.
+     * @since 1.0.0
+     */
+    comment: CommentParser.Data;
+
     /**
      * The id of the parent class parser.
      * @since 4.0.0
