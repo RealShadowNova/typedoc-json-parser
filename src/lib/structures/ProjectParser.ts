@@ -104,7 +104,7 @@ export class ProjectParser {
     this.name = name;
 
     if ('classes' in data) {
-      const { typeDocJsonParserVersion, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = data;
+      const { typeDocJsonParserVersion, classes, enums, functions, interfaces, namespaces, typeAliases, variables } = data;
       const incomingTypeDocVersion = typeDocJsonParserVersion.split('.').map(Number) as [number, number, number];
       const currentTypeDocVersion = this.typeDocJsonParserVersion.split('.').map(Number) as [number, number, number];
 
