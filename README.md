@@ -48,9 +48,10 @@ You can provider all options through CLI flags.
 Usage: typedoc-json-parser [options]
 
 Options:
-  -j, --json <path>  Path to the TypeDoc JSON output file.
-  -v, --verbose      Print verbose information (default: false)
-  -h, --help         display help for command
+  --json [path]     Path to the TypeDoc JSON output file to parse
+  --migrate [path]  Path to the directory containing TypeDoc JSON Parser output files to migrate
+  -v, --verbose     Print verbose information (default: false)
+  -h, --help        display help for command
 ```
 
 You can also set these options through a configuration file. This file should be located at your [current working directory](https://nodejs.org/api/process.html#processcwd). It should be named `.typedoc-json-parserrc`, optionally suffixed with `.json`, `.yml`, or `.yaml`.

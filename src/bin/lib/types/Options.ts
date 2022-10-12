@@ -1,5 +1,7 @@
 export interface Options {
-  json: string;
+  json?: string;
+
+  migrate?: string;
 
   verbose: boolean;
 }
