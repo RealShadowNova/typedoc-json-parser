@@ -1,6 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser } from '../misc';
+import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
 import { Parser } from '../Parser';
 import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
@@ -44,6 +44,12 @@ export class ClassParser extends Parser {
   public readonly implementsType: TypeParser[];
 
   /**
+   * The type parameter parsers of this class.
+   * @since 6.0.0
+   */
+  public readonly typeParameters: TypeParameterParser[];
+
+  /**
    * The constructor parser of this class.
    * @since 1.0.0
    */
@@ -64,13 +70,14 @@ export class ClassParser extends Parser {
   public constructor(data: ClassParser.Data, project: ProjectParser) {
     super(data, project);
 
-    const { comment, external, abstract, extendsType, implementsType, construct, properties, methods } = data;
+    const { comment, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = data;
 
     this.comment = comment;
     this.external = external;
     this.abstract = abstract;
     this.extendsType = extendsType;
     this.implementsType = implementsType;
+    this.typeParameters = typeParameters;
     this.construct = construct;
     this.properties = properties;
     this.methods = methods;
@@ -89,6 +96,7 @@ export class ClassParser extends Parser {
       abstract: this.abstract,
       extendsType: this.extendsType ? this.extendsType.toJSON() : null,
       implementsType: this.implementsType.map((implementsType) => implementsType.toJSON()),
+      typeParameters: this.typeParameters.map((typeParameter) => typeParameter.toJSON()),
       construct: this.construct.toJSON(),
       properties: this.properties,
       methods: this.methods
@@ -113,7 +121,8 @@ export class ClassParser extends Parser {
       flags,
       children = [],
       extendedTypes = [],
-      implementedTypes = []
+      implementedTypes = [],
+      typeParameters = []
     } = reflection;
 
     if (kind !== ReflectionKind.Class) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
@@ -140,6 +149,7 @@ export class ClassParser extends Parser {
         abstract: Boolean(flags.isAbstract),
         extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0], project) : null,
         implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType, project)),
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
         construct: ClassConstructorParser.generateFromTypeDoc(construct, id, project),
         properties,
         methods
@@ -149,7 +159,7 @@ export class ClassParser extends Parser {
   }
 
   public static generateFromJSON(json: ClassParser.JSON, project: ProjectParser): ClassParser {
-    const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = json;
+    const { id, name, comment, source, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = json;
 
     return new ClassParser(
       {
@@ -161,6 +171,7 @@ export class ClassParser extends Parser {
         abstract,
         extendsType: extendsType ? TypeParser.generateFromJSON(extendsType, project) : null,
         implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType, project)),
+        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
         construct: ClassConstructorParser.generateFromJSON(construct, project),
         properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property, project)),
         methods: methods.map((method) => ClassMethodParser.generateFromJSON(method, project))
@@ -201,6 +212,12 @@ export namespace ClassParser {
      * @since 1.0.0
      */
     implementsType: TypeParser[];
+
+    /**
+     * The type parameter parsers of this class.
+     * @since 6.0.0
+     */
+    typeParameters: TypeParameterParser[];
 
     /**
      * The constructor parser of this class.
@@ -251,6 +268,12 @@ export namespace ClassParser {
      * @since 1.0.0
      */
     implementsType: TypeParser.JSON[];
+
+    /**
+     * The type parameter parsers of this class in a JSON compatible format.
+     * @since 6.0.0
+     */
+    typeParameters: TypeParameterParser.JSON[];
 
     /**
      * The constructor parser of this class in a JSON compatible format.
