@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+# [6.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v5.2.0...v6.0.0) - (2022-10-14)
+
+## 🏠 Refactor
+
+- **EnumPropertyParser:** Rename to `EnumMemberParser` (#74) ([e4072c4](https://github.com/RealShadowNova/typedoc-json-parser/commit/e4072c4d4b9eadf8e1cac3f034a59156b8d554af))
+
+   ### 💥 Breaking Changes:
+   - `EnumPropertyParser` has been renamed to `EnumMemberParser`
+   - `EnumMemberParser#properties` has been renamed to `EnumMemberParser#members`
+
+- **ConstantParser:** Rename to `VariableParser` (#73) ([0eb62ae](https://github.com/RealShadowNova/typedoc-json-parser/commit/0eb62aede90be3fe540081a7f787ec01da4bedc3))
+
+   ### 💥 Breaking Changes:
+   - `ConstantParser` has been renamed to `VariableParser`
+   - All instances of `constant(s)` have been changed to `variable(s)`
+
+
+## 🚀 Features
+
+- **bin:** Add `migrate` option (#76) ([34520dd](https://github.com/RealShadowNova/typedoc-json-parser/commit/34520dd5104c6d780f43b05d3999ccc5bf7b755b))
+- **ClassParser:** Add `typeParameters` property (#77) ([76997f0](https://github.com/RealShadowNova/typedoc-json-parser/commit/76997f06927d5ec2860473753ddc61a5681127f9))
+- **Parser:** Remove `comment` property (#72) ([09666a1](https://github.com/RealShadowNova/typedoc-json-parser/commit/09666a12068c8d04dc39c8979f201a5ac01a7f89))
+
+   ### 💥 Breaking Changes:
+   - `Parser#comment` has been removed.
+   - `ClassMethodParser#comment` has been removed.
+   - `InterfaceMethodParser#comment` has been removed.
+
+- **ParameterParser:** Add `comment` property (#71) ([04076c4](https://github.com/RealShadowNova/typedoc-json-parser/commit/04076c4779c58cc15b533741b86fad771383019f))
+
 # [5.2.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v5.1.0...v5.2.0) - (2022-10-03)
 
 ## 🐛 Bug Fixes
