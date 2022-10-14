@@ -8,7 +8,12 @@ import { ProjectParser } from '../../lib/structures/ProjectParser';
 import type { TypeAliasParser } from '../../lib/structures/TypeAliasParser';
 import type { VariableParser } from '../../lib/structures/VariableParser';
 
-const typeDocJsonParserVersion = ProjectParser.version;
+const currentTypeDocJsonParserVersion = ProjectParser.version
+  .split('.')
+  // eslint-disable-next-line radix
+  .map((x) => parseInt(x))
+  .slice(0, 3)
+  .join('.');
 
 export const migrateProject = (
   projectJson:
@@ -21,9 +26,9 @@ export const migrateProject = (
     | Migration.MajorFour.MinorZero.ProjectJSON
     | Migration.MajorSix.MinorZero.ProjectJSON
 ): ProjectParser.JSON | null => {
-  const { id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
+  const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
-  switch (projectJson.typeDocJsonParserVersion) {
+  switch (typeDocJsonParserVersion) {
     case '2.1.0':
 
     case '2.2.0':
@@ -59,7 +64,7 @@ export const migrateProject = (
         | Migration.MajorFour.MinorZero.ProjectJSON;
 
       return {
-        typeDocJsonParserVersion,
+        typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
         id,
         name,
         version: 'version' in projectJson ? projectJson.version : null,
@@ -79,7 +84,7 @@ export const migrateProject = (
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJSON;
 
       return {
-        typeDocJsonParserVersion,
+        typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
         id,
         name,
         version: 'version' in projectJson ? projectJson.version : null,
@@ -96,7 +101,7 @@ export const migrateProject = (
     }
   }
 
-  throw new Error(`Unsupported typeDocJsonParserVersion: ${projectJson.typeDocJsonParserVersion}`);
+  throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
 };
 
 function migrateClassJson(
