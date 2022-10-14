@@ -1175,6 +1175,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sapphire/node-utilities@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sapphire/node-utilities@npm:1.0.0"
+  checksum: 80b99bd4f0fdcbccc289d1fc165321b82d421896355259ec54b733a72cb3e50635c00f126a9e4d56a0247a54aa77a1a96e1d6e99c4c8815dc061e53a39e87c4e
+  languageName: node
+  linkType: hard
+
 "@sapphire/result@npm:^2.5.0":
   version: 2.5.0
   resolution: "@sapphire/result@npm:2.5.0"
@@ -6733,6 +6740,7 @@ __metadata:
     "@favware/colorette-spinner": ^1.0.1
     "@favware/npm-deprecate": ^1.0.5
     "@sapphire/eslint-config": ^4.3.8
+    "@sapphire/node-utilities": ^1.0.0
     "@sapphire/ts-config": ^3.3.4
     "@types/jest": ^29.1.2
     "@types/js-yaml": ^4.0.5
