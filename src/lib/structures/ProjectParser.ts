@@ -238,7 +238,10 @@ export class ProjectParser {
    */
   public search(query: string): SearchResult[] {
     const results: SearchResult[] = [];
-    const words = query.toLowerCase().split(/(#|.)/g);
+    const words = query
+      .toLowerCase()
+      .split(/(#|\.)/g)
+      .filter((word) => word !== '.' && word !== '#');
 
     for (const classParser of this.classes) {
       if (classParser.name.toLowerCase().includes(words[0])) {
