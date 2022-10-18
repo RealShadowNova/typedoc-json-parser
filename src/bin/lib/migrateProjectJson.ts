@@ -15,7 +15,7 @@ const currentTypeDocJsonParserVersion = ProjectParser.version
   .slice(0, 3)
   .join('.');
 
-export const migrateProject = (
+export function migrateProjectJson(
   projectJson:
     | Migration.MajorTwo.MinorOne.ProjectJSON
     | Migration.MajorTwo.MinorTwo.ProjectJSON
@@ -25,7 +25,7 @@ export const migrateProject = (
     | Migration.MajorThree.MinorTwo.ProjectJSON
     | Migration.MajorFour.MinorZero.ProjectJSON
     | Migration.MajorSix.MinorZero.ProjectJSON
-): ProjectParser.JSON | null => {
+): ProjectParser.JSON | null {
   const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
   switch (typeDocJsonParserVersion) {
@@ -102,7 +102,7 @@ export const migrateProject = (
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
-};
+}
 
 function migrateClassJson(
   classJson:

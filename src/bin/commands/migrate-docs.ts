@@ -2,7 +2,7 @@ import { Spinner } from '@favware/colorette-spinner';
 import { findFilesRecursivelyStringEndsWith } from '@sapphire/node-utilities';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { migrateProject } from '../lib/migrations';
+import { migrateProjectJson } from '../lib/migrateProjectJson';
 import type { Options } from '../lib/types/Options';
 import type { RequiredExcept } from '../lib/types/RequiredExcept';
 
@@ -17,7 +17,7 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
       const data = JSON.parse(await readFile(path, 'utf-8'));
 
       if ('typeDocJsonParserVersion' in data) {
-        const migrated = migrateProject(data);
+        const migrated = migrateProjectJson(data);
 
         if (migrated) {
           await writeFile(path, JSON.stringify(migrated, null, 2), 'utf-8');
