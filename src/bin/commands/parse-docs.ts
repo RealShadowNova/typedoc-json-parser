@@ -23,9 +23,10 @@ export async function parseDocs(options: RequiredExcept<Options, 'migrate'>) {
   } catch (error) {
     const cause = error as Error;
 
-    spinner.error({ text: 'Failed to parse TypeDoc JSON output file' });
-
-    if (options.verbose) console.log(cause.stack ?? cause.message);
+    if (options.verbose) {
+      spinner.error({ text: 'Failed to parse TypeDoc JSON output file.' });
+      console.log(cause.stack ?? cause.message);
+    } else spinner.error({ text: 'Failed to parse TypeDoc JSON output file. Add the --verbose flag to view these errors.' });
 
     process.exit(1);
   }

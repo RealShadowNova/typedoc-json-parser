@@ -1,3 +1,4 @@
+import { bold, yellow } from 'colorette';
 import type { ClassParser } from '../../lib/structures/class-parser';
 import type { EnumParser } from '../../lib/structures/enum-parser';
 import type { FunctionParser } from '../../lib/structures/FunctionParser';
@@ -25,7 +26,7 @@ export function migrateProjectJson(
     | Migration.MajorThree.MinorTwo.ProjectJSON
     | Migration.MajorFour.MinorZero.ProjectJSON
     | Migration.MajorSix.MinorZero.ProjectJSON
-): ProjectParser.JSON | null {
+): ProjectParser.JSON | string {
   const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
   switch (typeDocJsonParserVersion) {
@@ -80,7 +81,11 @@ export function migrateProjectJson(
       };
     }
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJSON;
 
       return {
@@ -101,7 +106,11 @@ export function migrateProjectJson(
     }
   }
 
-  throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
+  return yellow(
+    `${bold(`[WARN]`)} Unsupported typeDocJsonParserVersion(${typeDocJsonParserVersion}) encountered while migrating project ${projectJson.name}${
+      'version' in projectJson ? `@${projectJson.version}` : ''
+    }`
+  );
 }
 
 function migrateClassJson(
@@ -192,7 +201,11 @@ function migrateClassJson(
         })
       };
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { typeParameters } = classJson as Migration.MajorSix.MinorZero.ClassJSON;
 
       return {
@@ -313,7 +326,11 @@ function migrateEnum(
       };
     }
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJSON;
 
       return {
@@ -375,6 +392,10 @@ function migrateFunction(
     case '5.2.0':
 
     case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
       return {
         id,
         name,
@@ -446,7 +467,11 @@ function migrateInterface(
 
     case '5.2.0':
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { methods } = interfaceJson as Migration.MajorThree.MinorOne.InterfaceJSON;
 
       return {
@@ -539,7 +564,11 @@ function migrateNamespace(
       };
     }
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJSON;
 
       return {
@@ -596,6 +625,10 @@ function migrateTypeAlias(
     case '5.2.0':
 
     case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
       return {
         id,
         name,
@@ -644,6 +677,10 @@ function migrateVariable(
     case '5.2.0':
 
     case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
       return {
         id,
         name,
@@ -697,7 +734,11 @@ function migrateSourceJson(
 
     case '5.2.0':
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJSON;
 
       return {
@@ -743,6 +784,10 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
     case '5.2.0':
 
     case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
       return {
         id,
         name,
@@ -801,7 +846,11 @@ function migrateSignatureJson(
 
     case '5.2.0':
 
-    case '6.0.0': {
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJSON;
 
       return {
