@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [6.0.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v6.0.1...v6.0.2) - (2022-10-22)
+
+## 🐛 Bug Fixes
+
+- **bin:** Warn instead of error on unsupported versions ([bb0b075](https://github.com/RealShadowNova/typedoc-json-parser/commit/bb0b075e2f1d6ae413da1f5a26615c762f3a8046))
+
+## 📝 Documentation
+
+- **readme:** Add migrating section ([14294a9](https://github.com/RealShadowNova/typedoc-json-parser/commit/14294a971f11ea6274ab5fd9bb6f272e5a9994c6))
+
 # [6.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v6.0.0...v6.0.1) - (2022-10-18)
 
 ## 🐛 Bug Fixes
@@ -15,15 +25,17 @@ All notable changes to this project will be documented in this file.
 
 - **EnumPropertyParser:** Rename to `EnumMemberParser` (#74) ([e4072c4](https://github.com/RealShadowNova/typedoc-json-parser/commit/e4072c4d4b9eadf8e1cac3f034a59156b8d554af))
 
-   ### 💥 Breaking Changes:
-   - `EnumPropertyParser` has been renamed to `EnumMemberParser`
-   - `EnumMemberParser#properties` has been renamed to `EnumMemberParser#members`
+  ### 💥 Breaking Changes:
+
+  - `EnumPropertyParser` has been renamed to `EnumMemberParser`
+  - `EnumMemberParser#properties` has been renamed to `EnumMemberParser#members`
 
 - **ConstantParser:** Rename to `VariableParser` (#73) ([0eb62ae](https://github.com/RealShadowNova/typedoc-json-parser/commit/0eb62aede90be3fe540081a7f787ec01da4bedc3))
 
-   ### 💥 Breaking Changes:
-   - `ConstantParser` has been renamed to `VariableParser`
-   - All instances of `constant(s)` have been changed to `variable(s)`
+  ### 💥 Breaking Changes:
+
+  - `ConstantParser` has been renamed to `VariableParser`
+  - All instances of `constant(s)` have been changed to `variable(s)`
 
 
 ## 🚀 Features
@@ -32,10 +44,11 @@ All notable changes to this project will be documented in this file.
 - **ClassParser:** Add `typeParameters` property (#77) ([76997f0](https://github.com/RealShadowNova/typedoc-json-parser/commit/76997f06927d5ec2860473753ddc61a5681127f9))
 - **Parser:** Remove `comment` property (#72) ([09666a1](https://github.com/RealShadowNova/typedoc-json-parser/commit/09666a12068c8d04dc39c8979f201a5ac01a7f89))
 
-   ### 💥 Breaking Changes:
-   - `Parser#comment` has been removed.
-   - `ClassMethodParser#comment` has been removed.
-   - `InterfaceMethodParser#comment` has been removed.
+  ### 💥 Breaking Changes:
+
+  - `Parser#comment` has been removed.
+  - `ClassMethodParser#comment` has been removed.
+  - `InterfaceMethodParser#comment` has been removed.
 
 - **ParameterParser:** Add `comment` property (#71) ([04076c4](https://github.com/RealShadowNova/typedoc-json-parser/commit/04076c4779c58cc15b533741b86fad771383019f))
 
@@ -71,7 +84,8 @@ All notable changes to this project will be documented in this file.
 
 - **TypeParser:** Add `project` property (#61) ([c5afe84](https://github.com/RealShadowNova/typedoc-json-parser/commit/c5afe840fcaad99be1711a74aafed444a78d9bcb))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - The constructor of `ArrayTypeParser` now takes 2 parameters of `ArrayTypeParser.Data` and `ProjectParser`
   - The constructor of `ConditionalTypeParser` now takes 2 parameters of `ConditionalTypeParser.Data` and `ProjectParser`
   - The constructor of `IndexedAccessTypeParser` now takes 2 parameters of `IndexedAccessTypeParser.Data` and `ProjectParser`
@@ -100,13 +114,15 @@ All notable changes to this project will be documented in this file.
 - **ClassConstructorParser:** Add `toString` method (#57) ([3f3d08c](https://github.com/RealShadowNova/typedoc-json-parser/commit/3f3d08cd4cfdfe15d0b1ae324b2047559e9426d0))
 - **interface-parser:** Add `parent` getter (#55) ([6b96fed](https://github.com/RealShadowNova/typedoc-json-parser/commit/6b96fed2481bd20c951b9f1618ab219e013b5e58))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - `InterfaceMethodParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
   - `InterfacePropertyParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
 
 - **class-parser:** Add `parent` getter (#53) ([0ad08e0](https://github.com/RealShadowNova/typedoc-json-parser/commit/0ad08e027a7ac5539d91595bdd0c879cdc7a1489))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - `ClassConstructorParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
   - `ClassMethodParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
   - `ClassPropertyParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
@@ -114,7 +130,8 @@ All notable changes to this project will be documented in this file.
 - **EnumPropertyParser:** Add `toString` method (#56) ([defeb42](https://github.com/RealShadowNova/typedoc-json-parser/commit/defeb422b81387a50f009ccfc986317127298232))
 - **enum-parser:** Add `parent` getter (#54) ([6a91232](https://github.com/RealShadowNova/typedoc-json-parser/commit/6a91232ae08eae6e5214586ad2b40aeda3b5310b))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - `EnumPropertyParser.generateFromTypeDoc()` now takes 3 parameters instead of 2.
 
 - **type-parsers:** Add static `formatToString` method (#48) ([9a567e6](https://github.com/RealShadowNova/typedoc-json-parser/commit/9a567e6a5d03005f93eb47e3c327382b7b5ed58e))
@@ -145,7 +162,8 @@ All notable changes to this project will be documented in this file.
 
 - **CommentParser:** Format `inline-tag` (#35) ([ad9ee31](https://github.com/RealShadowNova/typedoc-json-parser/commit/ad9ee3112b18957454019ed1c0dd2b0ba3cce504))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - `CommentParser#description` now formats `inline-tag`
   - `CommentParser#blockTags` now formats `inline-tag`
 
@@ -157,7 +175,8 @@ All notable changes to this project will be documented in this file.
 
 - **ProjectParser:** Add `readme` property (#38) ([09c8957](https://github.com/RealShadowNova/typedoc-json-parser/commit/09c895774b9503563155929cc4fc131af600667f))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
+
   - The constructor of `ProjectParser` now only accepts a single parameter of `ProjectParser.Options`
 
 - **ProjectParser:** Add `find` method (#36) ([adc3fd2](https://github.com/RealShadowNova/typedoc-json-parser/commit/adc3fd2e0a00cf98491f397bddecaeb34f3d63dc))
@@ -223,11 +242,11 @@ All notable changes to this project will be documented in this file.
 
 - **deps:** Update dependency `typedoc` to `0.23.8` (#19) ([63d2b6f](https://github.com/RealShadowNova/typedoc-json-parser/commit/63d2b6fe71067cc36070722b93dc4235fd1c3713))
 
-### 💥 Breaking Changes
+  ### 💥 Breaking Changes
 
-- Updated dependency `typedoc` to `0.23.8`
-- `CommentParser#tags` has been removed along with `#tags` in related interfaces. Use `#blockTags` and `#modifierTags` instead.
-- `CommentParser#extendedDescription` has been removed and merged with `#description` along with related interfaces.
+  - Updated dependency `typedoc` to `0.23.8`
+  - `CommentParser#tags` has been removed along with `#tags` in related interfaces. Use `#blockTags` and `#modifierTags` instead.
+  - `CommentParser#extendedDescription` has been removed and merged with `#description` along with related interfaces.
 
 # [1.0.0](https://github.com/RealShadowNova/typedoc-json-parser/tree/v1.0.0) - (2022-06-09)
 
