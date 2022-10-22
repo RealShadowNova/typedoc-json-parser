@@ -85,13 +85,13 @@ jobs:
         env:
           SEMVER: ${{ env.NAME }}
         run: |
-          mkdir -p out/typedoc-json-parser
-          mv docs/api.json out/typedoc-json-parser/${SEMVER}.json
+          mkdir -p out/docs/typedoc-json-parser
+          mv docs/api.json out/docs/typedoc-json-parser/${SEMVER}.json
       - name: Move Documentation
         if: ${{ !github.event.inputs.ref && env.TYPE == 'branch' }}
         run: |
-          mkdir -p out/typedoc-json-parser
-          mv docs/api.json out/typedoc-json-parser/${NAME}.json
+          mkdir -p out/docs/typedoc-json-parser
+          mv docs/api.json out/docs/typedoc-json-parser/${NAME}.json
 
       - name: Commit & Push
         run: |
