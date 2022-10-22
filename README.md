@@ -79,6 +79,14 @@ When using `.typedoc-json-parserrc` or `.typedoc-json-parserrc.json` as your con
 json: 'docs/api.json'
 ```
 
+## Migrating JSON Files
+
+If you need to migrate JSON files from a previous version of this package, you can use the `migrate` CLI flag. This will recursively search the provided directory for JSON files and migrate them to the latest version.
+
+```sh
+typedoc-json-parser --migrate docs
+```
+
 ## Node.js Usage
 
 Once you have used the CLI to parse the TypeDoc JSON output, you'll want to use that data to create documentation.
