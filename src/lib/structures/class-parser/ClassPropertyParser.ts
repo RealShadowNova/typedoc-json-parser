@@ -56,7 +56,7 @@ export class ClassPropertyParser extends Parser {
    * The type parser of this property.
    * @since 1.0.0
    */
-  public readonly type: TypeParser | null;
+  public readonly type: TypeParser;
 
   public constructor(data: ClassPropertyParser.Data) {
     super(data);
@@ -88,7 +88,7 @@ export class ClassPropertyParser extends Parser {
       static: this.static,
       readonly: this.readonly,
       optional: this.optional,
-      type: this.type ? this.type.toJSON() : null
+      type: this.type.toJSON()
     };
   }
 
@@ -127,7 +127,7 @@ export class ClassPropertyParser extends Parser {
         static: Boolean(flags.isStatic),
         readonly: Boolean(flags.isReadonly),
         optional: Boolean(flags.isOptional),
-        type: type ? TypeParser.generateFromTypeDoc(type) : null
+        type: TypeParser.generateFromTypeDoc(type!)
       });
     }
 
@@ -146,7 +146,7 @@ export class ClassPropertyParser extends Parser {
       static: Boolean(flags.isStatic),
       readonly: Boolean(flags.isReadonly),
       optional: Boolean(flags.isOptional),
-      type: type ? TypeParser.generateFromTypeDoc(type) : null
+      type: TypeParser.generateFromTypeDoc(type!)
     });
   }
 
@@ -169,7 +169,7 @@ export class ClassPropertyParser extends Parser {
       static: _static,
       readonly,
       optional,
-      type: type ? TypeParser.generateFromJson(type) : null
+      type: TypeParser.generateFromJson(type)
     });
   }
 }
@@ -222,7 +222,7 @@ export namespace ClassPropertyParser {
      * The type parser of this property.
      * @since 1.0.0
      */
-    type: TypeParser | null;
+    type: TypeParser;
   }
 
   export interface Json extends Parser.Json {
@@ -272,6 +272,6 @@ export namespace ClassPropertyParser {
      * The type parser of this property in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.Json | null;
+    type: TypeParser.Json;
   }
 }
