@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class IntrinsicTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -24,12 +17,10 @@ export class IntrinsicTypeParser implements TypeParser {
    */
   public readonly type: string;
 
-  public constructor(data: IntrinsicTypeParser.Data, project: ProjectParser) {
+  public constructor(data: IntrinsicTypeParser.Data) {
     const { type } = data;
 
     this.type = type;
-
-    this.project = project;
   }
 
   /**

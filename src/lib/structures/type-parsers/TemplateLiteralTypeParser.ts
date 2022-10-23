@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class TemplateLiteralTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -30,13 +23,11 @@ export class TemplateLiteralTypeParser implements TypeParser {
    */
   public readonly tail: TemplateLiteralTypeParser.Tail[];
 
-  public constructor(data: TemplateLiteralTypeParser.Data, project: ProjectParser) {
+  public constructor(data: TemplateLiteralTypeParser.Data) {
     const { head, tail } = data;
 
     this.head = head;
     this.tail = tail;
-
-    this.project = project;
   }
 
   /**

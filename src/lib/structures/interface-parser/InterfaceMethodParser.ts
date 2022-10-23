@@ -2,8 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { SignatureParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
-import type { InterfaceParser } from './InterfaceParser';
 
 /**
  * Parses data from an interface method reflection.
@@ -22,21 +20,13 @@ export class InterfaceMethodParser extends Parser {
    */
   public readonly signatures: SignatureParser[];
 
-  public constructor(data: InterfaceMethodParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: InterfaceMethodParser.Data) {
+    super(data);
 
     const { parentId, signatures } = data;
 
     this.parentId = parentId;
     this.signatures = signatures;
-  }
-
-  /**
-   * The parent interface parser.
-   * @since 4.0.0
-   */
-  public get parent(): InterfaceParser {
-    return this.project.find(this.parentId) as InterfaceParser;
   }
 
   /**
@@ -56,39 +46,37 @@ export class InterfaceMethodParser extends Parser {
    * Generates a new {@link InterfaceMethodParser} instance from the given data.
    * @since 3.1.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): InterfaceMethodParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): InterfaceMethodParser {
     const { kind, kindString = 'Unknown', id, name, sources = [], signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
 
-    return new InterfaceMethodParser(
-      {
-        id,
-        name,
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        parentId,
-        signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature, project))
-      },
-      project
-    );
+    return new InterfaceMethodParser({
+      id,
+      name,
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      parentId,
+      signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature))
+    });
   }
 
-  public static generateFromJSON(json: InterfaceMethodParser.JSON, project: ProjectParser): InterfaceMethodParser {
+  /**
+   * Generates a new {@link InterfaceMethodParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: InterfaceMethodParser.JSON): InterfaceMethodParser {
     const { id, name, source, parentId, signatures } = json;
 
-    return new InterfaceMethodParser(
-      {
-        id,
-        name,
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        parentId,
-        signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature, project))
-      },
-      project
-    );
+    return new InterfaceMethodParser({
+      id,
+      name,
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      parentId,
+      signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature))
+    });
   }
 }
 

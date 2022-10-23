@@ -1,6 +1,5 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 import { CommentParser } from './CommentParser';
 
@@ -9,12 +8,6 @@ import { CommentParser } from './CommentParser';
  * @since 1.0.0
  */
 export class ParameterParser {
-  /**
-   * The project this parser belongs to.
-   * @since 1.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The identifier of this parser.
    * @since 1.0.0
@@ -39,15 +32,13 @@ export class ParameterParser {
    */
   public readonly type: TypeParser;
 
-  public constructor(data: ParameterParser.Data, project: ProjectParser) {
+  public constructor(data: ParameterParser.Data) {
     const { id, name, comment, type } = data;
 
     this.id = id;
     this.name = name;
     this.comment = comment;
     this.type = type;
-
-    this.project = project;
   }
 
   /**
@@ -68,39 +59,37 @@ export class ParameterParser {
    * Generates a new {@link ParameterParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ParameterParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ParameterParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
       throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${kindString} (${kind})`);
     }
 
-    return new ParameterParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        type: TypeParser.generateFromTypeDoc(type!, project)
-      },
-      project
-    );
+    return new ParameterParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      type: TypeParser.generateFromTypeDoc(type!)
+    });
   }
 
-  public static generateFromJSON(json: ParameterParser.JSON, project: ProjectParser): ParameterParser {
+  /**
+   * Generates a new {@link ClassConstructorParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: ParameterParser.JSON): ParameterParser {
     const { id, name, comment, type } = json;
 
-    return new ParameterParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        type: TypeParser.generateFromJSON(type, project)
-      },
-      project
-    );
+    return new ParameterParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      type: TypeParser.generateFromJSON(type)
+    });
   }
 }
 

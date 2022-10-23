@@ -2,9 +2,7 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
-import type { InterfaceParser } from './InterfaceParser';
 
 /**
  * Parses data from an interface property reflection.
@@ -35,8 +33,8 @@ export class InterfacePropertyParser extends Parser {
    */
   public readonly type: TypeParser;
 
-  public constructor(data: InterfacePropertyParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: InterfacePropertyParser.Data) {
+    super(data);
 
     const { comment, parentId, readonly, type } = data;
 
@@ -44,14 +42,6 @@ export class InterfacePropertyParser extends Parser {
     this.parentId = parentId;
     this.readonly = readonly;
     this.type = type;
-  }
-
-  /**
-   * The parent interface parser.
-   * @since 4.0.0
-   */
-  public get parent(): InterfaceParser {
-    return this.project.find(this.parentId) as InterfaceParser;
   }
 
   /**
@@ -73,43 +63,41 @@ export class InterfacePropertyParser extends Parser {
    * Generates a new {@link InterfacePropertyParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): InterfacePropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): InterfacePropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags } = reflection;
 
     if (kind !== ReflectionKind.Property) throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${kindString} (${kind})`);
 
-    return new InterfacePropertyParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        parentId,
-        readonly: Boolean(flags.isReadonly),
-        type: TypeParser.generateFromTypeDoc(type!, project)
-      },
-      project
-    );
+    return new InterfacePropertyParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      parentId,
+      readonly: Boolean(flags.isReadonly),
+      type: TypeParser.generateFromTypeDoc(type!)
+    });
   }
 
-  public static generateFromJSON(json: InterfacePropertyParser.JSON, project: ProjectParser): InterfacePropertyParser {
+  /**
+   * Generates a new {@link InterfacePropertyParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: InterfacePropertyParser.JSON): InterfacePropertyParser {
     const { id, name, comment, source, parentId, readonly, type } = json;
 
-    return new InterfacePropertyParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        parentId,
-        readonly,
-        type: TypeParser.generateFromJSON(type, project)
-      },
-      project
-    );
+    return new InterfacePropertyParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      parentId,
+      readonly,
+      type: TypeParser.generateFromJSON(type)
+    });
   }
 }
 

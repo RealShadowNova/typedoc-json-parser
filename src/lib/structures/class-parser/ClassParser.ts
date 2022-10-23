@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 import { ClassConstructorParser } from './ClassConstructorParser';
 import { ClassMethodParser } from './ClassMethodParser';
@@ -67,8 +66,8 @@ export class ClassParser extends Parser {
    */
   public readonly methods: ClassMethodParser[];
 
-  public constructor(data: ClassParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: ClassParser.Data) {
+    super(data);
 
     const { comment, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = data;
 
@@ -107,10 +106,9 @@ export class ClassParser extends Parser {
    * Generates a new {@link ClassParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): ClassParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ClassParser {
     const {
       kind,
       kindString = 'Unknown',
@@ -133,51 +131,48 @@ export class ClassParser extends Parser {
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
-      .map((child) => ClassPropertyParser.generateFromTypeDoc(child, id, project));
+      .map((child) => ClassPropertyParser.generateFromTypeDoc(child, id));
 
-    const methods = children
-      .filter((child) => child.kind === ReflectionKind.Method)
-      .map((child) => ClassMethodParser.generateFromTypeDoc(child, id, project));
+    const methods = children.filter((child) => child.kind === ReflectionKind.Method).map((child) => ClassMethodParser.generateFromTypeDoc(child, id));
 
-    return new ClassParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        abstract: Boolean(flags.isAbstract),
-        extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0], project) : null,
-        implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType, project)),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
-        construct: ClassConstructorParser.generateFromTypeDoc(construct, id, project),
-        properties,
-        methods
-      },
-      project
-    );
+    return new ClassParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      abstract: Boolean(flags.isAbstract),
+      extendsType: extendedTypes.length ? TypeParser.generateFromTypeDoc(extendedTypes[0]) : null,
+      implementsType: implementedTypes.map((implementedType) => TypeParser.generateFromTypeDoc(implementedType)),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter)),
+      construct: ClassConstructorParser.generateFromTypeDoc(construct, id),
+      properties,
+      methods
+    });
   }
 
-  public static generateFromJSON(json: ClassParser.JSON, project: ProjectParser): ClassParser {
+  /**
+   * Generates a new {@link ClassParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: ClassParser.JSON): ClassParser {
     const { id, name, comment, source, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = json;
 
-    return new ClassParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        abstract,
-        extendsType: extendsType ? TypeParser.generateFromJSON(extendsType, project) : null,
-        implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType, project)),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
-        construct: ClassConstructorParser.generateFromJSON(construct, project),
-        properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property, project)),
-        methods: methods.map((method) => ClassMethodParser.generateFromJSON(method, project))
-      },
-      project
-    );
+    return new ClassParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      abstract,
+      extendsType: extendsType ? TypeParser.generateFromJSON(extendsType) : null,
+      implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType)),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
+      construct: ClassConstructorParser.generateFromJSON(construct),
+      properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property)),
+      methods: methods.map((method) => ClassMethodParser.generateFromJSON(method))
+    });
   }
 }
 

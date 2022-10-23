@@ -1,5 +1,4 @@
 import type { JSONOutput } from 'typedoc';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -7,12 +6,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ReflectionTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -25,12 +18,10 @@ export class ReflectionTypeParser implements TypeParser {
    */
   public reflection: JSONOutput.DeclarationReflection | null;
 
-  public constructor(data: ReflectionTypeParser.Data, project: ProjectParser) {
+  public constructor(data: ReflectionTypeParser.Data) {
     const { reflection } = data;
 
     this.reflection = reflection;
-
-    this.project = project;
   }
 
   /**

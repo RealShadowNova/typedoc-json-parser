@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../types';
 import { CommentParser, SourceParser, TypeParameterParser } from './misc/';
 import { Parser } from './Parser';
-import type { ProjectParser } from './ProjectParser';
 import { TypeParser } from './type-parsers';
 
 /**
@@ -34,8 +33,8 @@ export class TypeAliasParser extends Parser {
    */
   public readonly type: TypeParser;
 
-  public constructor(data: TypeAliasParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: TypeAliasParser.Data) {
+    super(data);
 
     const { comment, external, typeParameters, type } = data;
 
@@ -64,43 +63,41 @@ export class TypeAliasParser extends Parser {
    * Generates a new {@link TypeAliasParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): TypeAliasParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): TypeAliasParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, type, typeParameters = [] } = reflection;
 
     if (kind !== ReflectionKind.TypeAlias) throw new Error(`Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${kindString} (${kind})`);
 
-    return new TypeAliasParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
-        type: TypeParser.generateFromTypeDoc(type!, project)
-      },
-      project
-    );
+    return new TypeAliasParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter)),
+      type: TypeParser.generateFromTypeDoc(type!)
+    });
   }
 
-  public static generateFromJSON(json: TypeAliasParser.JSON, project: ProjectParser): TypeAliasParser {
+  /**
+   * Generates a new {@link TypeAliasParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: TypeAliasParser.JSON): TypeAliasParser {
     const { id, name, comment, source, external, typeParameters, type } = json;
 
-    return new TypeAliasParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
-        type: TypeParser.generateFromJSON(type, project)
-      },
-      project
-    );
+    return new TypeAliasParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
+      type: TypeParser.generateFromJSON(type)
+    });
   }
 }
 

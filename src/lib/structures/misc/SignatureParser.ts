@@ -1,6 +1,5 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 import { CommentParser } from './CommentParser';
 import { ParameterParser } from './ParameterParser';
@@ -11,12 +10,6 @@ import { TypeParameterParser } from './TypeParameterParser';
  * @since 1.0.0
  */
 export class SignatureParser {
-  /**
-   * The project this parser belongs to.
-   * @since 1.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The identifier of this parser.
    * @since 1.0.0
@@ -53,7 +46,7 @@ export class SignatureParser {
    */
   public readonly returnType: TypeParser;
 
-  public constructor(data: SignatureParser.Data, project: ProjectParser) {
+  public constructor(data: SignatureParser.Data) {
     const { id, name, comment, typeParameters, parameters, returnType } = data;
 
     this.id = id;
@@ -62,8 +55,6 @@ export class SignatureParser {
     this.typeParameters = typeParameters;
     this.parameters = parameters;
     this.returnType = returnType;
-
-    this.project = project;
   }
 
   /**
@@ -86,10 +77,9 @@ export class SignatureParser {
    * Generates a new {@link SignatureParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection, project: ProjectParser): SignatureParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection): SignatureParser {
     const {
       kind,
       kindString = 'Unknown',
@@ -105,33 +95,32 @@ export class SignatureParser {
       throw new Error(`Expected Call Signature (${ReflectionKind.CallSignature}), but received ${kindString} (${kind})`);
     }
 
-    return new SignatureParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter, project)),
-        parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter, project)),
-        returnType: TypeParser.generateFromTypeDoc(type!, project)
-      },
-      project
-    );
+    return new SignatureParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter)),
+      parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter)),
+      returnType: TypeParser.generateFromTypeDoc(type!)
+    });
   }
 
-  public static generateFromJSON(json: SignatureParser.JSON, project: ProjectParser): SignatureParser {
+  /**
+   * Generates a new {@link ClassConstructorParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: SignatureParser.JSON): SignatureParser {
     const { id, name, comment, typeParameters, parameters, returnType } = json;
 
-    return new SignatureParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter, project)),
-        parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter, project)),
-        returnType: TypeParser.generateFromJSON(returnType, project)
-      },
-      project
-    );
+    return new SignatureParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
+      parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter)),
+      returnType: TypeParser.generateFromJSON(returnType)
+    });
   }
 }
 

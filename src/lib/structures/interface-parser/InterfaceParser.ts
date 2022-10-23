@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
 import { InterfaceMethodParser } from './InterfaceMethodParser';
 import { InterfacePropertyParser } from './InterfacePropertyParser';
 
@@ -35,8 +34,8 @@ export class InterfaceParser extends Parser {
    */
   public readonly methods: InterfaceMethodParser[];
 
-  public constructor(data: InterfaceParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: InterfaceParser.Data) {
+    super(data);
 
     const { comment, external, properties, methods } = data;
 
@@ -65,51 +64,49 @@ export class InterfaceParser extends Parser {
    * Generates a new {@link InterfaceParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): InterfaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): InterfaceParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Interface) throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${kindString} (${kind})`);
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property)
-      .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, id, project));
+      .map((child) => InterfacePropertyParser.generateFromTypeDoc(child, id));
 
     const methods = children
       .filter((child) => child.kind === ReflectionKind.Method)
-      .map((child) => InterfaceMethodParser.generateFromTypeDoc(child, id, project));
+      .map((child) => InterfaceMethodParser.generateFromTypeDoc(child, id));
 
-    return new InterfaceParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        properties,
-        methods
-      },
-      project
-    );
+    return new InterfaceParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      properties,
+      methods
+    });
   }
 
-  public static generateFromJSON(json: InterfaceParser.JSON, project: ProjectParser): InterfaceParser {
+  /**
+   * Generates a new {@link InterfaceParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: InterfaceParser.JSON): InterfaceParser {
     const { id, name, comment, source, external, properties, methods } = json;
 
-    return new InterfaceParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        properties: properties.map((parser) => InterfacePropertyParser.generateFromJSON(parser, project)),
-        methods: methods.map((parser) => InterfaceMethodParser.generateFromJSON(parser, project))
-      },
-      project
-    );
+    return new InterfaceParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      properties: properties.map((parser) => InterfacePropertyParser.generateFromJSON(parser)),
+      methods: methods.map((parser) => InterfaceMethodParser.generateFromJSON(parser))
+    });
   }
 }
 

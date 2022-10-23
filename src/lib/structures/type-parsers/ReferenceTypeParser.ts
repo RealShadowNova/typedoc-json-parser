@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ReferenceTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -42,15 +35,13 @@ export class ReferenceTypeParser implements TypeParser {
    */
   public readonly typeArguments: TypeParser[];
 
-  public constructor(data: ReferenceTypeParser.Data, project: ProjectParser) {
+  public constructor(data: ReferenceTypeParser.Data) {
     const { id, name, packageName, typeArguments } = data;
 
     this.id = id;
     this.name = name;
     this.packageName = packageName;
     this.typeArguments = typeArguments;
-
-    this.project = project;
   }
 
   /**

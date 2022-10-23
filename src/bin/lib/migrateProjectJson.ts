@@ -85,7 +85,9 @@ export function migrateProjectJson(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJSON;
 
       return {
@@ -205,7 +207,9 @@ function migrateClassJson(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { typeParameters } = classJson as Migration.MajorSix.MinorZero.ClassJSON;
 
       return {
@@ -330,7 +334,9 @@ function migrateEnum(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJSON;
 
       return {
@@ -396,6 +402,8 @@ function migrateFunction(
     case '6.0.1':
 
     case '6.0.2':
+
+    case '7.0.0':
       return {
         id,
         name,
@@ -471,7 +479,9 @@ function migrateInterface(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { methods } = interfaceJson as Migration.MajorThree.MinorOne.InterfaceJSON;
 
       return {
@@ -568,7 +578,9 @@ function migrateNamespace(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJSON;
 
       return {
@@ -629,6 +641,8 @@ function migrateTypeAlias(
     case '6.0.1':
 
     case '6.0.2':
+
+    case '7.0.0':
       return {
         id,
         name,
@@ -681,6 +695,8 @@ function migrateVariable(
     case '6.0.1':
 
     case '6.0.2':
+
+    case '7.0.0':
       return {
         id,
         name,
@@ -738,7 +754,9 @@ function migrateSourceJson(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJSON;
 
       return {
@@ -788,6 +806,8 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
     case '6.0.1':
 
     case '6.0.2':
+
+    case '7.0.0':
       return {
         id,
         name,
@@ -850,7 +870,9 @@ function migrateSignatureJson(
 
     case '6.0.1':
 
-    case '6.0.2': {
+    case '6.0.2':
+
+    case '7.0.0': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJSON;
 
       return {

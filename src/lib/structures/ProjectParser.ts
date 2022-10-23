@@ -138,13 +138,13 @@ export class ProjectParser {
       this.version = version ?? data.version;
       this.readme = readme ?? data.readme;
       this.changelog = changelog ?? data.changelog;
-      this.classes = classes.map((json) => ClassParser.generateFromJSON(json, this));
-      this.enums = enums.map((json) => EnumParser.generateFromJSON(json, this));
-      this.functions = functions.map((json) => FunctionParser.generateFromJSON(json, this));
-      this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJSON(json, this));
-      this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json, this));
-      this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, this));
-      this.variables = variables.map((json) => VariableParser.generateFromJSON(json, this));
+      this.classes = classes.map((json) => ClassParser.generateFromJSON(json));
+      this.enums = enums.map((json) => EnumParser.generateFromJSON(json));
+      this.functions = functions.map((json) => FunctionParser.generateFromJSON(json));
+      this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJSON(json));
+      this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json));
+      this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json));
+      this.variables = variables.map((json) => VariableParser.generateFromJSON(json));
     } else {
       const { kind, kindString = 'Unknown', children = [] } = data;
 
@@ -153,28 +153,24 @@ export class ProjectParser {
       this.version = version ?? null;
       this.readme = readme ?? null;
       this.changelog = changelog ?? null;
-      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, this));
+      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child));
 
-      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, this));
-      this.functions = children
-        .filter((child) => child.kind === ReflectionKind.Function)
-        .map((child) => FunctionParser.generateFromTypeDoc(child, this));
+      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child));
+      this.functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generateFromTypeDoc(child));
 
       this.interfaces = children
         .filter((child) => child.kind === ReflectionKind.Interface)
-        .map((child) => InterfaceParser.generateFromTypeDoc(child, this));
+        .map((child) => InterfaceParser.generateFromTypeDoc(child));
 
       this.namespaces = children
         .filter((child) => child.kind === ReflectionKind.Namespace)
-        .map((child) => NamespaceParser.generateFromTypeDoc(child, this));
+        .map((child) => NamespaceParser.generateFromTypeDoc(child));
 
       this.typeAliases = children
         .filter((child) => child.kind === ReflectionKind.TypeAlias)
-        .map((child) => TypeAliasParser.generateFromTypeDoc(child, this));
+        .map((child) => TypeAliasParser.generateFromTypeDoc(child));
 
-      this.variables = children
-        .filter((child) => child.kind === ReflectionKind.Variable)
-        .map((child) => VariableParser.generateFromTypeDoc(child, this));
+      this.variables = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => VariableParser.generateFromTypeDoc(child));
     }
   }
 
