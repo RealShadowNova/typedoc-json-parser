@@ -38,11 +38,11 @@ export class EnumMemberParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): EnumMemberParser.JSON {
+  public toJSON(): EnumMemberParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -79,14 +79,14 @@ export class EnumMemberParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: EnumMemberParser.JSON): EnumMemberParser {
+  public static generateFromJson(json: EnumMemberParser.Json): EnumMemberParser {
     const { id, name, comment, source, parentId, value } = json;
 
     return new EnumMemberParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
       value
     });
@@ -114,12 +114,12 @@ export namespace EnumMemberParser {
     value: string;
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this property.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * The id of the parent enum parser.

@@ -24,11 +24,11 @@ export class LiteralTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): LiteralTypeParser.JSON {
+  public toJSON(): LiteralTypeParser.Json {
     return {
       kind: this.kind,
       value: this.value
@@ -64,7 +64,7 @@ export namespace LiteralTypeParser {
     value: string;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Literal;
 
     /**

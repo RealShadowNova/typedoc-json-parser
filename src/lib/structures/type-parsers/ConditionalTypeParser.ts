@@ -45,11 +45,11 @@ export class ConditionalTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ConditionalTypeParser.JSON {
+  public toJSON(): ConditionalTypeParser.Json {
     return {
       kind: this.kind,
       checkType: this.checkType.toJSON(),
@@ -109,31 +109,31 @@ export namespace ConditionalTypeParser {
     falseType: TypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Conditional;
 
     /**
-     * The check type of this conditional type in a JSON compatible format.
+     * The check type of this conditional type in a Json compatible format.
      * @since 1.0.0
      */
-    checkType: TypeParser.JSON;
+    checkType: TypeParser.Json;
 
     /**
-     * The extends type of this conditional type in a JSON compatible format.
+     * The extends type of this conditional type in a Json compatible format.
      * @since 1.0.0
      */
-    extendsType: TypeParser.JSON;
+    extendsType: TypeParser.Json;
 
     /**
-     * The type of this conditional type when the check type is true in a JSON compatible format.
+     * The type of this conditional type when the check type is true in a Json compatible format.
      * @since 1.0.0
      */
-    trueType: TypeParser.JSON;
+    trueType: TypeParser.Json;
 
     /**
-     * The type of this conditional type when the check type is false in a JSON compatible format.
+     * The type of this conditional type when the check type is false in a Json compatible format.
      * @since 1.0.0
      */
-    falseType: TypeParser.JSON;
+    falseType: TypeParser.Json;
   }
 }

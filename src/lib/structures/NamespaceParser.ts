@@ -255,11 +255,11 @@ export class NamespaceParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format.
+   * @returns The Json compatible format.
    */
-  public toJSON(): NamespaceParser.JSON {
+  public toJSON(): NamespaceParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -317,22 +317,22 @@ export class NamespaceParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: NamespaceParser.JSON): NamespaceParser {
+  public static generateFromJson(json: NamespaceParser.Json): NamespaceParser {
     const { id, name, comment, source, external, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = json;
 
     return new NamespaceParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      classes: classes.map((json) => ClassParser.generateFromJSON(json)),
-      enums: enums.map((json) => EnumParser.generateFromJSON(json)),
-      functions: functions.map((json) => FunctionParser.generateFromJSON(json)),
-      interfaces: interfaces.map((json) => InterfaceParser.generateFromJSON(json)),
-      namespaces: namespaces.map((json) => NamespaceParser.generateFromJSON(json)),
-      typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json)),
-      variables: variables.map((json) => VariableParser.generateFromJSON(json))
+      classes: classes.map((json) => ClassParser.generateFromJson(json)),
+      enums: enums.map((json) => EnumParser.generateFromJson(json)),
+      functions: functions.map((json) => FunctionParser.generateFromJson(json)),
+      interfaces: interfaces.map((json) => InterfaceParser.generateFromJson(json)),
+      namespaces: namespaces.map((json) => NamespaceParser.generateFromJson(json)),
+      typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJson(json)),
+      variables: variables.map((json) => VariableParser.generateFromJson(json))
     });
   }
 }
@@ -394,12 +394,12 @@ export namespace NamespaceParser {
     variables: VariableParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this namespace.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this namespace is external.
@@ -408,45 +408,45 @@ export namespace NamespaceParser {
     external: boolean;
 
     /**
-     * The class parsers of this namespace in a JSON compatible format.
+     * The class parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    classes: ClassParser.JSON[];
+    classes: ClassParser.Json[];
 
     /**
-     * The enum parsers of this namespace in a JSON compatible format.
+     * The enum parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    enums: EnumParser.JSON[];
+    enums: EnumParser.Json[];
 
     /**
-     * The function parsers of this namespace in a JSON compatible format.
+     * The function parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    functions: FunctionParser.JSON[];
+    functions: FunctionParser.Json[];
 
     /**
-     * The interface parsers of this namespace in a JSON compatible format.
+     * The interface parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    interfaces: InterfaceParser.JSON[];
+    interfaces: InterfaceParser.Json[];
 
     /**
-     * The namespace parsers of this namespace in a JSON compatible format.
+     * The namespace parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    namespaces: JSON[];
+    namespaces: Json[];
 
     /**
-     * The type alias parsers of this namespace in a JSON compatible format.
+     * The type alias parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    typeAliases: TypeAliasParser.JSON[];
+    typeAliases: TypeAliasParser.Json[];
 
     /**
-     * The variable parsers of this namespace in a JSON compatible format.
+     * The variable parsers of this namespace in a Json compatible format.
      * @since 1.0.0
      */
-    variables: VariableParser.JSON[];
+    variables: VariableParser.Json[];
   }
 }

@@ -45,11 +45,11 @@ export class VariableParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): VariableParser.JSON {
+  public toJSON(): VariableParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -87,16 +87,16 @@ export class VariableParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: VariableParser.JSON): VariableParser {
+  public static generateFromJson(json: VariableParser.Json): VariableParser {
     const { id, name, comment, source, external, type, value } = json;
 
     return new VariableParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      type: TypeParser.generateFromJSON(type),
+      type: TypeParser.generateFromJson(type),
       value
     });
   }
@@ -129,12 +129,12 @@ export namespace VariableParser {
     value: string;
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this constant.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this variable is external.
@@ -143,10 +143,10 @@ export namespace VariableParser {
     external: boolean;
 
     /**
-     * The type of this variable in a JSON compatible format.
+     * The type of this variable in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
 
     /**
      * The value of this variable.

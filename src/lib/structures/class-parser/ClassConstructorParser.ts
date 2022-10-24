@@ -33,11 +33,11 @@ export class ClassConstructorParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassConstructorParser.JSON {
+  public toJSON(): ClassConstructorParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -80,16 +80,16 @@ export class ClassConstructorParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: ClassConstructorParser.JSON): ClassConstructorParser {
+  public static generateFromJson(json: ClassConstructorParser.Json): ClassConstructorParser {
     const { id, name, comment, source, parentId, parameters } = json;
 
     return new ClassConstructorParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
-      parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter))
+      parameters: parameters.map((parameter) => ParameterParser.generateFromJson(parameter))
     });
   }
 }
@@ -115,7 +115,7 @@ export namespace ClassConstructorParser {
     parameters: ParameterParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this constructor.
      * @since 1.0.0
@@ -132,6 +132,6 @@ export namespace ClassConstructorParser {
      * The parameter parsers of this constructor.
      * @since 1.0.0
      */
-    parameters: ParameterParser.JSON[];
+    parameters: ParameterParser.Json[];
   }
 }

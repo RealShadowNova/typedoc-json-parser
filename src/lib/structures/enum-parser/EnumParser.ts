@@ -38,11 +38,11 @@ export class EnumParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): EnumParser.JSON {
+  public toJSON(): EnumParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -52,7 +52,7 @@ export class EnumParser extends Parser {
   }
 
   /**
-   * Generates a new {@link EnumParser} instance from the given JSON data.
+   * Generates a new {@link EnumParser} instance from the given Json data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
@@ -81,16 +81,16 @@ export class EnumParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: EnumParser.JSON): EnumParser {
+  public static generateFromJson(json: EnumParser.Json): EnumParser {
     const { id, name, comment, source, external, members } = json;
 
     return new EnumParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      members: members.map((property) => EnumMemberParser.generateFromJSON(property))
+      members: members.map((property) => EnumMemberParser.generateFromJson(property))
     });
   }
 }
@@ -116,12 +116,12 @@ export namespace EnumParser {
     members: EnumMemberParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this enum.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this enum is external.
@@ -130,8 +130,8 @@ export namespace EnumParser {
     external: boolean;
 
     /**
-     * The property parsers of this enum in a JSON compatible format.
+     * The property parsers of this enum in a Json compatible format.
      */
-    members: EnumMemberParser.JSON[];
+    members: EnumMemberParser.Json[];
   }
 }

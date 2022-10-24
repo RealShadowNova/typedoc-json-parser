@@ -83,11 +83,11 @@ export class ClassParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassParser.JSON {
+  public toJSON(): ClassParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -156,22 +156,22 @@ export class ClassParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: ClassParser.JSON): ClassParser {
+  public static generateFromJson(json: ClassParser.Json): ClassParser {
     const { id, name, comment, source, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = json;
 
     return new ClassParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
       abstract,
-      extendsType: extendsType ? TypeParser.generateFromJSON(extendsType) : null,
-      implementsType: implementsType.map((implementedType) => TypeParser.generateFromJSON(implementedType)),
-      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
-      construct: ClassConstructorParser.generateFromJSON(construct),
-      properties: properties.map((property) => ClassPropertyParser.generateFromJSON(property)),
-      methods: methods.map((method) => ClassMethodParser.generateFromJSON(method))
+      extendsType: extendsType ? TypeParser.generateFromJson(extendsType) : null,
+      implementsType: implementsType.map((implementedType) => TypeParser.generateFromJson(implementedType)),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJson(typeParameter)),
+      construct: ClassConstructorParser.generateFromJson(construct),
+      properties: properties.map((property) => ClassPropertyParser.generateFromJson(property)),
+      methods: methods.map((method) => ClassMethodParser.generateFromJson(method))
     });
   }
 }
@@ -233,12 +233,12 @@ export namespace ClassParser {
     methods: ClassMethodParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this class.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this class is external.
@@ -253,40 +253,40 @@ export namespace ClassParser {
     abstract: boolean;
 
     /**
-     * The `extends` type of this class in a JSON compatible format.
+     * The `extends` type of this class in a Json compatible format.
      * @since 1.0.0
      */
-    extendsType: TypeParser.JSON | null;
+    extendsType: TypeParser.Json | null;
 
     /**
-     * The `implements` type of this class in a JSON compatible format.
+     * The `implements` type of this class in a Json compatible format.
      * @since 1.0.0
      */
-    implementsType: TypeParser.JSON[];
+    implementsType: TypeParser.Json[];
 
     /**
-     * The type parameter parsers of this class in a JSON compatible format.
+     * The type parameter parsers of this class in a Json compatible format.
      * @since 6.0.0
      */
-    typeParameters: TypeParameterParser.JSON[];
+    typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The constructor parser of this class in a JSON compatible format.
+     * The constructor parser of this class in a Json compatible format.
      * @since 1.0.0
      */
-    construct: ClassConstructorParser.JSON;
+    construct: ClassConstructorParser.Json;
 
     /**
-     * The property parsers of this class in a JSON compatible format.
+     * The property parsers of this class in a Json compatible format.
      * @since 1.0.0
      */
-    properties: ClassPropertyParser.JSON[];
+    properties: ClassPropertyParser.Json[];
 
     /**
-     * The method parsers of this class in a JSON compatible format.
+     * The method parsers of this class in a Json compatible format.
      * @since 1.0.0
      */
-    methods: ClassMethodParser.JSON[];
+    methods: ClassMethodParser.Json[];
   }
 
   /**

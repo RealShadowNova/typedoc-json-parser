@@ -40,11 +40,11 @@ export class SourceParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): SourceParser.JSON {
+  public toJSON(): SourceParser.Json {
     return {
       line: this.line,
       file: this.file,
@@ -75,7 +75,7 @@ export class SourceParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: SourceParser.JSON): SourceParser {
+  public static generateFromJson(json: SourceParser.Json): SourceParser {
     const { line, file, path, url } = json;
 
     return new SourceParser({
@@ -114,7 +114,7 @@ export namespace SourceParser {
     url: string | null;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The line number of this source.
      * @since 1.0.0

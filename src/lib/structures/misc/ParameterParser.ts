@@ -42,11 +42,11 @@ export class ParameterParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ParameterParser.JSON {
+  public toJSON(): ParameterParser.Json {
     return {
       id: this.id,
       name: this.name,
@@ -81,14 +81,14 @@ export class ParameterParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: ParameterParser.JSON): ParameterParser {
+  public static generateFromJson(json: ParameterParser.Json): ParameterParser {
     const { id, name, comment, type } = json;
 
     return new ParameterParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      type: TypeParser.generateFromJSON(type)
+      comment: CommentParser.generateFromJson(comment),
+      type: TypeParser.generateFromJson(type)
     });
   }
 }
@@ -120,7 +120,7 @@ export namespace ParameterParser {
     type: TypeParser;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The identifier of this parser.
      * @since 1.0.0
@@ -137,12 +137,12 @@ export namespace ParameterParser {
      * The comment of this parameter.
      * @since 5.3.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
-     * The type of this parameter in a JSON compatible format.
+     * The type of this parameter in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 }

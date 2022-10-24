@@ -31,11 +31,11 @@ export class IndexedAccessTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): IndexedAccessTypeParser.JSON {
+  public toJSON(): IndexedAccessTypeParser.Json {
     return {
       kind: this.kind,
       objectType: this.objectType.toJSON(),
@@ -78,19 +78,19 @@ export namespace IndexedAccessTypeParser {
     indexType: TypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.IndexedAccess;
 
     /**
-     * The object type of this indexed access type in a JSON compatible format.
+     * The object type of this indexed access type in a Json compatible format.
      * @since 1.0.0
      */
-    objectType: TypeParser.JSON;
+    objectType: TypeParser.Json;
 
     /**
-     * The index type of this indexed access type in a JSON compatible format.
+     * The index type of this indexed access type in a Json compatible format.
      * @since 1.0.0
      */
-    indexType: TypeParser.JSON;
+    indexType: TypeParser.Json;
   }
 }

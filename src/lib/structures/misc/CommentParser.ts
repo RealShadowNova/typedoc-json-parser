@@ -56,11 +56,11 @@ export class CommentParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): CommentParser.JSON {
+  public toJSON(): CommentParser.Json {
     return {
       description: this.description,
       blockTags: this.blockTags,
@@ -94,7 +94,7 @@ export class CommentParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: CommentParser.JSON): CommentParser {
+  public static generateFromJson(json: CommentParser.Json): CommentParser {
     const { description, blockTags, modifierTags } = json;
 
     return new CommentParser({
@@ -126,7 +126,7 @@ export namespace CommentParser {
     modifierTags: string[];
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The description of this comment.
      * @since 1.0.0

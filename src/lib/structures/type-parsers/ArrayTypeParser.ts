@@ -24,11 +24,11 @@ export class ArrayTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ArrayTypeParser.JSON {
+  public toJSON(): ArrayTypeParser.Json {
     return {
       kind: this.kind,
       type: this.type.toJSON()
@@ -64,13 +64,13 @@ export namespace ArrayTypeParser {
     type: TypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Array;
 
     /**
-     * The type of this array in a JSON compatible format.
+     * The type of this array in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 }

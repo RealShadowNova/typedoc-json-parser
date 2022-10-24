@@ -30,11 +30,11 @@ export class InterfaceMethodParser extends Parser {
   }
 
   /**
-   * Convert this parser to a JSON compatible format.
+   * Convert this parser to a Json compatible format.
    * @since 3.1.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): InterfaceMethodParser.JSON {
+  public toJSON(): InterfaceMethodParser.Json {
     return {
       ...super.toJSON(),
       parentId: this.parentId,
@@ -67,15 +67,15 @@ export class InterfaceMethodParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: InterfaceMethodParser.JSON): InterfaceMethodParser {
+  public static generateFromJson(json: InterfaceMethodParser.Json): InterfaceMethodParser {
     const { id, name, source, parentId, signatures } = json;
 
     return new InterfaceMethodParser({
       id,
       name,
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
-      signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature))
+      signatures: signatures.map((signature) => SignatureParser.generateFromJson(signature))
     });
   }
 }
@@ -95,7 +95,7 @@ export namespace InterfaceMethodParser {
     signatures: SignatureParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The id of the parent interface parser.
      * @since 4.0.0
@@ -103,9 +103,9 @@ export namespace InterfaceMethodParser {
     parentId: number;
 
     /**
-     * The signature parsers of this method in a JSON compatible format.
+     * The signature parsers of this method in a Json compatible format.
      * @since 3.1.0
      */
-    signatures: SignatureParser.JSON[];
+    signatures: SignatureParser.Json[];
   }
 }

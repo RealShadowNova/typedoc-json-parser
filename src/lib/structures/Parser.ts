@@ -32,11 +32,11 @@ export abstract class Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): Parser.JSON {
+  public toJSON(): Parser.Json {
     return {
       id: this.id,
       name: this.name,
@@ -66,7 +66,7 @@ export namespace Parser {
     source: SourceParser | null;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The identifier for this parser.
      * @since 1.0.0
@@ -80,9 +80,9 @@ export namespace Parser {
     name: string;
 
     /**
-     * The source parser for this parser in a JSON compatible format.
+     * The source parser for this parser in a Json compatible format.
      * @since 1.0.0
      */
-    source: SourceParser.JSON | null;
+    source: SourceParser.Json | null;
   }
 }

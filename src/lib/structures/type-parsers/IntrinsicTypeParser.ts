@@ -24,11 +24,11 @@ export class IntrinsicTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): IntrinsicTypeParser.JSON {
+  public toJSON(): IntrinsicTypeParser.Json {
     return {
       kind: this.kind,
       type: this.type
@@ -64,7 +64,7 @@ export namespace IntrinsicTypeParser {
     type: string;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Intrinsic;
 
     /**

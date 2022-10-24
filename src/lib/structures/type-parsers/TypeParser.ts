@@ -33,10 +33,10 @@ export interface TypeParser {
   kind: TypeParser.Kind;
 
   /**
-   * The method to convert this type parser to a JSON compatible format.
+   * The method to convert this type parser to a Json compatible format.
    * @since 1.0.0
    */
-  toJSON(): TypeParser.JSON;
+  toJSON(): TypeParser.Json;
 
   /**
    * The method to convert this type parser to a string.
@@ -241,147 +241,147 @@ export namespace TypeParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  export function generateFromJSON(json: JSON): TypeParser {
+  export function generateFromJson(json: Json): TypeParser {
     switch (json.kind) {
       case Kind.Array: {
-        const { type } = json as ArrayTypeParser.JSON;
+        const { type } = json as ArrayTypeParser.Json;
 
-        return new ArrayTypeParser({ type: generateFromJSON(type) });
+        return new ArrayTypeParser({ type: generateFromJson(type) });
       }
 
       case Kind.Conditional: {
-        const { checkType, extendsType, trueType, falseType } = json as ConditionalTypeParser.JSON;
+        const { checkType, extendsType, trueType, falseType } = json as ConditionalTypeParser.Json;
 
         return new ConditionalTypeParser({
-          checkType: generateFromJSON(checkType),
-          extendsType: generateFromJSON(extendsType),
-          trueType: generateFromJSON(trueType),
-          falseType: generateFromJSON(falseType)
+          checkType: generateFromJson(checkType),
+          extendsType: generateFromJson(extendsType),
+          trueType: generateFromJson(trueType),
+          falseType: generateFromJson(falseType)
         });
       }
 
       case Kind.IndexedAccess: {
-        const { objectType, indexType } = json as IndexedAccessTypeParser.JSON;
+        const { objectType, indexType } = json as IndexedAccessTypeParser.Json;
 
         return new IndexedAccessTypeParser({
-          objectType: generateFromJSON(objectType),
-          indexType: generateFromJSON(indexType)
+          objectType: generateFromJson(objectType),
+          indexType: generateFromJson(indexType)
         });
       }
 
       case Kind.Inferred: {
-        const { type } = json as InferredTypeParser.JSON;
+        const { type } = json as InferredTypeParser.Json;
 
         return new InferredTypeParser({ type });
       }
 
       case Kind.Intersection: {
-        const { types } = json as IntersectionTypeParser.JSON;
+        const { types } = json as IntersectionTypeParser.Json;
 
-        return new IntersectionTypeParser({ types: types.map((type) => generateFromJSON(type)) });
+        return new IntersectionTypeParser({ types: types.map((type) => generateFromJson(type)) });
       }
 
       case Kind.Intrinsic: {
-        const { type } = json as IntrinsicTypeParser.JSON;
+        const { type } = json as IntrinsicTypeParser.Json;
 
         return new IntrinsicTypeParser({ type });
       }
 
       case Kind.Literal: {
-        const { value } = json as LiteralTypeParser.JSON;
+        const { value } = json as LiteralTypeParser.Json;
 
         return new LiteralTypeParser({ value });
       }
 
       case Kind.Mapped: {
-        const { parameter, parameterType, nameType, templateType, optional, readonly } = json as MappedTypeParser.JSON;
+        const { parameter, parameterType, nameType, templateType, optional, readonly } = json as MappedTypeParser.Json;
 
         return new MappedTypeParser({
           parameter,
-          parameterType: generateFromJSON(parameterType),
-          nameType: nameType ? generateFromJSON(nameType) : null,
-          templateType: generateFromJSON(templateType),
+          parameterType: generateFromJson(parameterType),
+          nameType: nameType ? generateFromJson(nameType) : null,
+          templateType: generateFromJson(templateType),
           optional,
           readonly
         });
       }
 
       case Kind.NamedTupleMember: {
-        const { type, optional, name } = json as NamedTupleMemberTypeParser.JSON;
+        const { type, optional, name } = json as NamedTupleMemberTypeParser.Json;
 
-        return new NamedTupleMemberTypeParser({ name, type: generateFromJSON(type), optional });
+        return new NamedTupleMemberTypeParser({ name, type: generateFromJson(type), optional });
       }
 
       case Kind.Optional: {
-        const { type } = json as OptionalTypeParser.JSON;
+        const { type } = json as OptionalTypeParser.Json;
 
-        return new OptionalTypeParser({ type: generateFromJSON(type) });
+        return new OptionalTypeParser({ type: generateFromJson(type) });
       }
 
       case Kind.Predicate: {
-        const { asserts, name, type } = json as PredicateTypeParser.JSON;
+        const { asserts, name, type } = json as PredicateTypeParser.Json;
 
-        return new PredicateTypeParser({ asserts, name, type: type ? generateFromJSON(type) : null });
+        return new PredicateTypeParser({ asserts, name, type: type ? generateFromJson(type) : null });
       }
 
       case Kind.Query: {
-        const { query } = json as QueryTypeParser.JSON;
+        const { query } = json as QueryTypeParser.Json;
 
-        return new QueryTypeParser({ query: generateFromJSON(query) as ReferenceTypeParser });
+        return new QueryTypeParser({ query: generateFromJson(query) as ReferenceTypeParser });
       }
 
       case Kind.Reference: {
-        const { id, name, packageName, typeArguments } = json as ReferenceTypeParser.JSON;
+        const { id, name, packageName, typeArguments } = json as ReferenceTypeParser.Json;
 
         return new ReferenceTypeParser({
           id,
           name,
           packageName: packageName ?? null,
-          typeArguments: typeArguments.map((type) => generateFromJSON(type))
+          typeArguments: typeArguments.map((type) => generateFromJson(type))
         });
       }
 
       case Kind.Reflection: {
-        const { reflection } = json as ReflectionTypeParser.JSON;
+        const { reflection } = json as ReflectionTypeParser.Json;
 
         return new ReflectionTypeParser({ reflection });
       }
 
       case Kind.Rest: {
-        const { type } = json as RestTypeParser.JSON;
+        const { type } = json as RestTypeParser.Json;
 
-        return new RestTypeParser({ type: generateFromJSON(type) });
+        return new RestTypeParser({ type: generateFromJson(type) });
       }
 
       case Kind.TemplateLiteral: {
-        const { head, tail } = json as TemplateLiteralTypeParser.JSON;
+        const { head, tail } = json as TemplateLiteralTypeParser.Json;
 
         return new TemplateLiteralTypeParser({
           head,
-          tail: tail.map((tail) => ({ type: generateFromJSON(tail.type), text: tail.text }))
+          tail: tail.map((tail) => ({ type: generateFromJson(tail.type), text: tail.text }))
         });
       }
 
       case Kind.Tuple: {
-        const { types } = json as TupleTypeParser.JSON;
+        const { types } = json as TupleTypeParser.Json;
 
-        return new TupleTypeParser({ types: types.map((type) => generateFromJSON(type)) });
+        return new TupleTypeParser({ types: types.map((type) => generateFromJson(type)) });
       }
 
       case Kind.TypeOperator: {
-        const { operator, type } = json as TypeOperatorTypeParser.JSON;
+        const { operator, type } = json as TypeOperatorTypeParser.Json;
 
-        return new TypeOperatorTypeParser({ operator, type: generateFromJSON(type) });
+        return new TypeOperatorTypeParser({ operator, type: generateFromJson(type) });
       }
 
       case Kind.Union: {
-        const { types } = json as UnionTypeParser.JSON;
+        const { types } = json as UnionTypeParser.Json;
 
-        return new UnionTypeParser({ types: types.map((type) => generateFromJSON(type)) });
+        return new UnionTypeParser({ types: types.map((type) => generateFromJson(type)) });
       }
 
       case Kind.Unknown: {
-        const { name } = json as UnknownTypeParser.JSON;
+        const { name } = json as UnknownTypeParser.Json;
 
         return new UnknownTypeParser({ name });
       }
@@ -473,10 +473,10 @@ export namespace TypeParser {
   };
 
   /**
-   * The base interface for the JSON compatible format of type parsers.
+   * The base interface for the Json compatible format of type parsers.
    * @since 1.0.0
    */
-  export interface JSON {
+  export interface Json {
     /**
      * The kind of type parser this is.
      * @since 1.0.0
