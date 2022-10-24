@@ -1,6 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser } from '../misc';
+import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
 import { Parser } from '../Parser';
 import { InterfaceMethodParser } from './InterfaceMethodParser';
 import { InterfacePropertyParser } from './InterfacePropertyParser';
@@ -23,6 +23,12 @@ export class InterfaceParser extends Parser {
   public readonly external: boolean;
 
   /**
+   * The type parameters of this interface.
+   * @since 7.0.0
+   */
+  public readonly typeParameters: TypeParameterParser[];
+
+  /**
    * The property parsers of this interface.
    * @since 1.0.0
    */
@@ -37,10 +43,11 @@ export class InterfaceParser extends Parser {
   public constructor(data: InterfaceParser.Data) {
     super(data);
 
-    const { comment, external, properties, methods } = data;
+    const { comment, external, typeParameters, properties, methods } = data;
 
     this.comment = comment;
     this.external = external;
+    this.typeParameters = typeParameters;
     this.properties = properties;
     this.methods = methods;
   }
@@ -55,6 +62,7 @@ export class InterfaceParser extends Parser {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
       external: this.external,
+      typeParameters: this.typeParameters.map((typeParameter) => typeParameter.toJSON()),
       properties: this.properties.map((parser) => parser.toJSON()),
       methods: this.methods.map((parser) => parser.toJSON())
     };
@@ -67,7 +75,7 @@ export class InterfaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): InterfaceParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, typeParameters = [], children = [] } = reflection;
 
     if (kind !== ReflectionKind.Interface) throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${kindString} (${kind})`);
 
@@ -85,6 +93,7 @@ export class InterfaceParser extends Parser {
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromTypeDoc(typeParameter)),
       properties,
       methods
     });
@@ -96,7 +105,7 @@ export class InterfaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: InterfaceParser.Json): InterfaceParser {
-    const { id, name, comment, source, external, properties, methods } = json;
+    const { id, name, comment, source, external, typeParameters, properties, methods } = json;
 
     return new InterfaceParser({
       id,
@@ -104,6 +113,7 @@ export class InterfaceParser extends Parser {
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJson(typeParameter)),
       properties: properties.map((parser) => InterfacePropertyParser.generateFromJson(parser)),
       methods: methods.map((parser) => InterfaceMethodParser.generateFromJson(parser))
     });
@@ -123,6 +133,12 @@ export namespace InterfaceParser {
      * @since 1.0.0
      */
     external: boolean;
+
+    /**
+     * The type parameters of this interface.
+     * @since 7.0.0
+     */
+    typeParameters: TypeParameterParser[];
 
     /**
      * The property parsers of this interface.
@@ -149,6 +165,12 @@ export namespace InterfaceParser {
      * @since 1.0.0
      */
     external: boolean;
+
+    /**
+     * The type parameters of this interface in a JSON compatible format.
+     * @since 7.0.0
+     */
+    typeParameters: TypeParameterParser.Json[];
 
     /**
      * The property parsers of this interface in a Json compatible format.

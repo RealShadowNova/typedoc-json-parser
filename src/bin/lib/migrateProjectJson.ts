@@ -422,7 +422,8 @@ function migrateInterface(
     | Migration.MajorTwo.MinorOne.InterfaceJson
     | Migration.MajorThree.MinorZero.InterfaceJson
     | Migration.MajorFour.MinorZero.InterfaceJson
-    | Migration.MajorSix.MinorZero.InterfaceJson,
+    | Migration.MajorSix.MinorZero.InterfaceJson
+    | Migration.MajorSeven.MinorZero.InterfaceJson,
   typeDocJsonParserVersion: string
 ): InterfaceParser.Json {
   const { id, name, comment, source, external, properties } = interfaceJson;
@@ -445,6 +446,7 @@ function migrateInterface(
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
+        typeParameters: [],
         properties: properties.map((propertyJson) => {
           const { id, name, comment, source, readonly, type } = propertyJson;
 
@@ -479,9 +481,7 @@ function migrateInterface(
 
     case '6.0.1':
 
-    case '6.0.2':
-
-    case '7.0.0': {
+    case '6.0.2': {
       const { methods } = interfaceJson as Migration.MajorThree.MinorOne.InterfaceJson;
 
       return {
@@ -490,6 +490,44 @@ function migrateInterface(
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
+        typeParameters: [],
+        properties: properties.map((propertyJson) => {
+          const { id, name, comment, source, readonly, type } = propertyJson;
+
+          return {
+            id,
+            name,
+            comment,
+            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+            parentId: id,
+            readonly,
+            type
+          };
+        }),
+        methods: methods.map((methodJson) => {
+          const { id, name, source, signatures } = methodJson;
+
+          return {
+            id,
+            name,
+            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+            parentId: id,
+            signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
+          };
+        })
+      };
+    }
+
+    case '7.0.0': {
+      const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorZero.InterfaceJson;
+
+      return {
+        id,
+        name,
+        comment,
+        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+        external,
+        typeParameters,
         properties: properties.map((propertyJson) => {
           const { id, name, comment, source, readonly, type } = propertyJson;
 
@@ -1298,6 +1336,18 @@ export namespace Migration {
         enums: EnumJson[];
         interfaces: InterfaceJson[];
         variables: VariableJson[];
+      }
+    }
+  }
+
+  export namespace MajorSeven {
+    export namespace MinorZero {
+      export interface InterfaceJson extends MajorSix.MinorZero.InterfaceJson {
+        typeParameters: MajorTwo.MinorOne.Misc.TypeParameterJson[];
+      }
+
+      export interface NamespaceJson extends Omit<MajorThree.MinorZero.NamespaceJson, 'classes' | 'constants' | 'enums' | 'interfaces'> {
+        interfaces: InterfaceJson[];
       }
     }
   }
