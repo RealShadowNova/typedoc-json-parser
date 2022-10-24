@@ -1,5 +1,5 @@
 import { bold, yellow } from 'colorette';
-import type { ClassParser } from '../../lib/structures/class-parser';
+import { ClassParser } from '../../lib/structures/class-parser';
 import type { EnumParser } from '../../lib/structures/enum-parser';
 import type { FunctionParser } from '../../lib/structures/FunctionParser';
 import type { InterfaceParser } from '../../lib/structures/interface-parser';
@@ -26,6 +26,7 @@ export function migrateProjectJson(
     | Migration.MajorThree.MinorTwo.ProjectJson
     | Migration.MajorFour.MinorZero.ProjectJson
     | Migration.MajorSix.MinorZero.ProjectJson
+    | Migration.MajorSeven.MinorZero.ProjectJson
 ): ProjectParser.Json | string {
   const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
@@ -121,7 +122,8 @@ function migrateClassJson(
     | Migration.MajorTwo.MinorThree.ClassJson
     | Migration.MajorThree.MinorZero.ClassJson
     | Migration.MajorFour.MinorZero.ClassJson
-    | Migration.MajorSix.MinorZero.ClassJson,
+    | Migration.MajorSix.MinorZero.ClassJson
+    | Migration.MajorSeven.MinorZero.ClassJson,
   typeDocJsonParserVersion: string
 ): ClassParser.Json {
   const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = classJson;
@@ -168,6 +170,7 @@ function migrateClassJson(
           comment: construct.comment,
           source: construct.source ? migrateSourceJson(construct.source, typeDocJsonParserVersion) : null,
           parentId: id,
+          accessibility: ClassParser.Accessibility.Public,
           parameters: construct.parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion))
         },
         properties: properties.map((propertyJson) => {
@@ -207,9 +210,7 @@ function migrateClassJson(
 
     case '6.0.1':
 
-    case '6.0.2':
-
-    case '7.0.0': {
+    case '6.0.2': {
       const { typeParameters } = classJson as Migration.MajorSix.MinorZero.ClassJson;
 
       return {
@@ -228,6 +229,63 @@ function migrateClassJson(
           comment: construct.comment,
           source: construct.source ? migrateSourceJson(construct.source, typeDocJsonParserVersion) : null,
           parentId: id,
+          accessibility: ClassParser.Accessibility.Public,
+          parameters: construct.parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion))
+        },
+        properties: properties.map((propertyJson) => {
+          const { id, name, comment, source, accessibility, abstract, static: _static, readonly, optional, type } = propertyJson;
+
+          return {
+            id,
+            name,
+            comment,
+            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+            parentId: id,
+            accessibility,
+            abstract,
+            static: _static,
+            readonly,
+            optional,
+            type
+          };
+        }),
+        methods: methods.map((methodJson) => {
+          const { id, name, source, accessibility, abstract, static: _static, signatures } = methodJson;
+
+          return {
+            id,
+            name,
+            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+            parentId: id,
+            accessibility,
+            abstract,
+            static: _static,
+            signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
+          };
+        })
+      };
+    }
+
+    case '7.0.0': {
+      const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorZero.ClassJson;
+
+      return {
+        id,
+        name,
+        comment,
+        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+        external,
+        abstract,
+        extendsType,
+        implementsType,
+        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
+        construct: {
+          id: construct.id,
+          name: construct.name,
+          comment: construct.comment,
+          source: construct.source ? migrateSourceJson(construct.source, typeDocJsonParserVersion) : null,
+          parentId: id,
+          accessibility: construct.accessibility,
           parameters: construct.parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion))
         },
         properties: properties.map((propertyJson) => {
@@ -365,7 +423,11 @@ function migrateEnum(
 }
 
 function migrateFunction(
-  functionJson: Migration.MajorTwo.MinorOne.FunctionJson | Migration.MajorTwo.MinorThree.FunctionJson | Migration.MajorThree.MinorZero.FunctionJson,
+  functionJson:
+    | Migration.MajorTwo.MinorOne.FunctionJson
+    | Migration.MajorTwo.MinorThree.FunctionJson
+    | Migration.MajorThree.MinorZero.FunctionJson
+    | Migration.MajorSeven.MinorZero.FunctionJson,
   typeDocJsonParserVersion: string
 ): FunctionParser.Json {
   const { id, name, comment, source, external, signatures } = functionJson;
@@ -1414,11 +1476,16 @@ export namespace Migration {
         functions: FunctionJson[];
       }
 
-      export interface ClassJson extends Omit<MajorSix.MinorZero.ClassJson, 'methods'> {
+      export interface ClassJson extends Omit<MajorSix.MinorZero.ClassJson, 'construct' | 'methods'> {
+        construct: ClassJson.ConstructorJson;
         methods: ClassJson.MethodJson[];
       }
 
       export namespace ClassJson {
+        export interface ConstructorJson extends MajorFour.MinorZero.ClassJson.ConstructorJson {
+          accessibility: MajorTwo.MinorOne.ClassJson.Accessibility;
+        }
+
         export interface MethodJson extends Omit<MajorSix.MinorZero.ClassJson.MethodJson, 'signatures'> {
           signatures: Misc.SignatureJson[];
         }

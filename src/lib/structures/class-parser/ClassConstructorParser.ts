@@ -2,6 +2,7 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, ParameterParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
+import { ClassParser } from './ClassParser';
 
 export class ClassConstructorParser extends Parser {
   /**
@@ -17,6 +18,12 @@ export class ClassConstructorParser extends Parser {
   public readonly parentId: number;
 
   /**
+   * The accessibility of this constructor.
+   * @since 7.0.0
+   */
+  public accessibility: ClassParser.Accessibility;
+
+  /**
    * The parameter parsers of this constructor.
    * @since 1.0.0
    */
@@ -25,10 +32,11 @@ export class ClassConstructorParser extends Parser {
   public constructor(data: ClassConstructorParser.Data) {
     super(data);
 
-    const { comment, parentId, parameters } = data;
+    const { comment, parentId, accessibility, parameters } = data;
 
     this.comment = comment;
     this.parentId = parentId;
+    this.accessibility = accessibility;
     this.parameters = parameters;
   }
 
@@ -42,6 +50,7 @@ export class ClassConstructorParser extends Parser {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
       parentId: this.parentId,
+      accessibility: this.accessibility,
       parameters: this.parameters.map((parameter) => parameter.toJSON())
     };
   }
@@ -53,7 +62,7 @@ export class ClassConstructorParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): ClassConstructorParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], signatures = [] } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Constructor) {
       throw new Error(`Expected Constructor (${ReflectionKind.Constructor}), but received ${kindString} (${kind})`);
@@ -71,6 +80,11 @@ export class ClassConstructorParser extends Parser {
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       parentId,
+      accessibility: flags.isPrivate
+        ? ClassParser.Accessibility.Private
+        : flags.isProtected
+        ? ClassParser.Accessibility.Protected
+        : ClassParser.Accessibility.Public,
       parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter))
     });
   }
@@ -81,7 +95,7 @@ export class ClassConstructorParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: ClassConstructorParser.Json): ClassConstructorParser {
-    const { id, name, comment, source, parentId, parameters } = json;
+    const { id, name, comment, source, parentId, accessibility, parameters } = json;
 
     return new ClassConstructorParser({
       id,
@@ -89,6 +103,7 @@ export class ClassConstructorParser extends Parser {
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
+      accessibility,
       parameters: parameters.map((parameter) => ParameterParser.generateFromJson(parameter))
     });
   }
@@ -101,6 +116,12 @@ export namespace ClassConstructorParser {
      * @since 1.0.0
      */
     comment: CommentParser;
+
+    /**
+     * The accessibility of this constructor.
+     * @since 7.0.0
+     */
+    accessibility: ClassParser.Accessibility;
 
     /**
      * The id of the parent class parser.
@@ -121,6 +142,12 @@ export namespace ClassConstructorParser {
      * @since 1.0.0
      */
     comment: CommentParser.Data;
+
+    /**
+     * The accessibility of this constructor.
+     * @since 7.0.0
+     */
+    accessibility: ClassParser.Accessibility;
 
     /**
      * The id of the parent class parser.
