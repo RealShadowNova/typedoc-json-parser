@@ -59,11 +59,11 @@ export class MappedTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): MappedTypeParser.JSON {
+  public toJSON(): MappedTypeParser.Json {
     return {
       kind: this.kind,
       parameter: this.parameter,
@@ -139,7 +139,7 @@ export namespace MappedTypeParser {
     optional: Modifier | null;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Mapped;
 
     /**
@@ -149,22 +149,22 @@ export namespace MappedTypeParser {
     parameter: string;
 
     /**
-     * The parameter type of this mapped type in a JSON compatible format.
+     * The parameter type of this mapped type in a Json compatible format.
      * @since 1.0.0
      */
-    parameterType: TypeParser.JSON;
+    parameterType: TypeParser.Json;
 
     /**
-     * The name type of this mapped type in a JSON compatible format.
+     * The name type of this mapped type in a Json compatible format.
      * @since 1.0.0
      */
-    nameType: TypeParser.JSON | null;
+    nameType: TypeParser.Json | null;
 
     /**
-     * The template type of this mapped type in a JSON compatible format.
+     * The template type of this mapped type in a Json compatible format.
      * @since 1.0.0
      */
-    templateType: TypeParser.JSON;
+    templateType: TypeParser.Json;
 
     /**
      * The readonly modifier of this mapped type.

@@ -18,15 +18,15 @@ const currentTypeDocJsonParserVersion = ProjectParser.version
 
 export function migrateProjectJson(
   projectJson:
-    | Migration.MajorTwo.MinorOne.ProjectJSON
-    | Migration.MajorTwo.MinorTwo.ProjectJSON
-    | Migration.MajorTwo.MinorThree.ProjectJSON
-    | Migration.MajorThree.MinorZero.ProjectJSON
-    | Migration.MajorThree.MinorOne.ProjectJSON
-    | Migration.MajorThree.MinorTwo.ProjectJSON
-    | Migration.MajorFour.MinorZero.ProjectJSON
-    | Migration.MajorSix.MinorZero.ProjectJSON
-): ProjectParser.JSON | string {
+    | Migration.MajorTwo.MinorOne.ProjectJson
+    | Migration.MajorTwo.MinorTwo.ProjectJson
+    | Migration.MajorTwo.MinorThree.ProjectJson
+    | Migration.MajorThree.MinorZero.ProjectJson
+    | Migration.MajorThree.MinorOne.ProjectJson
+    | Migration.MajorThree.MinorTwo.ProjectJson
+    | Migration.MajorFour.MinorZero.ProjectJson
+    | Migration.MajorSix.MinorZero.ProjectJson
+): ProjectParser.Json | string {
   const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
   switch (typeDocJsonParserVersion) {
@@ -56,13 +56,13 @@ export function migrateProjectJson(
 
     case '5.2.0': {
       const { constants } = projectJson as
-        | Migration.MajorTwo.MinorOne.ProjectJSON
-        | Migration.MajorTwo.MinorTwo.ProjectJSON
-        | Migration.MajorTwo.MinorThree.ProjectJSON
-        | Migration.MajorThree.MinorZero.ProjectJSON
-        | Migration.MajorThree.MinorOne.ProjectJSON
-        | Migration.MajorThree.MinorTwo.ProjectJSON
-        | Migration.MajorFour.MinorZero.ProjectJSON;
+        | Migration.MajorTwo.MinorOne.ProjectJson
+        | Migration.MajorTwo.MinorTwo.ProjectJson
+        | Migration.MajorTwo.MinorThree.ProjectJson
+        | Migration.MajorThree.MinorZero.ProjectJson
+        | Migration.MajorThree.MinorOne.ProjectJson
+        | Migration.MajorThree.MinorTwo.ProjectJson
+        | Migration.MajorFour.MinorZero.ProjectJson;
 
       return {
         typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
@@ -88,7 +88,7 @@ export function migrateProjectJson(
     case '6.0.2':
 
     case '7.0.0': {
-      const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJSON;
+      const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
         typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
@@ -117,13 +117,13 @@ export function migrateProjectJson(
 
 function migrateClassJson(
   classJson:
-    | Migration.MajorTwo.MinorOne.ClassJSON
-    | Migration.MajorTwo.MinorThree.ClassJSON
-    | Migration.MajorThree.MinorZero.ClassJSON
-    | Migration.MajorFour.MinorZero.ClassJSON
-    | Migration.MajorSix.MinorZero.ClassJSON,
+    | Migration.MajorTwo.MinorOne.ClassJson
+    | Migration.MajorTwo.MinorThree.ClassJson
+    | Migration.MajorThree.MinorZero.ClassJson
+    | Migration.MajorFour.MinorZero.ClassJson
+    | Migration.MajorSix.MinorZero.ClassJson,
   typeDocJsonParserVersion: string
-): ClassParser.JSON {
+): ClassParser.Json {
   const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = classJson;
 
   switch (typeDocJsonParserVersion) {
@@ -210,7 +210,7 @@ function migrateClassJson(
     case '6.0.2':
 
     case '7.0.0': {
-      const { typeParameters } = classJson as Migration.MajorSix.MinorZero.ClassJSON;
+      const { typeParameters } = classJson as Migration.MajorSix.MinorZero.ClassJson;
 
       return {
         id,
@@ -270,12 +270,12 @@ function migrateClassJson(
 
 function migrateEnum(
   enumJson:
-    | Migration.MajorTwo.MinorOne.EnumJSON
-    | Migration.MajorThree.MinorZero.EnumJSON
-    | Migration.MajorFour.MinorZero.EnumJSON
-    | Migration.MajorSix.MinorZero.EnumJSON,
+    | Migration.MajorTwo.MinorOne.EnumJson
+    | Migration.MajorThree.MinorZero.EnumJson
+    | Migration.MajorFour.MinorZero.EnumJson
+    | Migration.MajorSix.MinorZero.EnumJson,
   typeDocJsonParserVersion: string
-): EnumParser.JSON {
+): EnumParser.Json {
   const { id, name, comment, source, external } = enumJson;
 
   switch (typeDocJsonParserVersion) {
@@ -305,9 +305,9 @@ function migrateEnum(
 
     case '5.2.0': {
       const { properties } = enumJson as
-        | Migration.MajorTwo.MinorOne.EnumJSON
-        | Migration.MajorThree.MinorZero.EnumJSON
-        | Migration.MajorFour.MinorZero.EnumJSON;
+        | Migration.MajorTwo.MinorOne.EnumJson
+        | Migration.MajorThree.MinorZero.EnumJson
+        | Migration.MajorFour.MinorZero.EnumJson;
 
       return {
         id,
@@ -337,7 +337,7 @@ function migrateEnum(
     case '6.0.2':
 
     case '7.0.0': {
-      const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJSON;
+      const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
 
       return {
         id,
@@ -365,9 +365,9 @@ function migrateEnum(
 }
 
 function migrateFunction(
-  functionJson: Migration.MajorTwo.MinorOne.FunctionJSON | Migration.MajorTwo.MinorThree.FunctionJSON | Migration.MajorThree.MinorZero.FunctionJSON,
+  functionJson: Migration.MajorTwo.MinorOne.FunctionJson | Migration.MajorTwo.MinorThree.FunctionJson | Migration.MajorThree.MinorZero.FunctionJson,
   typeDocJsonParserVersion: string
-): FunctionParser.JSON {
+): FunctionParser.Json {
   const { id, name, comment, source, external, signatures } = functionJson;
 
   switch (typeDocJsonParserVersion) {
@@ -419,12 +419,12 @@ function migrateFunction(
 
 function migrateInterface(
   interfaceJson:
-    | Migration.MajorTwo.MinorOne.InterfaceJSON
-    | Migration.MajorThree.MinorZero.InterfaceJSON
-    | Migration.MajorFour.MinorZero.InterfaceJSON
-    | Migration.MajorSix.MinorZero.InterfaceJSON,
+    | Migration.MajorTwo.MinorOne.InterfaceJson
+    | Migration.MajorThree.MinorZero.InterfaceJson
+    | Migration.MajorFour.MinorZero.InterfaceJson
+    | Migration.MajorSix.MinorZero.InterfaceJson,
   typeDocJsonParserVersion: string
-): InterfaceParser.JSON {
+): InterfaceParser.Json {
   const { id, name, comment, source, external, properties } = interfaceJson;
 
   switch (typeDocJsonParserVersion) {
@@ -482,7 +482,7 @@ function migrateInterface(
     case '6.0.2':
 
     case '7.0.0': {
-      const { methods } = interfaceJson as Migration.MajorThree.MinorOne.InterfaceJSON;
+      const { methods } = interfaceJson as Migration.MajorThree.MinorOne.InterfaceJson;
 
       return {
         id,
@@ -523,11 +523,11 @@ function migrateInterface(
 
 function migrateNamespace(
   namespaceJson:
-    | Migration.MajorTwo.MinorOne.NamespaceJSON
-    | Migration.MajorThree.MinorZero.NamespaceJSON
-    | Migration.MajorSix.MinorZero.NamespaceJSON,
+    | Migration.MajorTwo.MinorOne.NamespaceJson
+    | Migration.MajorThree.MinorZero.NamespaceJson
+    | Migration.MajorSix.MinorZero.NamespaceJson,
   typeDocJsonParserVersion: string
-): NamespaceParser.JSON {
+): NamespaceParser.Json {
   const { id, name, comment, source, external, classes, enums, functions, interfaces, namespaces, typeAliases } = namespaceJson;
 
   switch (typeDocJsonParserVersion) {
@@ -556,7 +556,7 @@ function migrateNamespace(
     case '5.1.0':
 
     case '5.2.0': {
-      const { constants } = namespaceJson as Migration.MajorTwo.MinorOne.NamespaceJSON | Migration.MajorThree.MinorZero.NamespaceJSON;
+      const { constants } = namespaceJson as Migration.MajorTwo.MinorOne.NamespaceJson | Migration.MajorThree.MinorZero.NamespaceJson;
 
       return {
         id,
@@ -581,7 +581,7 @@ function migrateNamespace(
     case '6.0.2':
 
     case '7.0.0': {
-      const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJSON;
+      const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
 
       return {
         id,
@@ -604,9 +604,9 @@ function migrateNamespace(
 }
 
 function migrateTypeAlias(
-  typeAliasJson: Migration.MajorTwo.MinorOne.TypeAliasJSON | Migration.MajorThree.MinorZero.TypeAliasJSON,
+  typeAliasJson: Migration.MajorTwo.MinorOne.TypeAliasJson | Migration.MajorThree.MinorZero.TypeAliasJson,
   typeDocJsonParserVersion: string
-): TypeAliasParser.JSON {
+): TypeAliasParser.Json {
   const { id, name, comment, source, external, typeParameters, type } = typeAliasJson;
 
   switch (typeDocJsonParserVersion) {
@@ -658,9 +658,9 @@ function migrateTypeAlias(
 }
 
 function migrateVariable(
-  variableJson: Migration.MajorTwo.MinorOne.ConstantJSON | Migration.MajorThree.MinorZero.ConstantJSON,
+  variableJson: Migration.MajorTwo.MinorOne.ConstantJson | Migration.MajorThree.MinorZero.ConstantJson,
   typeDocJsonParserVersion: string
-): VariableParser.JSON {
+): VariableParser.Json {
   const { id, name, comment, source, external, type, value } = variableJson;
 
   switch (typeDocJsonParserVersion) {
@@ -712,9 +712,9 @@ function migrateVariable(
 }
 
 function migrateSourceJson(
-  sourceJson: Migration.MajorTwo.MinorOne.Misc.SourceJSON | Migration.MajorThree.MinorZero.Misc.SourceJSON,
+  sourceJson: Migration.MajorTwo.MinorOne.Misc.SourceJson | Migration.MajorThree.MinorZero.Misc.SourceJson,
   typeDocJsonParserVersion: string
-): SourceParser.JSON {
+): SourceParser.Json {
   const { line, file, path } = sourceJson;
 
   switch (typeDocJsonParserVersion) {
@@ -757,7 +757,7 @@ function migrateSourceJson(
     case '6.0.2':
 
     case '7.0.0': {
-      const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJSON;
+      const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
         line,
@@ -771,7 +771,7 @@ function migrateSourceJson(
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
 }
 
-function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.ParameterJSON, typeDocJsonParserVersion: string): ParameterParser.JSON {
+function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.ParameterJson, typeDocJsonParserVersion: string): ParameterParser.Json {
   const { id, name, type } = parameterJson;
 
   switch (typeDocJsonParserVersion) {
@@ -824,9 +824,9 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
 }
 
 function migrateSignatureJson(
-  signatureJson: Migration.MajorTwo.MinorOne.Misc.SignatureJSON | Migration.MajorTwo.MinorThree.Misc.SignatureJSON,
+  signatureJson: Migration.MajorTwo.MinorOne.Misc.SignatureJson | Migration.MajorTwo.MinorThree.Misc.SignatureJson,
   typeDocJsonParserVersion: string
-): SignatureParser.JSON {
+): SignatureParser.Json {
   const { id, name, typeParameters, parameters, returnType } = signatureJson;
 
   switch (typeDocJsonParserVersion) {
@@ -873,7 +873,7 @@ function migrateSignatureJson(
     case '6.0.2':
 
     case '7.0.0': {
-      const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJSON;
+      const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
         id,
@@ -892,35 +892,35 @@ function migrateSignatureJson(
 export namespace Migration {
   export namespace MajorTwo {
     export namespace MinorOne {
-      export interface ProjectJSON {
+      export interface ProjectJson {
         typeDocJsonParserVersion: string;
         id: number;
         name: string;
-        classes: ClassJSON[];
-        constants: ConstantJSON[];
-        enums: EnumJSON[];
-        functions: FunctionJSON[];
-        interfaces: InterfaceJSON[];
-        namespaces: NamespaceJSON[];
-        typeAliases: TypeAliasJSON[];
+        classes: ClassJson[];
+        constants: ConstantJson[];
+        enums: EnumJson[];
+        functions: FunctionJson[];
+        interfaces: InterfaceJson[];
+        namespaces: NamespaceJson[];
+        typeAliases: TypeAliasJson[];
       }
 
-      export interface ClassJSON extends Parser {
+      export interface ClassJson extends Parser {
         external: boolean;
         abstract: boolean;
         extendsType: Type | null;
         implementsType: Type[];
-        construct: ClassJSON.ConstructorJSON;
-        properties: ClassJSON.PropertyJSON[];
-        methods: ClassJSON.MethodJSON[];
+        construct: ClassJson.ConstructorJson;
+        properties: ClassJson.PropertyJson[];
+        methods: ClassJson.MethodJson[];
       }
 
-      export namespace ClassJSON {
-        export interface ConstructorJSON extends Parser {
-          parameters: Misc.ParameterJSON[];
+      export namespace ClassJson {
+        export interface ConstructorJson extends Parser {
+          parameters: Misc.ParameterJson[];
         }
 
-        export interface PropertyJSON extends Parser {
+        export interface PropertyJson extends Parser {
           accessibility: Accessibility;
           abstract: boolean;
           static: boolean;
@@ -929,11 +929,11 @@ export namespace Migration {
           type: Type;
         }
 
-        export interface MethodJSON extends Parser {
+        export interface MethodJson extends Parser {
           accessibility: Accessibility;
           abstract: boolean;
           static: boolean;
-          signatures: Misc.SignatureJSON[];
+          signatures: Misc.SignatureJson[];
         }
 
         export enum Accessibility {
@@ -943,63 +943,63 @@ export namespace Migration {
         }
       }
 
-      export interface ConstantJSON extends Parser {
+      export interface ConstantJson extends Parser {
         external: boolean;
         type: Type;
         value: string;
       }
 
-      export interface EnumJSON extends Parser {
+      export interface EnumJson extends Parser {
         external: boolean;
 
-        properties: EnumJSON.PropertyJSON[];
+        properties: EnumJson.PropertyJson[];
       }
 
-      export namespace EnumJSON {
-        export interface PropertyJSON extends Parser {
+      export namespace EnumJson {
+        export interface PropertyJson extends Parser {
           value: string;
         }
       }
 
-      export interface FunctionJSON extends Parser {
+      export interface FunctionJson extends Parser {
         external: boolean;
-        signatures: Misc.SignatureJSON[];
+        signatures: Misc.SignatureJson[];
       }
 
-      export interface InterfaceJSON extends Parser {
+      export interface InterfaceJson extends Parser {
         external: boolean;
-        properties: InterfaceJSON.PropertyJSON[];
+        properties: InterfaceJson.PropertyJson[];
       }
 
-      export namespace InterfaceJSON {
-        export interface PropertyJSON extends Parser {
+      export namespace InterfaceJson {
+        export interface PropertyJson extends Parser {
           readonly: boolean;
           type: Type;
         }
       }
 
-      export interface NamespaceJSON extends Parser {
+      export interface NamespaceJson extends Parser {
         external: boolean;
-        classes: ClassJSON[];
-        constants: ConstantJSON[];
-        enums: EnumJSON[];
-        functions: FunctionJSON[];
-        interfaces: InterfaceJSON[];
-        namespaces: NamespaceJSON[];
-        typeAliases: TypeAliasJSON[];
+        classes: ClassJson[];
+        constants: ConstantJson[];
+        enums: EnumJson[];
+        functions: FunctionJson[];
+        interfaces: InterfaceJson[];
+        namespaces: NamespaceJson[];
+        typeAliases: TypeAliasJson[];
       }
 
-      export interface TypeAliasJSON extends Parser {
+      export interface TypeAliasJson extends Parser {
         external: boolean;
-        typeParameters: Misc.TypeParameterJSON[];
+        typeParameters: Misc.TypeParameterJson[];
         type: Type;
       }
 
       export interface Parser {
         id: number;
         name: string;
-        comment: Misc.CommentJSON;
-        source: Misc.SourceJSON | null;
+        comment: Misc.CommentJson;
+        source: Misc.SourceJson | null;
       }
 
       export interface Type {
@@ -1032,40 +1032,40 @@ export namespace Migration {
       }
 
       export namespace Misc {
-        export interface CommentJSON {
+        export interface CommentJson {
           description: string | null;
-          blockTags: CommentJSON.BlockTag[];
+          blockTags: CommentJson.BlockTag[];
           modifierTags: string[];
         }
 
-        export namespace CommentJSON {
+        export namespace CommentJson {
           export interface BlockTag {
             name: string;
             text: string;
           }
         }
 
-        export interface ParameterJSON {
+        export interface ParameterJson {
           id: number;
           name: string;
           type: Type;
         }
 
-        export interface SignatureJSON {
+        export interface SignatureJson {
           id: number;
           name: string;
-          typeParameters: TypeParameterJSON[];
-          parameters: ParameterJSON[];
+          typeParameters: TypeParameterJson[];
+          parameters: ParameterJson[];
           returnType: Type;
         }
 
-        export interface SourceJSON {
+        export interface SourceJson {
           line: number;
           file: string;
           path: string;
         }
 
-        export interface TypeParameterJSON {
+        export interface TypeParameterJson {
           id: number;
           name: string;
           type: Type | null;
@@ -1075,31 +1075,31 @@ export namespace Migration {
     }
 
     export namespace MinorTwo {
-      export interface ProjectJSON extends MinorOne.ProjectJSON {
+      export interface ProjectJson extends MinorOne.ProjectJson {
         version: string | null;
       }
     }
 
     export namespace MinorThree {
-      export type ProjectJSON = MinorTwo.ProjectJSON;
+      export type ProjectJson = MinorTwo.ProjectJson;
 
-      export interface ClassJSON extends MinorOne.ClassJSON {
-        methods: ClassJSON.MethodJSON[];
+      export interface ClassJson extends MinorOne.ClassJson {
+        methods: ClassJson.MethodJson[];
       }
 
-      export namespace ClassJSON {
-        export interface MethodJSON extends MinorOne.ClassJSON.MethodJSON {
-          signatures: Misc.SignatureJSON[];
+      export namespace ClassJson {
+        export interface MethodJson extends MinorOne.ClassJson.MethodJson {
+          signatures: Misc.SignatureJson[];
         }
       }
 
-      export interface FunctionJSON extends MinorOne.FunctionJSON {
-        signatures: Misc.SignatureJSON[];
+      export interface FunctionJson extends MinorOne.FunctionJson {
+        signatures: Misc.SignatureJson[];
       }
 
       export namespace Misc {
-        export interface SignatureJSON extends MinorOne.Misc.SignatureJSON {
-          comment: MinorOne.Misc.CommentJSON;
+        export interface SignatureJson extends MinorOne.Misc.SignatureJson {
+          comment: MinorOne.Misc.CommentJson;
         }
       }
     }
@@ -1107,96 +1107,96 @@ export namespace Migration {
 
   export namespace MajorThree {
     export namespace MinorZero {
-      export interface ProjectJSON extends MajorTwo.MinorThree.ProjectJSON {
+      export interface ProjectJson extends MajorTwo.MinorThree.ProjectJson {
         readme: string | null;
       }
 
-      export interface ClassJSON extends MajorTwo.MinorThree.ClassJSON {
-        source: Misc.SourceJSON | null;
+      export interface ClassJson extends MajorTwo.MinorThree.ClassJson {
+        source: Misc.SourceJson | null;
       }
 
-      export namespace ClassJSON {
-        export interface ConstructorJSON extends MajorTwo.MinorOne.ClassJSON.ConstructorJSON {
-          source: Misc.SourceJSON | null;
+      export namespace ClassJson {
+        export interface ConstructorJson extends MajorTwo.MinorOne.ClassJson.ConstructorJson {
+          source: Misc.SourceJson | null;
         }
 
-        export interface MethodJSON extends MajorTwo.MinorThree.ClassJSON.MethodJSON {
-          source: Misc.SourceJSON | null;
+        export interface MethodJson extends MajorTwo.MinorThree.ClassJson.MethodJson {
+          source: Misc.SourceJson | null;
         }
 
-        export interface PropertyJSON extends MajorTwo.MinorOne.ClassJSON.PropertyJSON {
-          source: Misc.SourceJSON | null;
-        }
-      }
-
-      export interface ConstantJSON extends MajorTwo.MinorOne.ConstantJSON {
-        source: Misc.SourceJSON | null;
-      }
-
-      export interface EnumJSON extends MajorTwo.MinorOne.EnumJSON {
-        source: Misc.SourceJSON | null;
-      }
-
-      export namespace EnumJSON {
-        export interface PropertyJSON extends MajorTwo.MinorOne.EnumJSON.PropertyJSON {
-          source: Misc.SourceJSON | null;
+        export interface PropertyJson extends MajorTwo.MinorOne.ClassJson.PropertyJson {
+          source: Misc.SourceJson | null;
         }
       }
 
-      export interface FunctionJSON extends MajorTwo.MinorThree.FunctionJSON {
-        source: Misc.SourceJSON | null;
+      export interface ConstantJson extends MajorTwo.MinorOne.ConstantJson {
+        source: Misc.SourceJson | null;
       }
 
-      export interface InterfaceJSON extends MajorTwo.MinorOne.InterfaceJSON {
-        source: Misc.SourceJSON | null;
+      export interface EnumJson extends MajorTwo.MinorOne.EnumJson {
+        source: Misc.SourceJson | null;
       }
 
-      export namespace InterfaceJSON {
-        export interface PropertyJSON extends MajorTwo.MinorOne.InterfaceJSON.PropertyJSON {
-          source: Misc.SourceJSON | null;
+      export namespace EnumJson {
+        export interface PropertyJson extends MajorTwo.MinorOne.EnumJson.PropertyJson {
+          source: Misc.SourceJson | null;
         }
       }
 
-      export interface NamespaceJSON extends MajorTwo.MinorOne.NamespaceJSON {
-        source: Misc.SourceJSON | null;
-        classes: ClassJSON[];
-        constants: ConstantJSON[];
-        enums: EnumJSON[];
-        functions: FunctionJSON[];
-        interfaces: InterfaceJSON[];
-        namespaces: NamespaceJSON[];
-        typeAliases: TypeAliasJSON[];
+      export interface FunctionJson extends MajorTwo.MinorThree.FunctionJson {
+        source: Misc.SourceJson | null;
       }
 
-      export interface TypeAliasJSON extends MajorTwo.MinorOne.TypeAliasJSON {
-        source: Misc.SourceJSON | null;
+      export interface InterfaceJson extends MajorTwo.MinorOne.InterfaceJson {
+        source: Misc.SourceJson | null;
+      }
+
+      export namespace InterfaceJson {
+        export interface PropertyJson extends MajorTwo.MinorOne.InterfaceJson.PropertyJson {
+          source: Misc.SourceJson | null;
+        }
+      }
+
+      export interface NamespaceJson extends MajorTwo.MinorOne.NamespaceJson {
+        source: Misc.SourceJson | null;
+        classes: ClassJson[];
+        constants: ConstantJson[];
+        enums: EnumJson[];
+        functions: FunctionJson[];
+        interfaces: InterfaceJson[];
+        namespaces: NamespaceJson[];
+        typeAliases: TypeAliasJson[];
+      }
+
+      export interface TypeAliasJson extends MajorTwo.MinorOne.TypeAliasJson {
+        source: Misc.SourceJson | null;
       }
 
       export namespace Misc {
-        export interface SourceJSON extends MajorTwo.MinorOne.Misc.SourceJSON {
+        export interface SourceJson extends MajorTwo.MinorOne.Misc.SourceJson {
           url: string | null;
         }
       }
     }
 
     export namespace MinorOne {
-      export interface ProjectJSON extends MinorZero.ProjectJSON {
-        interfaces: InterfaceJSON[];
+      export interface ProjectJson extends MinorZero.ProjectJson {
+        interfaces: InterfaceJson[];
       }
 
-      export interface InterfaceJSON extends MinorZero.InterfaceJSON {
-        methods: InterfaceJSON.MethodJSON[];
+      export interface InterfaceJson extends MinorZero.InterfaceJson {
+        methods: InterfaceJson.MethodJson[];
       }
 
-      export namespace InterfaceJSON {
-        export interface MethodJSON extends MajorTwo.MinorOne.Parser {
-          signatures: MajorTwo.MinorOne.Misc.SignatureJSON[];
+      export namespace InterfaceJson {
+        export interface MethodJson extends MajorTwo.MinorOne.Parser {
+          signatures: MajorTwo.MinorOne.Misc.SignatureJson[];
         }
       }
     }
 
     export namespace MinorTwo {
-      export interface ProjectJSON extends MinorOne.ProjectJSON {
+      export interface ProjectJson extends MinorOne.ProjectJson {
         changelog: string | null;
       }
     }
@@ -1204,53 +1204,53 @@ export namespace Migration {
 
   export namespace MajorFour {
     export namespace MinorZero {
-      export interface ProjectJSON extends MajorThree.MinorTwo.ProjectJSON {
-        classes: ClassJSON[];
-        enums: EnumJSON[];
-        interfaces: InterfaceJSON[];
+      export interface ProjectJson extends MajorThree.MinorTwo.ProjectJson {
+        classes: ClassJson[];
+        enums: EnumJson[];
+        interfaces: InterfaceJson[];
       }
 
-      export interface ClassJSON extends MajorThree.MinorZero.ClassJSON {
-        construct: ClassJSON.ConstructorJSON;
-        methods: ClassJSON.MethodJSON[];
-        properties: ClassJSON.PropertyJSON[];
+      export interface ClassJson extends MajorThree.MinorZero.ClassJson {
+        construct: ClassJson.ConstructorJson;
+        methods: ClassJson.MethodJson[];
+        properties: ClassJson.PropertyJson[];
       }
 
-      export namespace ClassJSON {
-        export interface ConstructorJSON extends MajorThree.MinorZero.ClassJSON.ConstructorJSON {
+      export namespace ClassJson {
+        export interface ConstructorJson extends MajorThree.MinorZero.ClassJson.ConstructorJson {
           parentId: number;
         }
 
-        export interface MethodJSON extends MajorThree.MinorZero.ClassJSON.MethodJSON {
+        export interface MethodJson extends MajorThree.MinorZero.ClassJson.MethodJson {
           parentId: number;
         }
 
-        export interface PropertyJSON extends MajorThree.MinorZero.ClassJSON.PropertyJSON {
-          parentId: number;
-        }
-      }
-
-      export interface EnumJSON extends MajorThree.MinorZero.EnumJSON {
-        properties: EnumJSON.PropertyJSON[];
-      }
-
-      export namespace EnumJSON {
-        export interface PropertyJSON extends MajorThree.MinorZero.EnumJSON.PropertyJSON {
+        export interface PropertyJson extends MajorThree.MinorZero.ClassJson.PropertyJson {
           parentId: number;
         }
       }
 
-      export interface InterfaceJSON extends MajorThree.MinorOne.InterfaceJSON {
-        properties: InterfaceJSON.PropertyJSON[];
-        methods: InterfaceJSON.MethodJSON[];
+      export interface EnumJson extends MajorThree.MinorZero.EnumJson {
+        properties: EnumJson.PropertyJson[];
       }
 
-      export namespace InterfaceJSON {
-        export interface PropertyJSON extends MajorTwo.MinorOne.InterfaceJSON.PropertyJSON {
+      export namespace EnumJson {
+        export interface PropertyJson extends MajorThree.MinorZero.EnumJson.PropertyJson {
+          parentId: number;
+        }
+      }
+
+      export interface InterfaceJson extends MajorThree.MinorOne.InterfaceJson {
+        properties: InterfaceJson.PropertyJson[];
+        methods: InterfaceJson.MethodJson[];
+      }
+
+      export namespace InterfaceJson {
+        export interface PropertyJson extends MajorTwo.MinorOne.InterfaceJson.PropertyJson {
           parentId: number;
         }
 
-        export interface MethodJSON extends MajorThree.MinorOne.InterfaceJSON.MethodJSON {
+        export interface MethodJson extends MajorThree.MinorOne.InterfaceJson.MethodJson {
           parentId: number;
         }
       }
@@ -1259,45 +1259,45 @@ export namespace Migration {
 
   export namespace MajorSix {
     export namespace MinorZero {
-      export interface ProjectJSON extends Omit<MajorFour.MinorZero.ProjectJSON, 'classes' | 'constants' | 'enums' | 'interfaces'> {
-        classes: ClassJSON[];
-        enums: EnumJSON[];
-        interfaces: InterfaceJSON[];
-        variables: VariableJSON[];
+      export interface ProjectJson extends Omit<MajorFour.MinorZero.ProjectJson, 'classes' | 'constants' | 'enums' | 'interfaces'> {
+        classes: ClassJson[];
+        enums: EnumJson[];
+        interfaces: InterfaceJson[];
+        variables: VariableJson[];
       }
 
-      export interface ClassJSON extends Omit<MajorFour.MinorZero.ClassJSON, 'methods'> {
-        typeParameters: MajorTwo.MinorOne.Misc.TypeParameterJSON[];
-        methods: ClassJSON.MethodJSON[];
+      export interface ClassJson extends Omit<MajorFour.MinorZero.ClassJson, 'methods'> {
+        typeParameters: MajorTwo.MinorOne.Misc.TypeParameterJson[];
+        methods: ClassJson.MethodJson[];
       }
 
-      export namespace ClassJSON {
-        export type MethodJSON = Omit<MajorFour.MinorZero.ClassJSON.MethodJSON, 'comment'>;
+      export namespace ClassJson {
+        export type MethodJson = Omit<MajorFour.MinorZero.ClassJson.MethodJson, 'comment'>;
       }
 
-      export interface EnumJSON extends Omit<MajorFour.MinorZero.EnumJSON, 'properties'> {
-        members: EnumJSON.MemberJSON[];
+      export interface EnumJson extends Omit<MajorFour.MinorZero.EnumJson, 'properties'> {
+        members: EnumJson.MemberJson[];
       }
 
-      export namespace EnumJSON {
-        export type MemberJSON = MajorFour.MinorZero.EnumJSON.PropertyJSON;
+      export namespace EnumJson {
+        export type MemberJson = MajorFour.MinorZero.EnumJson.PropertyJson;
       }
 
-      export interface InterfaceJSON extends Omit<MajorFour.MinorZero.InterfaceJSON, 'methods'> {
-        methods: InterfaceJSON.MethodJSON[];
+      export interface InterfaceJson extends Omit<MajorFour.MinorZero.InterfaceJson, 'methods'> {
+        methods: InterfaceJson.MethodJson[];
       }
 
-      export namespace InterfaceJSON {
-        export type MethodJSON = Omit<MajorFour.MinorZero.InterfaceJSON.MethodJSON, 'comment'>;
+      export namespace InterfaceJson {
+        export type MethodJson = Omit<MajorFour.MinorZero.InterfaceJson.MethodJson, 'comment'>;
       }
 
-      export type VariableJSON = MajorThree.MinorZero.ConstantJSON;
+      export type VariableJson = MajorThree.MinorZero.ConstantJson;
 
-      export interface NamespaceJSON extends Omit<MajorThree.MinorZero.NamespaceJSON, 'classes' | 'constants' | 'enums' | 'interfaces'> {
-        classes: ClassJSON[];
-        enums: EnumJSON[];
-        interfaces: InterfaceJSON[];
-        variables: VariableJSON[];
+      export interface NamespaceJson extends Omit<MajorThree.MinorZero.NamespaceJson, 'classes' | 'constants' | 'enums' | 'interfaces'> {
+        classes: ClassJson[];
+        enums: EnumJson[];
+        interfaces: InterfaceJson[];
+        variables: VariableJson[];
       }
     }
   }

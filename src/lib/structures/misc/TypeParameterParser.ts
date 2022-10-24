@@ -41,11 +41,11 @@ export class TypeParameterParser {
   }
 
   /**
-   * Converts this type parameter to a JSON compatible format.
+   * Converts this type parameter to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this type parameter.
+   * @returns The Json compatible format of this type parameter.
    */
-  public toJSON(): TypeParameterParser.JSON {
+  public toJSON(): TypeParameterParser.Json {
     return {
       id: this.id,
       name: this.name,
@@ -81,14 +81,14 @@ export class TypeParameterParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: TypeParameterParser.JSON): TypeParameterParser {
+  public static generateFromJson(json: TypeParameterParser.Json): TypeParameterParser {
     const { id, name, type, default: _default } = json;
 
     return new TypeParameterParser({
       id,
       name,
-      type: type ? TypeParser.generateFromJSON(type) : null,
-      default: _default ? TypeParser.generateFromJSON(_default) : null
+      type: type ? TypeParser.generateFromJson(type) : null,
+      default: _default ? TypeParser.generateFromJson(_default) : null
     });
   }
 }
@@ -120,7 +120,7 @@ export namespace TypeParameterParser {
     default: TypeParser | null;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The identifier of this parser.
      * @since 1.0.0
@@ -134,15 +134,15 @@ export namespace TypeParameterParser {
     name: string;
 
     /**
-     * The type of this type parameter in a JSON compatible format.
+     * The type of this type parameter in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON | null;
+    type: TypeParser.Json | null;
 
     /**
-     * The default value of this type parameter in a JSON compatible format.
+     * The default value of this type parameter in a Json compatible format.
      * @since 1.0.0
      */
-    default: TypeParser.JSON | null;
+    default: TypeParser.Json | null;
   }
 }

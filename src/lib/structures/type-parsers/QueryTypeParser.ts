@@ -25,11 +25,11 @@ export class QueryTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): QueryTypeParser.JSON {
+  public toJSON(): QueryTypeParser.Json {
     return {
       kind: this.kind,
       query: this.query.toJSON()
@@ -65,13 +65,13 @@ export namespace QueryTypeParser {
     query: ReferenceTypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Query;
 
     /**
-     * The query of this query type in a JSON compatible format.
+     * The query of this query type in a Json compatible format.
      * @since 1.0.0
      */
-    query: ReferenceTypeParser.JSON;
+    query: ReferenceTypeParser.Json;
   }
 }

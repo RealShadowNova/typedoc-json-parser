@@ -24,11 +24,11 @@ export class UnionTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): UnionTypeParser.JSON {
+  public toJSON(): UnionTypeParser.Json {
     return {
       kind: this.kind,
       types: this.types.map((type) => type.toJSON())
@@ -58,19 +58,19 @@ export class UnionTypeParser implements TypeParser {
 export namespace UnionTypeParser {
   export interface Data {
     /**
-     * The types of this union type in a JSON compatible format.
+     * The types of this union type in a Json compatible format.
      * @since 5.0.0
      */
     types: TypeParser[];
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Union;
 
     /**
-     * The types of this union type in a JSON compatible format.
+     * The types of this union type in a Json compatible format.
      * @since 1.0.0
      */
-    types: TypeParser.JSON[];
+    types: TypeParser.Json[];
   }
 }

@@ -37,11 +37,11 @@ export class FunctionParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): FunctionParser.JSON {
+  public toJSON(): FunctionParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -76,16 +76,16 @@ export class FunctionParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: FunctionParser.JSON): FunctionParser {
+  public static generateFromJson(json: FunctionParser.Json): FunctionParser {
     const { id, name, comment, source, external, signatures } = json;
 
     return new FunctionParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature))
+      signatures: signatures.map((signature) => SignatureParser.generateFromJson(signature))
     });
   }
 }
@@ -111,12 +111,12 @@ export namespace FunctionParser {
     signatures: SignatureParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this function.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this function is external.
@@ -125,9 +125,9 @@ export namespace FunctionParser {
     external: boolean;
 
     /**
-     * The signature parsers of this function in a JSON compatible format.
+     * The signature parsers of this function in a Json compatible format.
      * @since 1.0.0
      */
-    signatures: SignatureParser.JSON[];
+    signatures: SignatureParser.Json[];
   }
 }

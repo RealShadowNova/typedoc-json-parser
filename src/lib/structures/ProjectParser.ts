@@ -10,7 +10,7 @@ import { TypeAliasParser } from './TypeAliasParser';
 import { VariableParser } from './VariableParser';
 
 /**
- * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.JSON}
+ * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.Json}
  * @since 1.0.0
  */
 export class ProjectParser {
@@ -138,13 +138,13 @@ export class ProjectParser {
       this.version = version ?? data.version;
       this.readme = readme ?? data.readme;
       this.changelog = changelog ?? data.changelog;
-      this.classes = classes.map((json) => ClassParser.generateFromJSON(json));
-      this.enums = enums.map((json) => EnumParser.generateFromJSON(json));
-      this.functions = functions.map((json) => FunctionParser.generateFromJSON(json));
-      this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJSON(json));
-      this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJSON(json));
-      this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJSON(json));
-      this.variables = variables.map((json) => VariableParser.generateFromJSON(json));
+      this.classes = classes.map((json) => ClassParser.generateFromJson(json));
+      this.enums = enums.map((json) => EnumParser.generateFromJson(json));
+      this.functions = functions.map((json) => FunctionParser.generateFromJson(json));
+      this.interfaces = interfaces.map((json) => InterfaceParser.generateFromJson(json));
+      this.namespaces = namespaces.map((json) => NamespaceParser.generateFromJson(json));
+      this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJson(json));
+      this.variables = variables.map((json) => VariableParser.generateFromJson(json));
     } else {
       const { kind, kindString = 'Unknown', children = [] } = data;
 
@@ -345,11 +345,11 @@ export class ProjectParser {
   }
 
   /**
-   * Converts this project to a JSON compatible format.
+   * Converts this project to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this project.
+   * @returns The Json compatible format of this project.
    */
-  public toJSON(): ProjectParser.JSON {
+  public toJSON(): ProjectParser.Json {
     return {
       typeDocJsonParserVersion: this.typeDocJsonParserVersion,
       id: this.id,
@@ -376,7 +376,7 @@ export namespace ProjectParser {
      * The data for this project.
      * @since 3.0.0
      */
-    data: JSON | JSONOutput.ProjectReflection;
+    data: Json | JSONOutput.ProjectReflection;
 
     /**
      * The version of the project being parsed.
@@ -397,9 +397,9 @@ export namespace ProjectParser {
     changelog?: string;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
-     * The version of `typedoc-json-parser` that generated this JSON object.
+     * The version of `typedoc-json-parser` that generated this Json object.
      * @since 2.1.0
      */
     typeDocJsonParserVersion: string;
@@ -439,45 +439,45 @@ export namespace ProjectParser {
     changelog: string | null;
 
     /**
-     * An array of class JSON compatible objects for this project in a JSON compatible format.
+     * An array of class Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    classes: ClassParser.JSON[];
+    classes: ClassParser.Json[];
 
     /**
-     * An array of enum JSON compatible objects for this project in a JSON compatible format.
+     * An array of enum Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    enums: EnumParser.JSON[];
+    enums: EnumParser.Json[];
 
     /**
-     * An array of function JSON compatible objects for this project in a JSON compatible format.
+     * An array of function Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    functions: FunctionParser.JSON[];
+    functions: FunctionParser.Json[];
 
     /**
-     * An array of interface JSON compatible objects for this project in a JSON compatible format.
+     * An array of interface Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    interfaces: InterfaceParser.JSON[];
+    interfaces: InterfaceParser.Json[];
 
     /**
-     * An array of namespace JSON compatible objects for this project in a JSON compatible format.
+     * An array of namespace Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    namespaces: NamespaceParser.JSON[];
+    namespaces: NamespaceParser.Json[];
 
     /**
-     * An array of type alias JSON compatible objects for this project in a JSON compatible format.
+     * An array of type alias Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    typeAliases: TypeAliasParser.JSON[];
+    typeAliases: TypeAliasParser.Json[];
 
     /**
-     * An array of variable JSON compatible objects for this project in a JSON compatible format.
+     * An array of variable Json compatible objects for this project in a Json compatible format.
      * @since 1.0.0
      */
-    variables: VariableParser.JSON[];
+    variables: VariableParser.Json[];
   }
 }

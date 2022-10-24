@@ -54,9 +54,9 @@ export class ClassMethodParser extends Parser {
   /**
    * Convert this parser to a JSON compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassMethodParser.JSON {
+  public toJSON(): ClassMethodParser.Json {
     return {
       ...super.toJSON(),
       parentId: this.parentId,
@@ -99,18 +99,18 @@ export class ClassMethodParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: ClassMethodParser.JSON): ClassMethodParser {
+  public static generateFromJson(json: ClassMethodParser.Json): ClassMethodParser {
     const { id, name, source, parentId, accessibility, abstract, static: _static, signatures } = json;
 
     return new ClassMethodParser({
       id,
       name,
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
       accessibility,
       abstract,
       static: _static,
-      signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature))
+      signatures: signatures.map((signature) => SignatureParser.generateFromJson(signature))
     });
   }
 }
@@ -148,7 +148,7 @@ export namespace ClassMethodParser {
     signatures: SignatureParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The id of the parent class parser.
      * @since 4.0.0
@@ -174,9 +174,9 @@ export namespace ClassMethodParser {
     static: boolean;
 
     /**
-     * The signature parsers of this method in a JSON compatible format.
+     * The signature parsers of this method in a Json compatible format.
      * @since 1.0.0
      */
-    signatures: SignatureParser.JSON[];
+    signatures: SignatureParser.Json[];
   }
 }

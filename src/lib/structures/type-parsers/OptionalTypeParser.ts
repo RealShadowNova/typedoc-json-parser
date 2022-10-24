@@ -24,11 +24,11 @@ export class OptionalTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): OptionalTypeParser.JSON {
+  public toJSON(): OptionalTypeParser.Json {
     return {
       kind: this.kind,
       type: this.type.toJSON()
@@ -64,13 +64,13 @@ export namespace OptionalTypeParser {
     type: TypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Optional;
 
     /**
-     * The type of this optional type in a JSON compatible format.
+     * The type of this optional type in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 }

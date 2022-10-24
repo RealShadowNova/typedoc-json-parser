@@ -45,11 +45,11 @@ export class TypeAliasParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): TypeAliasParser.JSON {
+  public toJSON(): TypeAliasParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -86,17 +86,17 @@ export class TypeAliasParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: TypeAliasParser.JSON): TypeAliasParser {
+  public static generateFromJson(json: TypeAliasParser.Json): TypeAliasParser {
     const { id, name, comment, source, external, typeParameters, type } = json;
 
     return new TypeAliasParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
-      type: TypeParser.generateFromJSON(type)
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJson(typeParameter)),
+      type: TypeParser.generateFromJson(type)
     });
   }
 }
@@ -128,12 +128,12 @@ export namespace TypeAliasParser {
     type: TypeParser;
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this type alias.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this type alias is external.
@@ -142,14 +142,14 @@ export namespace TypeAliasParser {
     external: boolean;
 
     /**
-     * The type parameters of this type alias in a JSON compatible format.
+     * The type parameters of this type alias in a Json compatible format.
      * @since 1.0.0
      */
-    typeParameters: TypeParameterParser.JSON[];
+    typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The type of this type alias in a JSON compatible format.
+     * The type of this type alias in a Json compatible format.
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 }

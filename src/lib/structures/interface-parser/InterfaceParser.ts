@@ -46,11 +46,11 @@ export class InterfaceParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): InterfaceParser.JSON {
+  public toJSON(): InterfaceParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -95,17 +95,17 @@ export class InterfaceParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: InterfaceParser.JSON): InterfaceParser {
+  public static generateFromJson(json: InterfaceParser.Json): InterfaceParser {
     const { id, name, comment, source, external, properties, methods } = json;
 
     return new InterfaceParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       external,
-      properties: properties.map((parser) => InterfacePropertyParser.generateFromJSON(parser)),
-      methods: methods.map((parser) => InterfaceMethodParser.generateFromJSON(parser))
+      properties: properties.map((parser) => InterfacePropertyParser.generateFromJson(parser)),
+      methods: methods.map((parser) => InterfaceMethodParser.generateFromJson(parser))
     });
   }
 }
@@ -137,12 +137,12 @@ export namespace InterfaceParser {
     methods: InterfaceMethodParser[];
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this interface.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * Whether this interface is external.
@@ -151,15 +151,15 @@ export namespace InterfaceParser {
     external: boolean;
 
     /**
-     * The property parsers of this interface in a JSON compatible format.
+     * The property parsers of this interface in a Json compatible format.
      * @since 1.0.0
      */
-    properties: InterfacePropertyParser.JSON[];
+    properties: InterfacePropertyParser.Json[];
 
     /**
-     * The method parsers of this interface in a JSON compatible format.
+     * The method parsers of this interface in a Json compatible format.
      * @since 3.1.0
      */
-    methods: InterfaceMethodParser.JSON[];
+    methods: InterfaceMethodParser.Json[];
   }
 }

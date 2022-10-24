@@ -54,11 +54,11 @@ export class ReferenceTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ReferenceTypeParser.JSON {
+  public toJSON(): ReferenceTypeParser.Json {
     return {
       kind: this.kind,
       id: this.id,
@@ -117,7 +117,7 @@ export namespace ReferenceTypeParser {
     typeArguments: TypeParser[];
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Reference;
 
     /**
@@ -139,9 +139,9 @@ export namespace ReferenceTypeParser {
     packageName: string | null;
 
     /**
-     * The type arguments of this reference type in a JSON compatible format.
+     * The type arguments of this reference type in a Json compatible format.
      * @since 1.0.0
      */
-    typeArguments: TypeParser.JSON[];
+    typeArguments: TypeParser.Json[];
   }
 }

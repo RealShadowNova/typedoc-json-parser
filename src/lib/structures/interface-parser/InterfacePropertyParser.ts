@@ -47,9 +47,9 @@ export class InterfacePropertyParser extends Parser {
   /**
    * Converts this parser to a JSON compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): InterfacePropertyParser.JSON {
+  public toJSON(): InterfacePropertyParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -86,17 +86,17 @@ export class InterfacePropertyParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: InterfacePropertyParser.JSON): InterfacePropertyParser {
+  public static generateFromJson(json: InterfacePropertyParser.Json): InterfacePropertyParser {
     const { id, name, comment, source, parentId, readonly, type } = json;
 
     return new InterfacePropertyParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
       readonly,
-      type: TypeParser.generateFromJSON(type)
+      type: TypeParser.generateFromJson(type)
     });
   }
 }
@@ -128,12 +128,12 @@ export namespace InterfacePropertyParser {
     type: TypeParser;
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this property.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * The id of the parent interface parser.
@@ -148,9 +148,9 @@ export namespace InterfacePropertyParser {
     readonly: boolean;
 
     /**
-     * The type of this property in a JSON compatible format.
+     * The type of this property in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 }

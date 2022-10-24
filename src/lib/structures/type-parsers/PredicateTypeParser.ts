@@ -39,11 +39,11 @@ export class PredicateTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): PredicateTypeParser.JSON {
+  public toJSON(): PredicateTypeParser.Json {
     return {
       kind: this.kind,
       asserts: this.asserts,
@@ -95,7 +95,7 @@ export namespace PredicateTypeParser {
     type: TypeParser | null;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Predicate;
 
     /**
@@ -111,11 +111,11 @@ export namespace PredicateTypeParser {
     name: string;
 
     /**
-     * The type of this predicate type in a JSON compatible format.
+     * The type of this predicate type in a Json compatible format.
      *
      * If this {@link PredicateTypeParser.asserts} is `false` this will not be `null`
      * @since 1.0.0
      */
-    type: TypeParser.JSON | null;
+    type: TypeParser.Json | null;
   }
 }

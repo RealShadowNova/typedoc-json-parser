@@ -38,11 +38,11 @@ export class NamedTupleMemberTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): NamedTupleMemberTypeParser.JSON {
+  public toJSON(): NamedTupleMemberTypeParser.Json {
     return {
       kind: this.kind,
       name: this.name,
@@ -92,7 +92,7 @@ export namespace NamedTupleMemberTypeParser {
     optional: boolean;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.NamedTupleMember;
 
     /**
@@ -102,10 +102,10 @@ export namespace NamedTupleMemberTypeParser {
     name: string;
 
     /**
-     * The type of this named tuple member in a JSON compatible format.
+     * The type of this named tuple member in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
 
     /**
      * Whether this named tuple member is optional.

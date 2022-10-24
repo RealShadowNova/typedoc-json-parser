@@ -74,11 +74,11 @@ export class ClassPropertyParser extends Parser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassPropertyParser.JSON {
+  public toJSON(): ClassPropertyParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
@@ -155,21 +155,21 @@ export class ClassPropertyParser extends Parser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: ClassPropertyParser.JSON): ClassPropertyParser {
+  public static generateFromJson(json: ClassPropertyParser.Json): ClassPropertyParser {
     const { id, name, comment, source, parentId, accessibility, abstract, static: _static, readonly, optional, type } = json;
 
     return new ClassPropertyParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      source: source ? SourceParser.generateFromJSON(source) : null,
+      comment: CommentParser.generateFromJson(comment),
+      source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
       accessibility,
       abstract,
       static: _static,
       readonly,
       optional,
-      type: type ? TypeParser.generateFromJSON(type) : null
+      type: type ? TypeParser.generateFromJson(type) : null
     });
   }
 }
@@ -225,12 +225,12 @@ export namespace ClassPropertyParser {
     type: TypeParser | null;
   }
 
-  export interface JSON extends Parser.JSON {
+  export interface Json extends Parser.Json {
     /**
      * The comment parser of this property.
      * @since 1.0.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
      * The id of the parent class parser.
@@ -269,9 +269,9 @@ export namespace ClassPropertyParser {
     optional: boolean;
 
     /**
-     * The type parser of this property in a JSON compatible format.
+     * The type parser of this property in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON | null;
+    type: TypeParser.Json | null;
   }
 }

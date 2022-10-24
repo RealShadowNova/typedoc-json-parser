@@ -31,11 +31,11 @@ export class TypeOperatorTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): TypeOperatorTypeParser.JSON {
+  public toJSON(): TypeOperatorTypeParser.Json {
     return {
       kind: this.kind,
       operator: this.operator,
@@ -78,7 +78,7 @@ export namespace TypeOperatorTypeParser {
     type: TypeParser;
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.TypeOperator;
 
     /**
@@ -88,10 +88,10 @@ export namespace TypeOperatorTypeParser {
     operator: Operator;
 
     /**
-     * The type of this type operator type in a JSON compatible format.
+     * The type of this type operator type in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.JSON;
+    type: TypeParser.Json;
   }
 
   /**

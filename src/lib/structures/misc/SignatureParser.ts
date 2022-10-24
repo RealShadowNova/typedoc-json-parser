@@ -58,11 +58,11 @@ export class SignatureParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): SignatureParser.JSON {
+  public toJSON(): SignatureParser.Json {
     return {
       id: this.id,
       name: this.name,
@@ -110,16 +110,16 @@ export class SignatureParser {
    * @param json The json to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromJSON(json: SignatureParser.JSON): SignatureParser {
+  public static generateFromJson(json: SignatureParser.Json): SignatureParser {
     const { id, name, comment, typeParameters, parameters, returnType } = json;
 
     return new SignatureParser({
       id,
       name,
-      comment: CommentParser.generateFromJSON(comment),
-      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJSON(typeParameter)),
-      parameters: parameters.map((parameter) => ParameterParser.generateFromJSON(parameter)),
-      returnType: TypeParser.generateFromJSON(returnType)
+      comment: CommentParser.generateFromJson(comment),
+      typeParameters: typeParameters.map((typeParameter) => TypeParameterParser.generateFromJson(typeParameter)),
+      parameters: parameters.map((parameter) => ParameterParser.generateFromJson(parameter)),
+      returnType: TypeParser.generateFromJson(returnType)
     });
   }
 }
@@ -163,7 +163,7 @@ export namespace SignatureParser {
     returnType: TypeParser;
   }
 
-  export interface JSON {
+  export interface Json {
     /**
      * The identifier of this parser.
      * @since 1.0.0
@@ -180,24 +180,24 @@ export namespace SignatureParser {
      * The comment of this signature.
      * @since 2.3.0
      */
-    comment: CommentParser.JSON;
+    comment: CommentParser.Json;
 
     /**
-     * The type parameters of this signature in a JSON compatible format.
+     * The type parameters of this signature in a Json compatible format.
      * @since 1.0.0
      */
-    typeParameters: TypeParameterParser.JSON[];
+    typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The parameters of this signature in a JSON compatible format.
+     * The parameters of this signature in a Json compatible format.
      * @since 1.0.0
      */
-    parameters: ParameterParser.JSON[];
+    parameters: ParameterParser.Json[];
 
     /**
-     * The return type of this signature in a JSON compatible format.
+     * The return type of this signature in a Json compatible format.
      * @since 1.0.0
      */
-    returnType: TypeParser.JSON;
+    returnType: TypeParser.Json;
   }
 }

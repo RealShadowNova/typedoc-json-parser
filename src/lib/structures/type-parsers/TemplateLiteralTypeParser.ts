@@ -31,11 +31,11 @@ export class TemplateLiteralTypeParser implements TypeParser {
   }
 
   /**
-   * Converts this parser to a JSON compatible format.
+   * Converts this parser to a Json compatible format.
    * @since 1.0.0
-   * @returns The JSON compatible format of this parser.
+   * @returns The Json compatible format of this parser.
    */
-  public toJSON(): TemplateLiteralTypeParser.JSON {
+  public toJSON(): TemplateLiteralTypeParser.Json {
     return {
       kind: this.kind,
       head: this.head,
@@ -78,7 +78,7 @@ export namespace TemplateLiteralTypeParser {
     tail: Tail[];
   }
 
-  export interface JSON extends TypeParser.JSON {
+  export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.TemplateLiteral;
 
     /**
@@ -91,7 +91,7 @@ export namespace TemplateLiteralTypeParser {
      * The tail of this template literal type.
      * @since 1.0.0
      */
-    tail: Tail.JSON[];
+    tail: Tail.Json[];
   }
 
   export interface Tail {
@@ -109,12 +109,12 @@ export namespace TemplateLiteralTypeParser {
   }
 
   export namespace Tail {
-    export interface JSON {
+    export interface Json {
       /**
-       * The type of this template literal tail type in a JSON compatible format.
+       * The type of this template literal tail type in a Json compatible format.
        * @since 1.0.0
        */
-      type: TypeParser.JSON;
+      type: TypeParser.Json;
 
       /**
        * The text of this template literal tail type.
