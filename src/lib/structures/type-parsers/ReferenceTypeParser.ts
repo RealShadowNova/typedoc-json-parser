@@ -50,7 +50,7 @@ export class ReferenceTypeParser implements TypeParser {
    * @returns
    */
   public isPackage(): boolean {
-    return this.packageName === null;
+    return this.packageName !== null;
   }
 
   /**
