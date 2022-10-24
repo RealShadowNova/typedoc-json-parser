@@ -23,7 +23,7 @@ export class TypeParameterParser {
    * The type of this type parameter.
    * @since 1.0.0
    */
-  public readonly type: TypeParser | null;
+  public readonly constraint: TypeParser | null;
 
   /**
    * The default value of this type parameter.
@@ -32,11 +32,11 @@ export class TypeParameterParser {
   public readonly default: TypeParser | null;
 
   public constructor(data: TypeParameterParser.Data) {
-    const { id, name, type, default: defaultValue } = data;
+    const { id, name, constraint, default: defaultValue } = data;
 
     this.id = id;
     this.name = name;
-    this.type = type;
+    this.constraint = constraint;
     this.default = defaultValue;
   }
 
@@ -49,7 +49,7 @@ export class TypeParameterParser {
     return {
       id: this.id,
       name: this.name,
-      type: this.type ? this.type.toJSON() : null,
+      constraint: this.constraint ? this.constraint.toJSON() : null,
       default: this.default ? this.default.toJSON() : null
     };
   }
@@ -71,7 +71,7 @@ export class TypeParameterParser {
     return new TypeParameterParser({
       id,
       name,
-      type: type ? TypeParser.generateFromTypeDoc(type) : null,
+      constraint: type ? TypeParser.generateFromTypeDoc(type) : null,
       default: _default ? TypeParser.generateFromTypeDoc(_default) : null
     });
   }
@@ -82,12 +82,12 @@ export class TypeParameterParser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: TypeParameterParser.Json): TypeParameterParser {
-    const { id, name, type, default: _default } = json;
+    const { id, name, constraint, default: _default } = json;
 
     return new TypeParameterParser({
       id,
       name,
-      type: type ? TypeParser.generateFromJson(type) : null,
+      constraint: constraint ? TypeParser.generateFromJson(constraint) : null,
       default: _default ? TypeParser.generateFromJson(_default) : null
     });
   }
@@ -108,10 +108,10 @@ export namespace TypeParameterParser {
     name: string;
 
     /**
-     * The type of this type parameter.
+     * The constraint of this type parameter.
      * @since 1.0.0
      */
-    type: TypeParser | null;
+    constraint: TypeParser | null;
 
     /**
      * The default value of this type parameter.
@@ -134,10 +134,10 @@ export namespace TypeParameterParser {
     name: string;
 
     /**
-     * The type of this type parameter in a Json compatible format.
+     * The constraint of this type parameter in a Json compatible format.
      * @since 1.0.0
      */
-    type: TypeParser.Json | null;
+    constraint: TypeParser.Json | null;
 
     /**
      * The default value of this type parameter in a Json compatible format.
