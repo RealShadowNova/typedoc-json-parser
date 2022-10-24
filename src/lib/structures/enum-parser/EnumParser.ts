@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
 import { EnumMemberParser } from './EnumMemberParser';
 
 /**
@@ -28,8 +27,8 @@ export class EnumParser extends Parser {
    */
   public readonly members: EnumMemberParser[];
 
-  public constructor(data: EnumParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: EnumParser.Data) {
+    super(data);
 
     const { comment, external, members } = data;
 
@@ -56,45 +55,43 @@ export class EnumParser extends Parser {
    * Generates a new {@link EnumParser} instance from the given JSON data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): EnumParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): EnumParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Enum) throw new Error(`Expected Enum (${ReflectionKind.Enum}), but received ${kindString} (${kind})`);
 
     const members = children
       .filter((child) => child.kind === ReflectionKind.EnumMember)
-      .map((child) => EnumMemberParser.generateFromTypeDoc(child, id, project));
+      .map((child) => EnumMemberParser.generateFromTypeDoc(child, id));
 
-    return new EnumParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        members
-      },
-      project
-    );
+    return new EnumParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      members
+    });
   }
 
-  public static generateFromJSON(json: EnumParser.JSON, project: ProjectParser): EnumParser {
+  /**
+   * Generates a new {@link EnumParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: EnumParser.JSON): EnumParser {
     const { id, name, comment, source, external, members } = json;
 
-    return new EnumParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        members: members.map((property) => EnumMemberParser.generateFromJSON(property, project))
-      },
-      project
-    );
+    return new EnumParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      members: members.map((property) => EnumMemberParser.generateFromJSON(property))
+    });
   }
 }
 

@@ -1,17 +1,10 @@
 import type { SourceParser } from './misc';
-import type { ProjectParser } from './ProjectParser';
 
 /**
  * The base parser for all top level exported parsers.
  * @since 1.0.0
  */
 export abstract class Parser {
-  /**
-   * The project parser this belongs to.
-   * @since 1.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The identifier of this parser.
    * @since 1.0.0
@@ -30,14 +23,12 @@ export abstract class Parser {
    */
   public readonly source: SourceParser | null;
 
-  public constructor(data: Parser.Data, project: ProjectParser) {
+  public constructor(data: Parser.Data) {
     const { id, name, source } = data;
 
     this.id = id;
     this.name = name;
     this.source = source;
-
-    this.project = project;
   }
 
   /**

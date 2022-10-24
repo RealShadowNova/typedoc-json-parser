@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class TypeOperatorTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -30,13 +23,11 @@ export class TypeOperatorTypeParser implements TypeParser {
    */
   public readonly type: TypeParser;
 
-  public constructor(data: TypeOperatorTypeParser.Data, project: ProjectParser) {
+  public constructor(data: TypeOperatorTypeParser.Data) {
     const { operator, type } = data;
 
     this.operator = operator;
     this.type = type;
-
-    this.project = project;
   }
 
   /**

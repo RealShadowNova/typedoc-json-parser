@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class PredicateTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -37,14 +30,12 @@ export class PredicateTypeParser implements TypeParser {
    */
   public readonly type: TypeParser | null;
 
-  public constructor(data: PredicateTypeParser.Data, project: ProjectParser) {
+  public constructor(data: PredicateTypeParser.Data) {
     const { asserts, name, type } = data;
 
     this.asserts = asserts;
     this.name = name;
     this.type = type;
-
-    this.project = project;
   }
 
   /**

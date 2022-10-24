@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class MappedTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -54,7 +47,7 @@ export class MappedTypeParser implements TypeParser {
    */
   public readonly optional: MappedTypeParser.Modifier | null;
 
-  public constructor(data: MappedTypeParser.Data, project: ProjectParser) {
+  public constructor(data: MappedTypeParser.Data) {
     const { parameter, parameterType, nameType, templateType, readonly, optional } = data;
 
     this.parameter = parameter;
@@ -63,8 +56,6 @@ export class MappedTypeParser implements TypeParser {
     this.templateType = templateType;
     this.readonly = readonly;
     this.optional = optional;
-
-    this.project = project;
   }
 
   /**

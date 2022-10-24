@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../../types';
 import { CommentParser, SourceParser } from '../misc';
 import { Parser } from '../Parser';
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from '../type-parsers';
 import { ClassParser } from './ClassParser';
 
@@ -59,8 +58,8 @@ export class ClassPropertyParser extends Parser {
    */
   public readonly type: TypeParser | null;
 
-  public constructor(data: ClassPropertyParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: ClassPropertyParser.Data) {
+    super(data);
 
     const { comment, parentId, accessibility, abstract, static: _static, readonly, optional, type } = data;
 
@@ -72,14 +71,6 @@ export class ClassPropertyParser extends Parser {
     this.readonly = readonly;
     this.optional = optional;
     this.type = type;
-  }
-
-  /**
-   * The parent class parser.
-   * @since 4.0.0
-   */
-  public get parent(): ClassParser {
-    return this.project.find(this.parentId) as ClassParser;
   }
 
   /**
@@ -105,10 +96,9 @@ export class ClassPropertyParser extends Parser {
    * Generates a new {@link ClassPropertyParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number, project: ProjectParser): ClassPropertyParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): ClassPropertyParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags, getSignature } = reflection;
 
     if (kind !== ReflectionKind.Property && kind !== ReflectionKind.Accessor) {
@@ -122,34 +112,11 @@ export class ClassPropertyParser extends Parser {
 
       const { id, name, comment = { summary: [] }, type, flags } = getSignature;
 
-      return new ClassPropertyParser(
-        {
-          id,
-          name,
-          comment: CommentParser.generateFromTypeDoc(comment, project),
-          source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-          parentId,
-          accessibility: flags.isPrivate
-            ? ClassParser.Accessibility.Private
-            : flags.isProtected
-            ? ClassParser.Accessibility.Protected
-            : ClassParser.Accessibility.Public,
-          abstract: Boolean(flags.isAbstract),
-          static: Boolean(flags.isStatic),
-          readonly: Boolean(flags.isReadonly),
-          optional: Boolean(flags.isOptional),
-          type: type ? TypeParser.generateFromTypeDoc(type, project) : null
-        },
-        project
-      );
-    }
-
-    return new ClassPropertyParser(
-      {
+      return new ClassPropertyParser({
         id,
         name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
+        comment: CommentParser.generateFromTypeDoc(comment),
+        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
         parentId,
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
@@ -160,31 +127,50 @@ export class ClassPropertyParser extends Parser {
         static: Boolean(flags.isStatic),
         readonly: Boolean(flags.isReadonly),
         optional: Boolean(flags.isOptional),
-        type: type ? TypeParser.generateFromTypeDoc(type, project) : null
-      },
-      project
-    );
+        type: type ? TypeParser.generateFromTypeDoc(type) : null
+      });
+    }
+
+    return new ClassPropertyParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      parentId,
+      accessibility: flags.isPrivate
+        ? ClassParser.Accessibility.Private
+        : flags.isProtected
+        ? ClassParser.Accessibility.Protected
+        : ClassParser.Accessibility.Public,
+      abstract: Boolean(flags.isAbstract),
+      static: Boolean(flags.isStatic),
+      readonly: Boolean(flags.isReadonly),
+      optional: Boolean(flags.isOptional),
+      type: type ? TypeParser.generateFromTypeDoc(type) : null
+    });
   }
 
-  public static generateFromJSON(json: ClassPropertyParser.JSON, project: ProjectParser): ClassPropertyParser {
+  /**
+   * Generates a new {@link ClassPropertyParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: ClassPropertyParser.JSON): ClassPropertyParser {
     const { id, name, comment, source, parentId, accessibility, abstract, static: _static, readonly, optional, type } = json;
 
-    return new ClassPropertyParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        parentId,
-        accessibility,
-        abstract,
-        static: _static,
-        readonly,
-        optional,
-        type: type ? TypeParser.generateFromJSON(type, project) : null
-      },
-      project
-    );
+    return new ClassPropertyParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      parentId,
+      accessibility,
+      abstract,
+      static: _static,
+      readonly,
+      optional,
+      type: type ? TypeParser.generateFromJSON(type) : null
+    });
   }
 }
 

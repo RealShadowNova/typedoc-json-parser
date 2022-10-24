@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,12 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class IndexedAccessTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -30,13 +23,11 @@ export class IndexedAccessTypeParser implements TypeParser {
    */
   public readonly indexType: TypeParser;
 
-  public constructor(data: IndexedAccessTypeParser.Data, project: ProjectParser) {
+  public constructor(data: IndexedAccessTypeParser.Data) {
     const { objectType, indexType } = data;
 
     this.objectType = objectType;
     this.indexType = indexType;
-
-    this.project = project;
   }
 
   /**

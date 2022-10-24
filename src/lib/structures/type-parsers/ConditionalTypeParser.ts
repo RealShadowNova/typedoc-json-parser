@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -6,11 +5,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class ConditionalTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -41,15 +35,13 @@ export class ConditionalTypeParser implements TypeParser {
    */
   public readonly falseType: TypeParser;
 
-  public constructor(data: ConditionalTypeParser.Data, project: ProjectParser) {
+  public constructor(data: ConditionalTypeParser.Data) {
     const { checkType, extendsType, trueType, falseType } = data;
 
     this.checkType = checkType;
     this.extendsType = extendsType;
     this.trueType = trueType;
     this.falseType = falseType;
-
-    this.project = project;
   }
 
   /**

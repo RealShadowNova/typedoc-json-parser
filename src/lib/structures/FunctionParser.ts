@@ -2,7 +2,6 @@ import type { JSONOutput } from 'typedoc';
 import { ReflectionKind } from '../types';
 import { CommentParser, SignatureParser, SourceParser } from './misc';
 import { Parser } from './Parser';
-import type { ProjectParser } from './ProjectParser';
 
 /**
  * Parses data from a function reflection.
@@ -27,8 +26,8 @@ export class FunctionParser extends Parser {
    */
   public readonly signatures: SignatureParser[];
 
-  public constructor(data: FunctionParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: FunctionParser.Data) {
+    super(data);
 
     const { comment, external, signatures } = data;
 
@@ -55,41 +54,39 @@ export class FunctionParser extends Parser {
    * Generates a new {@link FunctionParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): FunctionParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): FunctionParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Function) throw new Error(`Expected Function (${ReflectionKind.Function}), but received ${kindString} (${kind})`);
 
-    return new FunctionParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature, project))
-      },
-      project
-    );
+    return new FunctionParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature))
+    });
   }
 
-  public static generateFromJSON(json: FunctionParser.JSON, project: ProjectParser): FunctionParser {
+  /**
+   * Generates a new {@link FunctionParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: FunctionParser.JSON): FunctionParser {
     const { id, name, comment, source, external, signatures } = json;
 
-    return new FunctionParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature, project))
-      },
-      project
-    );
+    return new FunctionParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      signatures: signatures.map((signature) => SignatureParser.generateFromJSON(signature))
+    });
   }
 }
 

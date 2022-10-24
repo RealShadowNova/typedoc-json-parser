@@ -1,16 +1,10 @@
 import type { JSONOutput } from 'typedoc';
-import type { ProjectParser } from '../ProjectParser';
 
 /**
  * Parses data from a comment reflection.
  * @since 1.0.0
  */
 export class CommentParser {
-  /**
-   * The project this parser belongs to.
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The description of this comment.
    * @since 1.0.0
@@ -29,14 +23,12 @@ export class CommentParser {
    */
   public readonly modifierTags: string[];
 
-  public constructor(data: CommentParser.Data, project: ProjectParser) {
+  public constructor(data: CommentParser.Data) {
     const { description, blockTags, modifierTags } = data;
 
     this.description = description;
     this.blockTags = blockTags;
     this.modifierTags = modifierTags;
-
-    this.project = project;
   }
 
   /**
@@ -80,38 +72,36 @@ export class CommentParser {
    * Generates a new {@link CommentParser} instance from the given data.
    * @since 1.0.0
    * @param comment The comment to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(comment: JSONOutput.Comment, project: ProjectParser): CommentParser {
+  public static generateFromTypeDoc(comment: JSONOutput.Comment): CommentParser {
     const { summary, blockTags = [], modifierTags = [] } = comment;
 
-    return new CommentParser(
-      {
-        description: summary.length
-          ? summary.map((summary) => (summary.kind === 'inline-tag' ? `{${summary.tag} ${summary.text}}` : summary.text)).join('')
-          : null,
-        blockTags: blockTags.map((tag) => ({
-          name: tag.name ?? tag.tag.replace(/@/, ''),
-          text: tag.content.map((content) => (content.kind === 'inline-tag' ? `{${content.tag} ${content.text}}` : content.text)).join('')
-        })),
-        modifierTags
-      },
-      project
-    );
+    return new CommentParser({
+      description: summary.length
+        ? summary.map((summary) => (summary.kind === 'inline-tag' ? `{${summary.tag} ${summary.text}}` : summary.text)).join('')
+        : null,
+      blockTags: blockTags.map((tag) => ({
+        name: tag.name ?? tag.tag.replace(/@/, ''),
+        text: tag.content.map((content) => (content.kind === 'inline-tag' ? `{${content.tag} ${content.text}}` : content.text)).join('')
+      })),
+      modifierTags
+    });
   }
 
-  public static generateFromJSON(json: CommentParser.JSON, project: ProjectParser): CommentParser {
+  /**
+   * Generates a new {@link ClassConstructorParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: CommentParser.JSON): CommentParser {
     const { description, blockTags, modifierTags } = json;
 
-    return new CommentParser(
-      {
-        description,
-        blockTags,
-        modifierTags
-      },
-      project
-    );
+    return new CommentParser({
+      description,
+      blockTags,
+      modifierTags
+    });
   }
 }
 

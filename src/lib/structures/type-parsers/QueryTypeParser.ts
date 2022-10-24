@@ -1,4 +1,3 @@
-import type { ProjectParser } from '../ProjectParser';
 import type { ReferenceTypeParser } from './ReferenceTypeParser';
 import { TypeParser } from './TypeParser';
 
@@ -7,12 +6,6 @@ import { TypeParser } from './TypeParser';
  * @since 1.0.0
  */
 export class QueryTypeParser implements TypeParser {
-  /**
-   * The project parser this parser belongs to.
-   * @since 5.0.0
-   */
-  public readonly project: ProjectParser;
-
   /**
    * The kind of type this parser is for.
    * @since 1.0.0
@@ -25,12 +18,10 @@ export class QueryTypeParser implements TypeParser {
    */
   public readonly query: ReferenceTypeParser;
 
-  public constructor(data: QueryTypeParser.Data, project: ProjectParser) {
+  public constructor(data: QueryTypeParser.Data) {
     const { query } = data;
 
     this.query = query;
-
-    this.project = project;
   }
 
   /**

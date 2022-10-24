@@ -6,7 +6,6 @@ import { FunctionParser } from './FunctionParser';
 import { InterfaceParser } from './interface-parser';
 import { CommentParser, SourceParser } from './misc';
 import { Parser } from './Parser';
-import type { ProjectParser } from './ProjectParser';
 import { TypeAliasParser } from './TypeAliasParser';
 import { VariableParser } from './VariableParser';
 
@@ -69,8 +68,8 @@ export class NamespaceParser extends Parser {
    */
   public readonly variables: VariableParser[];
 
-  public constructor(data: NamespaceParser.Data, project: ProjectParser) {
-    super(data, project);
+  public constructor(data: NamespaceParser.Data) {
+    super(data);
 
     const { comment, external, classes, enums, functions, interfaces, namespaces, typeAliases, variables } = data;
 
@@ -279,75 +278,62 @@ export class NamespaceParser extends Parser {
    * Generates a new {@link NamespaceParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, project: ProjectParser): NamespaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): NamespaceParser {
     const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Namespace) throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${kindString} (${kind})`);
 
-    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, project));
-    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, project));
-    const functions = children
-      .filter((child) => child.kind === ReflectionKind.Function)
-      .map((child) => FunctionParser.generateFromTypeDoc(child, project));
-
-    const interfaces = children
-      .filter((child) => child.kind === ReflectionKind.Interface)
-      .map((child) => InterfaceParser.generateFromTypeDoc(child, project));
-
-    const namespaces = children
-      .filter((child) => child.kind === ReflectionKind.Namespace)
-      .map((child) => NamespaceParser.generateFromTypeDoc(child, project));
-
+    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child));
+    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child));
+    const functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generateFromTypeDoc(child));
+    const interfaces = children.filter((child) => child.kind === ReflectionKind.Interface).map((child) => InterfaceParser.generateFromTypeDoc(child));
+    const namespaces = children.filter((child) => child.kind === ReflectionKind.Namespace).map((child) => NamespaceParser.generateFromTypeDoc(child));
     const typeAliases = children
       .filter((child) => child.kind === ReflectionKind.TypeAlias)
-      .map((child) => TypeAliasParser.generateFromTypeDoc(child, project));
+      .map((child) => TypeAliasParser.generateFromTypeDoc(child));
 
-    const variables = children
-      .filter((child) => child.kind === ReflectionKind.Variable)
-      .map((child) => VariableParser.generateFromTypeDoc(child, project));
+    const variables = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => VariableParser.generateFromTypeDoc(child));
 
-    return new NamespaceParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromTypeDoc(comment, project),
-        source: sources.length ? SourceParser.generateFromTypeDoc(sources[0], project) : null,
-        external: Boolean(flags.isExternal),
-        classes,
-        enums,
-        functions,
-        interfaces,
-        namespaces,
-        typeAliases,
-        variables
-      },
-      project
-    );
+    return new NamespaceParser({
+      id,
+      name,
+      comment: CommentParser.generateFromTypeDoc(comment),
+      source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
+      external: Boolean(flags.isExternal),
+      classes,
+      enums,
+      functions,
+      interfaces,
+      namespaces,
+      typeAliases,
+      variables
+    });
   }
 
-  public static generateFromJSON(json: NamespaceParser.JSON, project: ProjectParser): NamespaceParser {
+  /**
+   * Generates a new {@link NamespaceParser} instance from the given data.
+   * @param json The json to generate the parser from.
+   * @returns The generated parser.
+   */
+  public static generateFromJSON(json: NamespaceParser.JSON): NamespaceParser {
     const { id, name, comment, source, external, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = json;
 
-    return new NamespaceParser(
-      {
-        id,
-        name,
-        comment: CommentParser.generateFromJSON(comment, project),
-        source: source ? SourceParser.generateFromJSON(source, project) : null,
-        external,
-        classes: classes.map((json) => ClassParser.generateFromJSON(json, project)),
-        enums: enums.map((json) => EnumParser.generateFromJSON(json, project)),
-        functions: functions.map((json) => FunctionParser.generateFromJSON(json, project)),
-        interfaces: interfaces.map((json) => InterfaceParser.generateFromJSON(json, project)),
-        namespaces: namespaces.map((json) => NamespaceParser.generateFromJSON(json, project)),
-        typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json, project)),
-        variables: variables.map((json) => VariableParser.generateFromJSON(json, project))
-      },
-      project
-    );
+    return new NamespaceParser({
+      id,
+      name,
+      comment: CommentParser.generateFromJSON(comment),
+      source: source ? SourceParser.generateFromJSON(source) : null,
+      external,
+      classes: classes.map((json) => ClassParser.generateFromJSON(json)),
+      enums: enums.map((json) => EnumParser.generateFromJSON(json)),
+      functions: functions.map((json) => FunctionParser.generateFromJSON(json)),
+      interfaces: interfaces.map((json) => InterfaceParser.generateFromJSON(json)),
+      namespaces: namespaces.map((json) => NamespaceParser.generateFromJSON(json)),
+      typeAliases: typeAliases.map((json) => TypeAliasParser.generateFromJSON(json)),
+      variables: variables.map((json) => VariableParser.generateFromJSON(json))
+    });
   }
 }
 
