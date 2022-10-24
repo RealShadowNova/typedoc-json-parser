@@ -4803,7 +4803,7 @@ __metadata:
     pretty-quick: ^3.1.3
     rimraf: ^3.0.2
     tslib: ^2.4.0
-    typedoc: ^0.23.16
+    typedoc: ^0.23.18
     typescript: ^4.8.4
     vitest: ^0.24.3
   bin:
@@ -4811,9 +4811,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"typedoc@npm:^0.23.16":
-  version: 0.23.16
-  resolution: "typedoc@npm:0.23.16"
+"typedoc@npm:^0.23.18":
+  version: 0.23.18
+  resolution: "typedoc@npm:0.23.18"
   dependencies:
     lunr: ^2.3.9
     marked: ^4.0.19
@@ -4823,7 +4823,7 @@ __metadata:
     typescript: 4.6.x || 4.7.x || 4.8.x
   bin:
     typedoc: bin/typedoc
-  checksum: 3574ee4a5fe3ca485b8a7d18cbe745bffe6d21886fcbc09c59551d0442d90b6391d435b06245199293914500c4f237fd0e7cc3eec678f1f8ee796b88b3d96089
+  checksum: 2cf1ae57865e53545ba4cbdd8a441870b7a4ad74e421d43f4b731e4643adc82c3a2e89fa9cf1f600f908d9d12da818bcd1d26970c9dce9493a8d8ec5b649b594
   languageName: node
   linkType: hard
 
