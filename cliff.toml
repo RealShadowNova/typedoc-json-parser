@@ -28,7 +28,7 @@ body = """
 		{% if commit.breaking %}\
 			\n\n {% raw %}  {% endraw %}### 💥 Breaking Changes:\n\n\
 			{% for breakingChange in commit.footers %}\
-				{% raw %}  {% endraw %} - {{ breakingChange }}\n\
+				{% raw %}  {% endraw %}- {{ breakingChange }}\n\
 			{% endfor %}\
 		{% endif %}\
     {% endfor %}
