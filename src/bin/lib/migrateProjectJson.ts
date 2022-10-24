@@ -3,7 +3,7 @@ import type { ClassParser } from '../../lib/structures/class-parser';
 import type { EnumParser } from '../../lib/structures/enum-parser';
 import type { FunctionParser } from '../../lib/structures/FunctionParser';
 import type { InterfaceParser } from '../../lib/structures/interface-parser';
-import type { ParameterParser, SignatureParser, SourceParser } from '../../lib/structures/misc';
+import type { ParameterParser, SignatureParser, SourceParser, TypeParameterParser } from '../../lib/structures/misc';
 import type { NamespaceParser } from '../../lib/structures/NamespaceParser';
 import { ProjectParser } from '../../lib/structures/ProjectParser';
 import type { TypeAliasParser } from '../../lib/structures/TypeAliasParser';
@@ -221,7 +221,7 @@ function migrateClassJson(
         abstract,
         extendsType,
         implementsType,
-        typeParameters,
+        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         construct: {
           id: construct.id,
           name: construct.name,
@@ -687,7 +687,7 @@ function migrateTypeAlias(
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
-        typeParameters,
+        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         type
       };
   }
@@ -862,7 +862,10 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
 }
 
 function migrateSignatureJson(
-  signatureJson: Migration.MajorTwo.MinorOne.Misc.SignatureJson | Migration.MajorTwo.MinorThree.Misc.SignatureJson,
+  signatureJson:
+    | Migration.MajorTwo.MinorOne.Misc.SignatureJson
+    | Migration.MajorTwo.MinorThree.Misc.SignatureJson
+    | Migration.MajorSeven.MinorZero.Misc.SignatureJson,
   typeDocJsonParserVersion: string
 ): SignatureParser.Json {
   const { id, name, typeParameters, parameters, returnType } = signatureJson;
@@ -877,7 +880,7 @@ function migrateSignatureJson(
         id,
         name,
         comment: { description: null, blockTags: [], modifierTags: [] },
-        typeParameters,
+        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         parameters: parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion)),
         returnType
       };
@@ -917,9 +920,72 @@ function migrateSignatureJson(
         id,
         name,
         comment,
-        typeParameters,
+        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         parameters: parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion)),
         returnType
+      };
+    }
+  }
+
+  throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
+}
+
+function migrateTypeParameterJson(
+  typeParameterJson: Migration.MajorTwo.MinorOne.Misc.TypeParameterJson | Migration.MajorSeven.MinorZero.Misc.TypeParameterJson,
+  typeDocJsonParserVersion: string
+): TypeParameterParser.Json {
+  const { id, name, default: _default } = typeParameterJson;
+
+  switch (typeDocJsonParserVersion) {
+    case '2.1.0':
+
+    case '2.2.0':
+
+    case '2.2.1':
+
+    case '2.3.0':
+
+    case '2.3.1':
+
+    case '3.0.0':
+
+    case '3.1.0':
+
+    case '3.2.0':
+
+    case '4.0.0':
+
+    case '5.0.0':
+
+    case '5.0.1':
+
+    case '5.1.0':
+
+    case '5.2.0':
+
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2': {
+      const { type } = typeParameterJson as Migration.MajorTwo.MinorOne.Misc.TypeParameterJson;
+
+      return {
+        id,
+        name,
+        constraint: type,
+        default: _default
+      };
+    }
+
+    case '7.0.0': {
+      const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
+
+      return {
+        id,
+        name,
+        constraint,
+        default: _default
       };
     }
   }
@@ -946,8 +1012,8 @@ export namespace Migration {
       export interface ClassJson extends Parser {
         external: boolean;
         abstract: boolean;
-        extendsType: Type | null;
-        implementsType: Type[];
+        extendsType: TypeJson | null;
+        implementsType: TypeJson[];
         construct: ClassJson.ConstructorJson;
         properties: ClassJson.PropertyJson[];
         methods: ClassJson.MethodJson[];
@@ -964,7 +1030,7 @@ export namespace Migration {
           static: boolean;
           readonly: boolean;
           optional: boolean;
-          type: Type;
+          type: TypeJson;
         }
 
         export interface MethodJson extends Parser {
@@ -983,7 +1049,7 @@ export namespace Migration {
 
       export interface ConstantJson extends Parser {
         external: boolean;
-        type: Type;
+        type: TypeJson;
         value: string;
       }
 
@@ -1012,7 +1078,7 @@ export namespace Migration {
       export namespace InterfaceJson {
         export interface PropertyJson extends Parser {
           readonly: boolean;
-          type: Type;
+          type: TypeJson;
         }
       }
 
@@ -1030,7 +1096,7 @@ export namespace Migration {
       export interface TypeAliasJson extends Parser {
         external: boolean;
         typeParameters: Misc.TypeParameterJson[];
-        type: Type;
+        type: TypeJson;
       }
 
       export interface Parser {
@@ -1040,11 +1106,11 @@ export namespace Migration {
         source: Misc.SourceJson | null;
       }
 
-      export interface Type {
-        kind: Type.Kind;
+      export interface TypeJson {
+        kind: TypeJson.Kind;
       }
 
-      export namespace Type {
+      export namespace TypeJson {
         export enum Kind {
           Array = 'array',
           Conditional = 'conditional',
@@ -1086,7 +1152,7 @@ export namespace Migration {
         export interface ParameterJson {
           id: number;
           name: string;
-          type: Type;
+          type: TypeJson;
         }
 
         export interface SignatureJson {
@@ -1094,7 +1160,7 @@ export namespace Migration {
           name: string;
           typeParameters: TypeParameterJson[];
           parameters: ParameterJson[];
-          returnType: Type;
+          returnType: TypeJson;
         }
 
         export interface SourceJson {
@@ -1106,8 +1172,8 @@ export namespace Migration {
         export interface TypeParameterJson {
           id: number;
           name: string;
-          type: Type | null;
-          default: Type | null;
+          type: TypeJson | null;
+          default: TypeJson | null;
         }
       }
     }
@@ -1342,12 +1408,45 @@ export namespace Migration {
 
   export namespace MajorSeven {
     export namespace MinorZero {
-      export interface InterfaceJson extends MajorSix.MinorZero.InterfaceJson {
-        typeParameters: MajorTwo.MinorOne.Misc.TypeParameterJson[];
+      export interface ProjectJson extends Omit<MajorSix.MinorZero.ProjectJson, 'classes' | 'interfaces' | 'functions'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
       }
 
-      export interface NamespaceJson extends Omit<MajorThree.MinorZero.NamespaceJson, 'classes' | 'constants' | 'enums' | 'interfaces'> {
-        interfaces: InterfaceJson[];
+      export interface ClassJson extends Omit<MajorSix.MinorZero.ClassJson, 'methods'> {
+        methods: ClassJson.MethodJson[];
+      }
+
+      export namespace ClassJson {
+        export interface MethodJson extends Omit<MajorSix.MinorZero.ClassJson.MethodJson, 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
+      }
+
+      export interface InterfaceJson extends Omit<MajorSix.MinorZero.InterfaceJson, 'methods'> {
+        typeParameters: Misc.TypeParameterJson[];
+        methods: InterfaceJson.MethodJson[];
+      }
+
+      export namespace InterfaceJson {
+        export interface MethodJson extends Omit<MajorSix.MinorZero.InterfaceJson.MethodJson, 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
+      }
+
+      export interface FunctionJson extends Omit<MajorThree.MinorZero.FunctionJson, 'signatures'> {
+        signatures: Misc.SignatureJson[];
+      }
+
+      export namespace Misc {
+        export interface SignatureJson extends Omit<MajorTwo.MinorOne.Misc.SignatureJson, 'typeParameters'> {
+          typeParameters: TypeParameterJson[];
+        }
+
+        export interface TypeParameterJson extends Omit<MajorTwo.MinorOne.Misc.TypeParameterJson, 'type'> {
+          constraint: MajorTwo.MinorOne.TypeJson | null;
+        }
       }
     }
   }
