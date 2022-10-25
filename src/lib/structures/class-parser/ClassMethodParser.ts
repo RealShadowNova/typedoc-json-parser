@@ -52,6 +52,33 @@ export class ClassMethodParser extends Parser {
   }
 
   /**
+   * Whether or not this method has a public accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isPublic(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Public;
+  }
+
+  /**
+   * Whether or not this method has a protected accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isProtected(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Protected;
+  }
+
+  /**
+   * Whether or not this method has a private accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isPrivate(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Private;
+  }
+
+  /**
    * Convert this parser to a JSON compatible format.
    * @since 1.0.0
    * @returns The Json compatible format of this parser.

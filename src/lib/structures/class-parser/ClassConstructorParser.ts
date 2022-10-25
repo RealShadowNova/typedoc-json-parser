@@ -41,6 +41,33 @@ export class ClassConstructorParser extends Parser {
   }
 
   /**
+   * Whether or not this constructor has a public accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isPublic(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Public;
+  }
+
+  /**
+   * Whether or not this constructor has a protected accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isProtected(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Protected;
+  }
+
+  /**
+   * Whether or not this constructor has a private accessibility.
+   * @since 7.0.0
+   * @returns The validation boolean.
+   */
+  public isPrivate(): boolean {
+    return this.accessibility === ClassParser.Accessibility.Private;
+  }
+
+  /**
    * Converts this parser to a Json compatible format.
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
