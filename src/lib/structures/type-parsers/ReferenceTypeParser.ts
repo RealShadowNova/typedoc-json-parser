@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -71,20 +72,22 @@ export class ReferenceTypeParser implements TypeParser {
   /**
    * Converts this parser to a string.
    * @since 1.0.0
+   * @param project The project to convert this parser to a string.
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return ReferenceTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return ReferenceTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: ReferenceTypeParser): string {
-    const typeArguments = parser.typeArguments.length > 0 ? `<${parser.typeArguments.map((type) => type.toString()).join(', ')}>` : '';
+  public static formatToString(options: TypeParser.FormatToStringOptions<ReferenceTypeParser>): string {
+    const { parser, project } = options;
+    const typeArguments = parser.typeArguments.length > 0 ? `<${parser.typeArguments.map((type) => type.toString(project)).join(', ')}>` : '';
 
     return `${parser.packageName ? `${parser.packageName}.` : ''}${parser.name}${typeArguments}`;
   }

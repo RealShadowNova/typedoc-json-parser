@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -48,18 +49,20 @@ export class TemplateLiteralTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return TemplateLiteralTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return TemplateLiteralTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: TemplateLiteralTypeParser): string {
-    return `\`${parser.head}${parser.tail.map((tail) => `\${${tail.type.toString()}}${tail.text}`).join('')}\``;
+  public static formatToString(options: TypeParser.FormatToStringOptions<TemplateLiteralTypeParser>): string {
+    const { parser, project } = options;
+
+    return `\`${parser.head}${parser.tail.map((tail) => `\${${tail.type.toString(project)}}${tail.text}`).join('')}\``;
   }
 }
 

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -48,18 +49,20 @@ export class TypeOperatorTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return TypeOperatorTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return TypeOperatorTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: TypeOperatorTypeParser): string {
-    return `${parser.operator} ${parser.type.toString()}`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<TypeOperatorTypeParser>): string {
+    const { parser, project } = options;
+
+    return `${parser.operator} ${parser.type.toString(project)}`;
   }
 }
 

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -38,19 +39,22 @@ export class ArrayTypeParser implements TypeParser {
   /**
    * Converts this parser to a string.
    * @since 1.0.0
+   * @param project The project to convert this parser to a string.
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return ArrayTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return ArrayTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: ArrayTypeParser): string {
+  public static formatToString(options: TypeParser.FormatToStringOptions<ArrayTypeParser>): string {
+    const { parser } = options;
+
     return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Array])}[]`;
   }
 }

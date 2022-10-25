@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -48,18 +49,20 @@ export class IndexedAccessTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return IndexedAccessTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return IndexedAccessTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: IndexedAccessTypeParser): string {
-    return `${parser.objectType.toString()}[${parser.indexType.toString()}]`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<IndexedAccessTypeParser>): string {
+    const { parser, project } = options;
+
+    return `${parser.objectType.toString(project)}[${parser.indexType.toString(project)}]`;
   }
 }
 
