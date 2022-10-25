@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -40,17 +41,19 @@ export class InferredTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return InferredTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return InferredTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: InferredTypeParser): string {
+  public static formatToString(options: TypeParser.FormatToStringOptions<InferredTypeParser>): string {
+    const { parser } = options;
+
     return `infer ${parser.type}`;
   }
 }

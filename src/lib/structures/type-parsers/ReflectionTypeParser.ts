@@ -1,4 +1,5 @@
 import type { JSONOutput } from 'typedoc';
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -41,17 +42,19 @@ export class ReflectionTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return ReflectionTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return ReflectionTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: ReflectionTypeParser): string {
+  public static formatToString(options: TypeParser.FormatToStringOptions<ReflectionTypeParser>): string {
+    const { parser } = options;
+
     return !parser.reflection?.children && parser.reflection?.signatures ? 'Function' : 'Object';
   }
 }

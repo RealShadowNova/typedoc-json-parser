@@ -1,5 +1,6 @@
 import type { JSONOutput } from 'typedoc';
 import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
+import type { ProjectParser } from '../ProjectParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
 import { ConditionalTypeParser } from './ConditionalTypeParser';
 import { IndexedAccessTypeParser } from './IndexedAccessTypeParser';
@@ -40,9 +41,10 @@ export interface TypeParser {
 
   /**
    * The method to convert this type parser to a string.
+   * @param project The optional project parser to use.
    * @since 1.0.0
    */
-  toString(): string;
+  toString(project?: ProjectParser): string;
 }
 
 export namespace TypeParser {
@@ -50,7 +52,6 @@ export namespace TypeParser {
    * Generates a new {@link TypeParser} instance from the given data.
    * @since 1.0.0
    * @param type The type to generate the parser from.
-   * @param  The  this parser belongs to.
    * @returns The generated parser.
    */
   export function generateFromTypeDoc(
@@ -482,5 +483,23 @@ export namespace TypeParser {
      * @since 1.0.0
      */
     kind: Kind;
+  }
+
+  /**
+   * The options for the static `*TypeParser.formatToString()` methods.
+   * @since 7.0.0
+   */
+  export interface FormatToStringOptions<P extends TypeParser> {
+    /**
+     * The type parser to format.
+     * @since 7.0.0
+     */
+    parser: P;
+
+    /**
+     * The project this type parser belongs to.
+     * @since 7.0.0
+     */
+    project?: ProjectParser;
   }
 }

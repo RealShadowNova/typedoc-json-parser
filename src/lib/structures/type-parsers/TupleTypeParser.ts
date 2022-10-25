@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -40,18 +41,20 @@ export class TupleTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return TupleTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return TupleTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: TupleTypeParser): string {
-    return `[${parser.types.map((type) => type.toString()).join(', ')}]`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<TupleTypeParser>): string {
+    const { parser, project } = options;
+
+    return `[${parser.types.map((type) => type.toString(project)).join(', ')}]`;
   }
 }
 

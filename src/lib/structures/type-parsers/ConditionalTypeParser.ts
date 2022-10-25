@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -64,21 +65,22 @@ export class ConditionalTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return ConditionalTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return ConditionalTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: ConditionalTypeParser): string {
-    return `${TypeParser.wrap(
-      parser.checkType,
-      TypeParser.BindingPowers[TypeParser.Kind.Conditional]
-    )} extends ${parser.extendsType.toString()} ? ${parser.trueType.toString()} : ${parser.falseType.toString()}`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<ConditionalTypeParser>): string {
+    const { parser, project } = options;
+
+    return `${TypeParser.wrap(parser.checkType, TypeParser.BindingPowers[TypeParser.Kind.Conditional])} extends ${parser.extendsType.toString(
+      project
+    )} ? ${parser.trueType.toString(project)} : ${parser.falseType.toString(project)}`;
   }
 }
 

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -56,18 +57,20 @@ export class NamedTupleMemberTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return NamedTupleMemberTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return NamedTupleMemberTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: NamedTupleMemberTypeParser): string {
-    return `${parser.name}${parser.optional ? '?' : ''}: ${parser.type.toString()}`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<NamedTupleMemberTypeParser>): string {
+    const { parser, project } = options;
+
+    return `${parser.name}${parser.optional ? '?' : ''}: ${parser.type.toString(project)}`;
   }
 }
 

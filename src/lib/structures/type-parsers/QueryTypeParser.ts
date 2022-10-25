@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import type { ReferenceTypeParser } from './ReferenceTypeParser';
 import { TypeParser } from './TypeParser';
 
@@ -41,18 +42,20 @@ export class QueryTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return QueryTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return QueryTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: QueryTypeParser): string {
-    return `typeof ${parser.query.toString()}`;
+  public static formatToString(options: TypeParser.FormatToStringOptions<QueryTypeParser>): string {
+    const { parser, project } = options;
+
+    return `typeof ${parser.query.toString(project)}`;
   }
 }
 

@@ -1,3 +1,4 @@
+import type { ProjectParser } from '../ProjectParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -80,23 +81,24 @@ export class MappedTypeParser implements TypeParser {
    * @since 1.0.0
    * @returns The string representation of this parser.
    */
-  public toString(): string {
-    return MappedTypeParser.formatToString(this);
+  public toString(project?: ProjectParser): string {
+    return MappedTypeParser.formatToString({ parser: this, project });
   }
 
   /**
    * Formats this type parser to a string.
    * @since 4.0.0
-   * @param parser The parser to format.
+   * @param options The options to format this type parser to a string.
    * @returns The string representation of this parser.
    */
-  public static formatToString(parser: MappedTypeParser): string {
+  public static formatToString(options: TypeParser.FormatToStringOptions<MappedTypeParser>): string {
+    const { parser, project } = options;
     const readonly =
       parser.readonly === MappedTypeParser.Modifier.Add ? 'readonly' : parser.readonly === MappedTypeParser.Modifier.Remove ? '-readonly' : '';
 
     const optional = parser.optional === MappedTypeParser.Modifier.Add ? '?' : parser.optional === MappedTypeParser.Modifier.Remove ? '-?' : '';
 
-    return `{ ${readonly}[${parser.parameter} in ${parser.parameterType.toString()}]${optional}: ${parser.templateType.toString()} }`;
+    return `{ ${readonly}[${parser.parameter} in ${parser.parameterType.toString(project)}]${optional}: ${parser.templateType.toString(project)} }`;
   }
 }
 
