@@ -6,6 +6,7 @@
 
 [![GitHub](https://img.shields.io/github/license/RealShadowNova/typedoc-json-parser)](https://github.com/RealShadowNova/typedoc-json-parserblob/main/LICENSE.md)
 [![npm](https://img.shields.io/npm/v/typedoc-json-parser?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/typedoc-json-parser)
+[![codecov](https://codecov.io/gh/RealShadowNova/typedoc-json-parser/branch/main/graph/badge.svg?token=JnJcjxqT3k)](https://codecov.io/gh/RealShadowNova/typedoc-json-parser)
 
 [![Support Server](https://discord.com/api/guilds/554742955898961930/embed.png?style=banner2)](https://discord.gg/fERY6AenEv)
 
