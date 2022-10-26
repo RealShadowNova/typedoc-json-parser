@@ -2,6 +2,59 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v6.0.2...v7.0.0) - (2022-10-25)
+
+## 🏠 Refactor
+
+- **TypeParameterParser:** Rename property `type` to `constraint` (#90) ([93bedae](https://github.com/RealShadowNova/typedoc-json-parser/commit/93bedae2af902afe059bfa51244295938b0c6693))
+
+  ### 💥 Breaking Changes:
+
+  - `TypeParameterParser#type` has been renamed to `#constraint`.
+
+- ***:** Rename from `*JSON` to `*Json` (#92) ([730ac5a](https://github.com/RealShadowNova/typedoc-json-parser/commit/730ac5a05fb45c3a9c4ad1bd7f42961bbf252aa6))
+
+  ### 💥 Breaking Changes:
+
+  - `*Parser.JSON` has been renamed to `*Parser.Json`.
+  - `*Parser.generateFromJSON()` has been renamed to `*Parser.generateFromJson()`.
+
+
+## 🐛 Bug Fixes
+
+- **ReferenceTypeParser:** Invalid return from the `isPackage()` validator method ([3491f96](https://github.com/RealShadowNova/typedoc-json-parser/commit/3491f96feb90a181d390714acd66e1f2f313ebf5))
+- **ClassPropertyParser:** The `type` property is no longer nullable (#89) ([368ffe6](https://github.com/RealShadowNova/typedoc-json-parser/commit/368ffe64240a95dda24f91dfb9ab395ec561e849))
+- **deps:** Update dependency typedoc to ^0.23.18 (#86) ([0d39296](https://github.com/RealShadowNova/typedoc-json-parser/commit/0d39296d4dd12ea60442ea2246ca0484701c5138))
+
+## 🚀 Features
+
+- **type-parsers:** Add the `project` parameter to the `toString()` method (#93) ([e6059d7](https://github.com/RealShadowNova/typedoc-json-parser/commit/e6059d7045ff021332e68f01a3a3655e9ce0d0f8))
+
+  ### 💥 Breaking Changes:
+
+  - `*TypeParser.formatToString()` now accepts a single parameter of `TypeParser.FormatToStringOptions<*TypeParser>`.
+
+- **class-parser:** Add accessibility validator methods ([bb02200](https://github.com/RealShadowNova/typedoc-json-parser/commit/bb0220072175d5cd55868576776bb7bcfe66e20b))
+- **ClassConstructorParser:** Add `accessibility` property ([c23ede8](https://github.com/RealShadowNova/typedoc-json-parser/commit/c23ede8125c709b5b471c0c3d7d56325dc5c5ff0))
+- **InterfaceParser:** Add `typeParameters` property (#91) ([51a8c6a](https://github.com/RealShadowNova/typedoc-json-parser/commit/51a8c6a19c5810aa23112df26d8105da29489c41))
+- ***:** Remove `project` property (#88) ([eae3dc6](https://github.com/RealShadowNova/typedoc-json-parser/commit/eae3dc6cd6ef8ad446048e7480704fe09e4efee6))
+
+  ### 💥 Breaking Changes:
+
+  - `Parser#project` has been removed along with all references in classes that extend this class.
+  - `TypeParser#project` has been removed along with all references in classes that extend this interface.
+  - `CommentParser#project` has been removed.
+  - `ParameterParser#project` has been removed.
+  - `SignatureParser#project` has been removed.
+  - `SourceParser#project` has been removed.
+  - `TypeParameterParser#project` has been removed.
+  - `ClassConstructorParser#parent` has been removed.
+  - `ClassMethodParser#parent` has been removed.
+  - `ClassPropertyParser#parent` has been removed.
+  - `EnumMemberParser#parent` has been removed.
+  - `InterfaceMethodParser#parent` has been removed.
+  - `InterfacePropertyParser#parent` has been removed.
+
 # [6.0.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v6.0.1...v6.0.2) - (2022-10-22)
 
 ## 🐛 Bug Fixes
