@@ -871,7 +871,10 @@ function migrateSourceJson(
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
 }
 
-function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.ParameterJson, typeDocJsonParserVersion: string): ParameterParser.Json {
+function migrateParameterJson(
+  parameterJson: Migration.MajorTwo.MinorOne.Misc.ParameterJson | Migration.MajorSix.MinorZero.Misc.ParameterJson,
+  typeDocJsonParserVersion: string
+): ParameterParser.Json {
   const { id, name, type } = parameterJson;
 
   switch (typeDocJsonParserVersion) {
@@ -900,14 +903,6 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
     case '5.1.0':
 
     case '5.2.0':
-
-    case '6.0.0':
-
-    case '6.0.1':
-
-    case '6.0.2':
-
-    case '7.0.0':
       return {
         id,
         name,
@@ -918,6 +913,23 @@ function migrateParameterJson(parameterJson: Migration.MajorTwo.MinorOne.Misc.Pa
         },
         type
       };
+
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
+
+    case '7.0.0': {
+      const { comment } = parameterJson as Migration.MajorSix.MinorZero.Misc.ParameterJson;
+
+      return {
+        id,
+        name,
+        comment,
+        type
+      };
+    }
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
@@ -1438,7 +1450,9 @@ export namespace Migration {
       }
 
       export namespace ClassJson {
-        export type MethodJson = Omit<MajorFour.MinorZero.ClassJson.MethodJson, 'comment'>;
+        export interface MethodJson extends Omit<MajorFour.MinorZero.ClassJson.MethodJson, 'comment' | 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
       }
 
       export interface EnumJson extends Omit<MajorFour.MinorZero.EnumJson, 'properties'> {
@@ -1454,7 +1468,13 @@ export namespace Migration {
       }
 
       export namespace InterfaceJson {
-        export type MethodJson = Omit<MajorFour.MinorZero.InterfaceJson.MethodJson, 'comment'>;
+        export interface MethodJson extends Omit<MajorFour.MinorZero.InterfaceJson.MethodJson, 'comment'> {
+          signatures: Misc.SignatureJson[];
+        }
+      }
+
+      export interface FunctionJson extends Omit<MajorTwo.MinorThree.FunctionJson, 'signatures'> {
+        signatures: Misc.SignatureJson[];
       }
 
       export type VariableJson = MajorThree.MinorZero.ConstantJson;
@@ -1464,6 +1484,16 @@ export namespace Migration {
         enums: EnumJson[];
         interfaces: InterfaceJson[];
         variables: VariableJson[];
+      }
+
+      export namespace Misc {
+        export interface ParameterJson extends MajorTwo.MinorOne.Misc.ParameterJson {
+          comment: MajorTwo.MinorOne.Misc.CommentJson;
+        }
+
+        export interface SignatureJson extends MajorTwo.MinorOne.Misc.SignatureJson {
+          parameters: ParameterJson[];
+        }
       }
     }
   }
@@ -1507,7 +1537,7 @@ export namespace Migration {
       }
 
       export namespace Misc {
-        export interface SignatureJson extends Omit<MajorTwo.MinorOne.Misc.SignatureJson, 'typeParameters'> {
+        export interface SignatureJson extends Omit<MajorSix.MinorZero.Misc.SignatureJson, 'typeParameters'> {
           typeParameters: TypeParameterJson[];
         }
 
