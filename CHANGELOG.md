@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.0.0...v7.0.1) - (2022-10-27)
+
+## 🐛 Bug Fixes
+
+- **bin:** Parameter migrations for v6.0.0+ ([a46263a](https://github.com/RealShadowNova/typedoc-json-parser/commit/a46263aa9ec7bf2f53f381b905f0f8faf1aa7be8))
+
 # [7.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v6.0.2...v7.0.0) - (2022-10-25)
 
 ## 🏠 Refactor
