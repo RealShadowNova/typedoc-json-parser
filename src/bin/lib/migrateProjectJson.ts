@@ -88,7 +88,11 @@ export function migrateProjectJson(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
@@ -266,7 +270,11 @@ function migrateClassJson(
       };
     }
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorZero.ClassJson;
 
       return {
@@ -394,7 +402,11 @@ function migrateEnum(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
 
       return {
@@ -466,6 +478,10 @@ function migrateFunction(
     case '6.0.2':
 
     case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2':
       return {
         id,
         name,
@@ -580,7 +596,11 @@ function migrateInterface(
       };
     }
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorZero.InterfaceJson;
 
       return {
@@ -680,7 +700,11 @@ function migrateNamespace(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
 
       return {
@@ -743,6 +767,10 @@ function migrateTypeAlias(
     case '6.0.2':
 
     case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2':
       return {
         id,
         name,
@@ -797,6 +825,10 @@ function migrateVariable(
     case '6.0.2':
 
     case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2':
       return {
         id,
         name,
@@ -856,7 +888,11 @@ function migrateSourceJson(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
@@ -920,7 +956,11 @@ function migrateParameterJson(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { comment } = parameterJson as Migration.MajorSix.MinorZero.Misc.ParameterJson;
 
       return {
@@ -987,7 +1027,11 @@ function migrateSignatureJson(
 
     case '6.0.2':
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
@@ -1052,7 +1096,11 @@ function migrateTypeParameterJson(
       };
     }
 
-    case '7.0.0': {
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2': {
       const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
 
       return {
