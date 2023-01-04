@@ -49,7 +49,7 @@ export class TypeAliasParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): TypeAliasParser.Json {
+  public override toJSON(): TypeAliasParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),

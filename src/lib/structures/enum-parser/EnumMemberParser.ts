@@ -42,7 +42,7 @@ export class EnumMemberParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): EnumMemberParser.Json {
+  public override toJSON(): EnumMemberParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),

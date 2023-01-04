@@ -72,7 +72,7 @@ export class ClassConstructorParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassConstructorParser.Json {
+  public override toJSON(): ClassConstructorParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),

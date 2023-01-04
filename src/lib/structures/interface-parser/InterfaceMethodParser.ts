@@ -34,7 +34,7 @@ export class InterfaceMethodParser extends Parser {
    * @since 3.1.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): InterfaceMethodParser.Json {
+  public override toJSON(): InterfaceMethodParser.Json {
     return {
       ...super.toJSON(),
       parentId: this.parentId,

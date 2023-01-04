@@ -83,7 +83,7 @@ export class ClassMethodParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassMethodParser.Json {
+  public override toJSON(): ClassMethodParser.Json {
     return {
       ...super.toJSON(),
       parentId: this.parentId,

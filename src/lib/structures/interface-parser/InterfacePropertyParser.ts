@@ -49,7 +49,7 @@ export class InterfacePropertyParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): InterfacePropertyParser.Json {
+  public override toJSON(): InterfacePropertyParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),

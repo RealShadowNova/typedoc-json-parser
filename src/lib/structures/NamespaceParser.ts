@@ -259,7 +259,7 @@ export class NamespaceParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format.
    */
-  public toJSON(): NamespaceParser.Json {
+  public override toJSON(): NamespaceParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),

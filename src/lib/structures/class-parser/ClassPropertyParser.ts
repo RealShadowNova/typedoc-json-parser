@@ -105,7 +105,7 @@ export class ClassPropertyParser extends Parser {
    * @since 1.0.0
    * @returns The Json compatible format of this parser.
    */
-  public toJSON(): ClassPropertyParser.Json {
+  public override toJSON(): ClassPropertyParser.Json {
     return {
       ...super.toJSON(),
       comment: this.comment.toJSON(),
