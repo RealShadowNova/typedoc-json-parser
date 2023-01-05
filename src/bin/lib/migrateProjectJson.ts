@@ -27,6 +27,7 @@ export function migrateProjectJson(
     | Migration.MajorFour.MinorZero.ProjectJson
     | Migration.MajorSix.MinorZero.ProjectJson
     | Migration.MajorSeven.MinorZero.ProjectJson
+    | Migration.MajorSeven.MinorOne.ProjectJson
 ): ProjectParser.Json | string {
   const { typeDocJsonParserVersion, id, name, classes, enums, functions, interfaces, namespaces, typeAliases } = projectJson;
 
@@ -92,7 +93,9 @@ export function migrateProjectJson(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
@@ -127,7 +130,8 @@ function migrateClassJson(
     | Migration.MajorThree.MinorZero.ClassJson
     | Migration.MajorFour.MinorZero.ClassJson
     | Migration.MajorSix.MinorZero.ClassJson
-    | Migration.MajorSeven.MinorZero.ClassJson,
+    | Migration.MajorSeven.MinorZero.ClassJson
+    | Migration.MajorSeven.MinorOne.ClassJson,
   typeDocJsonParserVersion: string
 ): ClassParser.Json {
   const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = classJson;
@@ -274,8 +278,10 @@ function migrateClassJson(
 
     case '7.0.1':
 
-    case '7.0.2': {
-      const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorZero.ClassJson;
+    case '7.0.2':
+
+    case '7.1.0': {
+      const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorOne.ClassJson;
 
       return {
         id,
@@ -406,7 +412,9 @@ function migrateEnum(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
 
       return {
@@ -439,7 +447,8 @@ function migrateFunction(
     | Migration.MajorTwo.MinorOne.FunctionJson
     | Migration.MajorTwo.MinorThree.FunctionJson
     | Migration.MajorThree.MinorZero.FunctionJson
-    | Migration.MajorSeven.MinorZero.FunctionJson,
+    | Migration.MajorSeven.MinorZero.FunctionJson
+    | Migration.MajorSeven.MinorOne.FunctionJson,
   typeDocJsonParserVersion: string
 ): FunctionParser.Json {
   const { id, name, comment, source, external, signatures } = functionJson;
@@ -482,6 +491,8 @@ function migrateFunction(
     case '7.0.1':
 
     case '7.0.2':
+
+    case '7.1.0':
       return {
         id,
         name,
@@ -501,7 +512,8 @@ function migrateInterface(
     | Migration.MajorThree.MinorZero.InterfaceJson
     | Migration.MajorFour.MinorZero.InterfaceJson
     | Migration.MajorSix.MinorZero.InterfaceJson
-    | Migration.MajorSeven.MinorZero.InterfaceJson,
+    | Migration.MajorSeven.MinorZero.InterfaceJson
+    | Migration.MajorSeven.MinorOne.InterfaceJson,
   typeDocJsonParserVersion: string
 ): InterfaceParser.Json {
   const { id, name, comment, source, external, properties } = interfaceJson;
@@ -600,8 +612,10 @@ function migrateInterface(
 
     case '7.0.1':
 
-    case '7.0.2': {
-      const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorZero.InterfaceJson;
+    case '7.0.2':
+
+    case '7.1.0': {
+      const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorOne.InterfaceJson;
 
       return {
         id,
@@ -645,7 +659,8 @@ function migrateNamespace(
   namespaceJson:
     | Migration.MajorTwo.MinorOne.NamespaceJson
     | Migration.MajorThree.MinorZero.NamespaceJson
-    | Migration.MajorSix.MinorZero.NamespaceJson,
+    | Migration.MajorSix.MinorZero.NamespaceJson
+    | Migration.MajorSeven.MinorZero.NamespaceJson,
   typeDocJsonParserVersion: string
 ): NamespaceParser.Json {
   const { id, name, comment, source, external, classes, enums, functions, interfaces, namespaces, typeAliases } = namespaceJson;
@@ -704,7 +719,9 @@ function migrateNamespace(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
 
       return {
@@ -771,6 +788,8 @@ function migrateTypeAlias(
     case '7.0.1':
 
     case '7.0.2':
+
+    case '7.1.0':
       return {
         id,
         name,
@@ -829,6 +848,8 @@ function migrateVariable(
     case '7.0.1':
 
     case '7.0.2':
+
+    case '7.1.0':
       return {
         id,
         name,
@@ -892,7 +913,9 @@ function migrateSourceJson(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
@@ -908,7 +931,10 @@ function migrateSourceJson(
 }
 
 function migrateParameterJson(
-  parameterJson: Migration.MajorTwo.MinorOne.Misc.ParameterJson | Migration.MajorSix.MinorZero.Misc.ParameterJson,
+  parameterJson:
+    | Migration.MajorTwo.MinorOne.Misc.ParameterJson
+    | Migration.MajorSix.MinorZero.Misc.ParameterJson
+    | Migration.MajorSeven.MinorOne.Misc.ParameterJson,
   typeDocJsonParserVersion: string
 ): ParameterParser.Json {
   const { id, name, type } = parameterJson;
@@ -947,6 +973,7 @@ function migrateParameterJson(
           blockTags: [],
           modifierTags: []
         },
+        optional: false,
         type
       };
 
@@ -967,6 +994,19 @@ function migrateParameterJson(
         id,
         name,
         comment,
+        optional: false,
+        type
+      };
+    }
+
+    case '7.1.0': {
+      const { comment, optional } = parameterJson as Migration.MajorSeven.MinorOne.Misc.ParameterJson;
+
+      return {
+        id,
+        name,
+        comment,
+        optional,
         type
       };
     }
@@ -979,7 +1019,8 @@ function migrateSignatureJson(
   signatureJson:
     | Migration.MajorTwo.MinorOne.Misc.SignatureJson
     | Migration.MajorTwo.MinorThree.Misc.SignatureJson
-    | Migration.MajorSeven.MinorZero.Misc.SignatureJson,
+    | Migration.MajorSeven.MinorZero.Misc.SignatureJson
+    | Migration.MajorSeven.MinorOne.Misc.SignatureJson,
   typeDocJsonParserVersion: string
 ): SignatureParser.Json {
   const { id, name, typeParameters, parameters, returnType } = signatureJson;
@@ -1031,7 +1072,9 @@ function migrateSignatureJson(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
@@ -1100,7 +1143,9 @@ function migrateTypeParameterJson(
 
     case '7.0.1':
 
-    case '7.0.2': {
+    case '7.0.2':
+
+    case '7.1.0': {
       const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
 
       return {
@@ -1548,7 +1593,14 @@ export namespace Migration {
 
   export namespace MajorSeven {
     export namespace MinorZero {
-      export interface ProjectJson extends Omit<MajorSix.MinorZero.ProjectJson, 'classes' | 'interfaces' | 'functions'> {
+      export interface ProjectJson extends Omit<MajorSix.MinorZero.ProjectJson, 'classes' | 'interfaces' | 'functions' | 'namespaces'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
+        namespaces: NamespaceJson[];
+      }
+
+      export interface NamespaceJson extends Omit<MajorSix.MinorZero.NamespaceJson, 'classes' | 'interfaces' | 'functions'> {
         classes: ClassJson[];
         interfaces: InterfaceJson[];
         functions: FunctionJson[];
@@ -1591,6 +1643,60 @@ export namespace Migration {
 
         export interface TypeParameterJson extends Omit<MajorTwo.MinorOne.Misc.TypeParameterJson, 'type'> {
           constraint: MajorTwo.MinorOne.TypeJson | null;
+        }
+      }
+    }
+
+    export namespace MinorOne {
+      export interface ProjectJson extends Omit<MinorZero.ProjectJson, 'classes' | 'interfaces' | 'functions' | 'namespaces'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
+        namespaces: NamespaceJson[];
+      }
+
+      export interface NamespaceJson extends Omit<MinorZero.NamespaceJson, 'classes' | 'interfaces' | 'functions'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
+      }
+
+      export interface ClassJson extends Omit<MinorZero.ClassJson, 'construct' | 'methods'> {
+        construct: ClassJson.ConstructorJson;
+        methods: ClassJson.MethodJson[];
+      }
+
+      export namespace ClassJson {
+        export interface ConstructorJson extends Omit<MinorZero.ClassJson.ConstructorJson, 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
+
+        export interface MethodJson extends Omit<MinorZero.ClassJson.MethodJson, 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
+      }
+
+      export interface InterfaceJson extends Omit<MinorZero.InterfaceJson, 'methods'> {
+        methods: InterfaceJson.MethodJson[];
+      }
+
+      export namespace InterfaceJson {
+        export interface MethodJson extends Omit<MinorZero.InterfaceJson.MethodJson, 'signatures'> {
+          signatures: Misc.SignatureJson[];
+        }
+      }
+
+      export interface FunctionJson extends Omit<MinorZero.FunctionJson, 'signatures'> {
+        signatures: Misc.SignatureJson[];
+      }
+
+      export namespace Misc {
+        export interface SignatureJson extends MinorZero.Misc.SignatureJson {
+          parameters: ParameterJson[];
+        }
+
+        export interface ParameterJson extends MajorSix.MinorZero.Misc.ParameterJson {
+          optional: boolean;
         }
       }
     }
