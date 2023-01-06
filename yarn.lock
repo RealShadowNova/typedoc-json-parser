@@ -420,9 +420,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshdb/eslint-config@npm:1.1.0-next.6db7b48.0":
-  version: 1.1.0-next.6db7b48.0
-  resolution: "@joshdb/eslint-config@npm:1.1.0-next.6db7b48.0"
+"@joshdb/eslint-config@npm:1.1.0-next.89c3b7b.0":
+  version: 1.1.0-next.89c3b7b.0
+  resolution: "@joshdb/eslint-config@npm:1.1.0-next.89c3b7b.0"
   dependencies:
     "@sapphire/eslint-config": ^4.3.8
     "@typescript-eslint/eslint-plugin": ^5.47.1
@@ -432,7 +432,7 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     prettier: ^2.8.1
     typescript: ^4.9.4
-  checksum: 002107f87893c7f2a18bd17f94d70020f431d8e3723c7961cf5eec233a47bcd4523f5569b6fa4761572c02bedcca2df6272e2ec7028d0e531130fea349225201
+  checksum: 26589472310479e9ec0c0aff769ad59cff646c1b28ea406f5e8359821d86eac9e78fa3715917209b3255f89fcdf45c8e3f1d0fb12aca82fcf09cc5067ee6eda0
   languageName: node
   linkType: hard
 
@@ -5067,7 +5067,7 @@ __metadata:
     "@favware/cliff-jumper": ^1.8.8
     "@favware/colorette-spinner": ^1.0.1
     "@favware/npm-deprecate": ^1.0.5
-    "@joshdb/eslint-config": 1.1.0-next.6db7b48.0
+    "@joshdb/eslint-config": 1.1.0-next.89c3b7b.0
     "@joshdb/ts-config": 1.1.0-next.6db7b48.0
     "@sapphire/node-utilities": ^1.0.0
     "@types/js-yaml": ^4.0.5
