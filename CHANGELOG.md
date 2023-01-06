@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.1.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.0.2...v7.1.0) - (2023-01-06)
+
+## 🐛 Bug Fixes
+
+- **deps:** Update dependency typedoc to ^0.23.23 (#100) ([620f6c3](https://github.com/RealShadowNova/typedoc-json-parser/commit/620f6c327b13876262178a21b65afcc02e9ebe67))
+
+## 🚀 Features
+
+- **ParameterParser:** Add `optional` property (#103) ([d81536c](https://github.com/RealShadowNova/typedoc-json-parser/commit/d81536c9da8fb85ef7df40c80a5279322f8d5111))
+
 # [7.0.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.0.1...v7.0.2) - (2022-11-27)
 
 ## 🐛 Bug Fixes
