@@ -27,17 +27,24 @@ export class ParameterParser {
   public readonly comment: CommentParser;
 
   /**
+   * Whether this parameter is optional.
+   * @since 7.1.0
+   */
+  public readonly optional: boolean;
+
+  /**
    * The type of this parameter.
    * @since 1.0.0
    */
   public readonly type: TypeParser;
 
   public constructor(data: ParameterParser.Data) {
-    const { id, name, comment, type } = data;
+    const { id, name, comment, optional, type } = data;
 
     this.id = id;
     this.name = name;
     this.comment = comment;
+    this.optional = optional;
     this.type = type;
   }
 
@@ -51,6 +58,7 @@ export class ParameterParser {
       id: this.id,
       name: this.name,
       comment: this.comment.toJSON(),
+      optional: this.optional,
       type: this.type.toJSON()
     };
   }
@@ -62,7 +70,7 @@ export class ParameterParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ParameterParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, type } = reflection;
+    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, flags, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
       throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${kindString} (${kind})`);
@@ -72,6 +80,7 @@ export class ParameterParser {
       id,
       name,
       comment: CommentParser.generateFromTypeDoc(comment),
+      optional: flags.isOptional ?? false,
       type: TypeParser.generateFromTypeDoc(type!)
     });
   }
@@ -82,12 +91,13 @@ export class ParameterParser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: ParameterParser.Json): ParameterParser {
-    const { id, name, comment, type } = json;
+    const { id, name, comment, optional, type } = json;
 
     return new ParameterParser({
       id,
       name,
       comment: CommentParser.generateFromJson(comment),
+      optional,
       type: TypeParser.generateFromJson(type)
     });
   }
@@ -114,6 +124,12 @@ export namespace ParameterParser {
     comment: CommentParser;
 
     /**
+     * Whether this parameter is optional.
+     * @since 7.1.0
+     */
+    optional: boolean;
+
+    /**
      * The type of this parameter.
      * @since 1.0.0
      */
@@ -138,6 +154,12 @@ export namespace ParameterParser {
      * @since 5.3.0
      */
     comment: CommentParser.Json;
+
+    /**
+     * Whether this parameter is optional.
+     * @since 7.1.0
+     */
+    optional: boolean;
 
     /**
      * The type of this parameter in a Json compatible format.
