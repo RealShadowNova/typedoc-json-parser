@@ -33,7 +33,7 @@
     "@favware/colorette-spinner": "^1.0.1",
     "@sapphire/node-utilities": "^1.0.0",
     "colorette": "^2.0.19",
-    "commander": "^9.4.1",
+    "commander": "^10.0.0",
     "js-yaml": "^4.1.0",
     "tslib": "^2.4.1",
     "typedoc": "^0.23.23"
