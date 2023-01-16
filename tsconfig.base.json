@@ -4,6 +4,7 @@
     "importHelpers": true,
     "noEmitHelpers": true,
     "target": "ES2021",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "lib": ["ES2021", "DOM"]
   }
 }
