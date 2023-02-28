@@ -27,6 +27,12 @@ export class ParameterParser {
   public readonly comment: CommentParser;
 
   /**
+   * Whether this is a rest parameter.
+   * @since 7.2.0
+   */
+  public readonly rest: boolean;
+
+  /**
    * Whether this parameter is optional.
    * @since 7.1.0
    */
@@ -39,11 +45,12 @@ export class ParameterParser {
   public readonly type: TypeParser;
 
   public constructor(data: ParameterParser.Data) {
-    const { id, name, comment, optional, type } = data;
+    const { id, name, comment, rest, optional, type } = data;
 
     this.id = id;
     this.name = name;
     this.comment = comment;
+    this.rest = rest;
     this.optional = optional;
     this.type = type;
   }
@@ -58,6 +65,7 @@ export class ParameterParser {
       id: this.id,
       name: this.name,
       comment: this.comment.toJSON(),
+      rest: this.rest,
       optional: this.optional,
       type: this.type.toJSON()
     };
@@ -80,6 +88,7 @@ export class ParameterParser {
       id,
       name,
       comment: CommentParser.generateFromTypeDoc(comment),
+      rest: flags.isRest ?? false,
       optional: flags.isOptional ?? false,
       type: TypeParser.generateFromTypeDoc(type!)
     });
@@ -91,12 +100,13 @@ export class ParameterParser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: ParameterParser.Json): ParameterParser {
-    const { id, name, comment, optional, type } = json;
+    const { id, name, comment, rest, optional, type } = json;
 
     return new ParameterParser({
       id,
       name,
       comment: CommentParser.generateFromJson(comment),
+      rest,
       optional,
       type: TypeParser.generateFromJson(type)
     });
@@ -122,6 +132,12 @@ export namespace ParameterParser {
      * @since 5.3.0
      */
     comment: CommentParser;
+
+    /**
+     * Whether this is a rest parameter.
+     * @since 7.2.0
+     */
+    rest: boolean;
 
     /**
      * Whether this parameter is optional.
@@ -154,6 +170,12 @@ export namespace ParameterParser {
      * @since 5.3.0
      */
     comment: CommentParser.Json;
+
+    /**
+     * Whether this is a rest parameter.
+     * @since 7.2.0
+     */
+    rest: boolean;
 
     /**
      * Whether this parameter is optional.
