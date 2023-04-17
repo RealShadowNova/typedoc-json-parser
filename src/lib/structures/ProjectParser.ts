@@ -1,6 +1,6 @@
 import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, SearchResult } from '../types';
+import { ReflectionKind, type SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
 import { EnumParser } from './enum-parser';
 import { FunctionParser } from './FunctionParser';
