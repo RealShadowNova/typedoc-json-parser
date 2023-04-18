@@ -10,6 +10,12 @@ import { EnumMemberParser } from './EnumMemberParser';
  */
 export class EnumParser extends Parser {
   /**
+   * The namespace parent id of this enum, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this enum.
    * @since 1.0.0
    */
@@ -30,8 +36,9 @@ export class EnumParser extends Parser {
   public constructor(data: EnumParser.Data) {
     super(data);
 
-    const { comment, external, members } = data;
+    const { namespaceParentId, comment, external, members } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.members = members;
@@ -45,6 +52,7 @@ export class EnumParser extends Parser {
   public override toJSON(): EnumParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       members: this.members
@@ -57,7 +65,7 @@ export class EnumParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): EnumParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): EnumParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Enum) {
@@ -71,6 +79,7 @@ export class EnumParser extends Parser {
     return new EnumParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -84,11 +93,12 @@ export class EnumParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: EnumParser.Json): EnumParser {
-    const { id, name, comment, source, external, members } = json;
+    const { id, name, namespaceParentId, comment, source, external, members } = json;
 
     return new EnumParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -99,6 +109,12 @@ export class EnumParser extends Parser {
 
 export namespace EnumParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this enum, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this enum.
      * @since 1.0.0
@@ -119,6 +135,12 @@ export namespace EnumParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this enum, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this enum.
      * @since 1.0.0

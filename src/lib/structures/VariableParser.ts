@@ -10,6 +10,12 @@ import { TypeParser } from './type-parsers';
  */
 export class VariableParser extends Parser {
   /**
+   * The namespace parent id of this variable, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this variable.
    * @since 1.0.0
    */
@@ -36,8 +42,9 @@ export class VariableParser extends Parser {
   public constructor(data: VariableParser.Data) {
     super(data);
 
-    const { comment, external, type, value } = data;
+    const { namespaceParentId, comment, external, type, value } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.type = type;
@@ -52,6 +59,7 @@ export class VariableParser extends Parser {
   public override toJSON(): VariableParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       type: this.type.toJSON(),
@@ -66,7 +74,7 @@ export class VariableParser extends Parser {
    * @param  The  this parser belongs to.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): VariableParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): VariableParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, defaultValue } = reflection;
 
     if (kind !== ReflectionKind.Variable) {
@@ -76,6 +84,7 @@ export class VariableParser extends Parser {
     return new VariableParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -90,11 +99,12 @@ export class VariableParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: VariableParser.Json): VariableParser {
-    const { id, name, comment, source, external, type, value } = json;
+    const { id, name, namespaceParentId, comment, source, external, type, value } = json;
 
     return new VariableParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -106,6 +116,12 @@ export class VariableParser extends Parser {
 
 export namespace VariableParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this variable, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this variable.
      * @since 1.0.0
@@ -132,6 +148,12 @@ export namespace VariableParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this variable, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this constant.
      * @since 1.0.0

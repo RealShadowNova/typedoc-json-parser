@@ -10,6 +10,12 @@ import { TypeParser } from './type-parsers';
  */
 export class TypeAliasParser extends Parser {
   /**
+   * The namespace parent id of this type alias, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this type alias.
    * @since 1.0.0
    */
@@ -36,8 +42,9 @@ export class TypeAliasParser extends Parser {
   public constructor(data: TypeAliasParser.Data) {
     super(data);
 
-    const { comment, external, typeParameters, type } = data;
+    const { namespaceParentId, comment, external, typeParameters, type } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.typeParameters = typeParameters;
@@ -52,6 +59,7 @@ export class TypeAliasParser extends Parser {
   public override toJSON(): TypeAliasParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       typeParameters: this.typeParameters.map((typeParameter) => typeParameter.toJSON()),
@@ -65,7 +73,7 @@ export class TypeAliasParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): TypeAliasParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): TypeAliasParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, typeParameters = [] } = reflection;
 
     if (kind !== ReflectionKind.TypeAlias) {
@@ -75,6 +83,7 @@ export class TypeAliasParser extends Parser {
     return new TypeAliasParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -89,11 +98,12 @@ export class TypeAliasParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: TypeAliasParser.Json): TypeAliasParser {
-    const { id, name, comment, source, external, typeParameters, type } = json;
+    const { id, name, namespaceParentId, comment, source, external, typeParameters, type } = json;
 
     return new TypeAliasParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -105,6 +115,12 @@ export class TypeAliasParser extends Parser {
 
 export namespace TypeAliasParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this type alias, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this type alias.
      * @since 1.0.0
@@ -131,6 +147,12 @@ export namespace TypeAliasParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this type alias, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this type alias.
      * @since 1.0.0

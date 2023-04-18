@@ -1,13 +1,13 @@
 import { bold, yellow } from 'colorette';
-import { ClassParser } from '../../lib/structures/class-parser';
-import type { EnumParser } from '../../lib/structures/enum-parser';
 import type { FunctionParser } from '../../lib/structures/FunctionParser';
-import type { InterfaceParser } from '../../lib/structures/interface-parser';
-import type { ParameterParser, SignatureParser, SourceParser, TypeParameterParser } from '../../lib/structures/misc';
 import type { NamespaceParser } from '../../lib/structures/NamespaceParser';
 import { ProjectParser } from '../../lib/structures/ProjectParser';
 import type { TypeAliasParser } from '../../lib/structures/TypeAliasParser';
 import type { VariableParser } from '../../lib/structures/VariableParser';
+import { ClassParser } from '../../lib/structures/class-parser';
+import type { EnumParser } from '../../lib/structures/enum-parser';
+import type { InterfaceParser } from '../../lib/structures/interface-parser';
+import type { ParameterParser, SignatureParser, SourceParser, TypeParameterParser } from '../../lib/structures/misc';
 
 const currentTypeDocJsonParserVersion = ProjectParser.version
   .split('.')
@@ -1784,6 +1784,54 @@ export namespace Migration {
         export interface ParameterJson extends MinorOne.Misc.ParameterJson {
           rest: boolean;
         }
+      }
+    }
+
+    export namespace MinorThree {
+      export interface ProjectJson
+        extends Omit<MinorTwo.ProjectJson, 'classes' | 'interfaces' | 'functions' | 'namespaces' | 'variables' | 'enums' | 'typeAliases'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
+        namespaces: NamespaceJson[];
+        variables: VariableJson[];
+        enums: EnumJson[];
+        typeAliases: TypeAliasJson[];
+      }
+
+      export interface NamespaceJson
+        extends Omit<MinorTwo.NamespaceJson, 'classes' | 'interfaces' | 'functions' | 'variables' | 'enums' | 'typeAliases'> {
+        classes: ClassJson[];
+        interfaces: InterfaceJson[];
+        functions: FunctionJson[];
+        variables: VariableJson[];
+        enums: EnumJson[];
+        typeAliases: TypeAliasJson[];
+        namespaces: NamespaceJson[];
+      }
+
+      export interface ClassJson extends MinorTwo.ClassJson {
+        namespaceParentId: string | null;
+      }
+
+      export interface InterfaceJson extends MinorTwo.InterfaceJson {
+        namespaceParentId: string | null;
+      }
+
+      export interface FunctionJson extends MinorTwo.FunctionJson {
+        namespaceParentId: string | null;
+      }
+
+      export interface VariableJson extends MajorSix.MinorZero.VariableJson {
+        namespaceParentId: string | null;
+      }
+
+      export interface EnumJson extends MajorSix.MinorZero.EnumJson {
+        namespaceParentId: string | null;
+      }
+
+      export interface TypeAliasJson extends MajorThree.MinorZero.TypeAliasJson {
+        namespaceParentId: string | null;
       }
     }
   }

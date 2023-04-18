@@ -15,6 +15,12 @@ import { VariableParser } from './VariableParser';
  */
 export class NamespaceParser extends Parser {
   /**
+   * The namespace parent id of this namespace, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this namespace.
    * @since 1.0.0
    */
@@ -71,8 +77,9 @@ export class NamespaceParser extends Parser {
   public constructor(data: NamespaceParser.Data) {
     super(data);
 
-    const { comment, external, classes, enums, functions, interfaces, namespaces, typeAliases, variables } = data;
+    const { namespaceParentId, comment, external, classes, enums, functions, interfaces, namespaces, typeAliases, variables } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.classes = classes;
@@ -262,6 +269,7 @@ export class NamespaceParser extends Parser {
   public override toJSON(): NamespaceParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       classes: this.classes.map((parser) => parser.toJSON()),
@@ -280,27 +288,39 @@ export class NamespaceParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): NamespaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): NamespaceParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Namespace) {
       throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
-    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child));
-    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child));
-    const functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generateFromTypeDoc(child));
-    const interfaces = children.filter((child) => child.kind === ReflectionKind.Interface).map((child) => InterfaceParser.generateFromTypeDoc(child));
-    const namespaces = children.filter((child) => child.kind === ReflectionKind.Namespace).map((child) => NamespaceParser.generateFromTypeDoc(child));
+    const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, id));
+    const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, id));
+    const functions = children
+      .filter((child) => child.kind === ReflectionKind.Function)
+      .map((child) => FunctionParser.generateFromTypeDoc(child, id));
+
+    const interfaces = children
+      .filter((child) => child.kind === ReflectionKind.Interface)
+      .map((child) => InterfaceParser.generateFromTypeDoc(child, id));
+
+    const namespaces = children
+      .filter((child) => child.kind === ReflectionKind.Namespace)
+      .map((child) => NamespaceParser.generateFromTypeDoc(child, id));
+
     const typeAliases = children
       .filter((child) => child.kind === ReflectionKind.TypeAlias)
-      .map((child) => TypeAliasParser.generateFromTypeDoc(child));
+      .map((child) => TypeAliasParser.generateFromTypeDoc(child, id));
 
-    const variables = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => VariableParser.generateFromTypeDoc(child));
+    const variables = children
+      .filter((child) => child.kind === ReflectionKind.Variable)
+      .map((child) => VariableParser.generateFromTypeDoc(child, id));
 
     return new NamespaceParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -320,11 +340,13 @@ export class NamespaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: NamespaceParser.Json): NamespaceParser {
-    const { id, name, comment, source, external, classes, variables, enums, functions, interfaces, namespaces, typeAliases } = json;
+    const { id, name, namespaceParentId, comment, source, external, classes, variables, enums, functions, interfaces, namespaces, typeAliases } =
+      json;
 
     return new NamespaceParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -341,6 +363,11 @@ export class NamespaceParser extends Parser {
 
 export namespace NamespaceParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this namespace, if any.
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this namespace.
      * @since 1.0.0
@@ -397,6 +424,12 @@ export namespace NamespaceParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this namespace, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this namespace.
      * @since 1.0.0

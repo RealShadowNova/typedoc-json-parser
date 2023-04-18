@@ -9,6 +9,12 @@ import { CommentParser, SignatureParser, SourceParser } from './misc';
  */
 export class FunctionParser extends Parser {
   /**
+   * The namespace parent id of this function, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this function.
    * @since 1.0.0
    */
@@ -29,8 +35,9 @@ export class FunctionParser extends Parser {
   public constructor(data: FunctionParser.Data) {
     super(data);
 
-    const { comment, external, signatures } = data;
+    const { namespaceParentId, comment, external, signatures } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.signatures = signatures;
@@ -44,6 +51,7 @@ export class FunctionParser extends Parser {
   public override toJSON(): FunctionParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       signatures: this.signatures.map((signature) => signature.toJSON())
@@ -56,7 +64,7 @@ export class FunctionParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): FunctionParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): FunctionParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Function) {
@@ -66,6 +74,7 @@ export class FunctionParser extends Parser {
     return new FunctionParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -79,11 +88,12 @@ export class FunctionParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: FunctionParser.Json): FunctionParser {
-    const { id, name, comment, source, external, signatures } = json;
+    const { id, name, namespaceParentId, comment, source, external, signatures } = json;
 
     return new FunctionParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -94,6 +104,12 @@ export class FunctionParser extends Parser {
 
 export namespace FunctionParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this function, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this function.
      * @since 1.0.0
@@ -114,6 +130,12 @@ export namespace FunctionParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this function, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this function.
      * @since 1.0.0

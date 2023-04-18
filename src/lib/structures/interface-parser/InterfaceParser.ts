@@ -11,6 +11,12 @@ import { InterfacePropertyParser } from './InterfacePropertyParser';
  */
 export class InterfaceParser extends Parser {
   /**
+   * The namespace parent id of this interface, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this interface.
    * @since 1.0.0
    */
@@ -43,8 +49,9 @@ export class InterfaceParser extends Parser {
   public constructor(data: InterfaceParser.Data) {
     super(data);
 
-    const { comment, external, typeParameters, properties, methods } = data;
+    const { namespaceParentId, comment, external, typeParameters, properties, methods } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.typeParameters = typeParameters;
@@ -60,6 +67,7 @@ export class InterfaceParser extends Parser {
   public override toJSON(): InterfaceParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       typeParameters: this.typeParameters.map((typeParameter) => typeParameter.toJSON()),
@@ -74,7 +82,7 @@ export class InterfaceParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): InterfaceParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): InterfaceParser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, typeParameters = [], children = [] } = reflection;
 
     if (kind !== ReflectionKind.Interface) {
@@ -92,6 +100,7 @@ export class InterfaceParser extends Parser {
     return new InterfaceParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -107,11 +116,12 @@ export class InterfaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: InterfaceParser.Json): InterfaceParser {
-    const { id, name, comment, source, external, typeParameters, properties, methods } = json;
+    const { id, name, namespaceParentId, comment, source, external, typeParameters, properties, methods } = json;
 
     return new InterfaceParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -124,6 +134,12 @@ export class InterfaceParser extends Parser {
 
 export namespace InterfaceParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this interface, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this interface.
      * @since 1.0.0
@@ -156,6 +172,12 @@ export namespace InterfaceParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this interface, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this interface.
      * @since 1.0.0
