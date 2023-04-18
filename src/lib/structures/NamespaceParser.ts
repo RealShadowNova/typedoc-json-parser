@@ -1,5 +1,5 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, type SearchResult } from '../types';
+import { ReflectionKind, reflectionKindToString, type SearchResult } from '../types';
 import { ClassParser } from './class-parser/';
 import { EnumParser } from './enum-parser';
 import { FunctionParser } from './FunctionParser';
@@ -281,9 +281,11 @@ export class NamespaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): NamespaceParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
-    if (kind !== ReflectionKind.Namespace) throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Namespace) {
+      throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child));
     const enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child));

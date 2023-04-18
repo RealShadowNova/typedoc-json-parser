@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../types';
-import { CommentParser, SignatureParser, SourceParser } from './misc';
+import { ReflectionKind, reflectionKindToString } from '../types';
 import { Parser } from './Parser';
+import { CommentParser, SignatureParser, SourceParser } from './misc';
 
 /**
  * Parses data from a function reflection.
@@ -57,9 +57,11 @@ export class FunctionParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): FunctionParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
-    if (kind !== ReflectionKind.Function) throw new Error(`Expected Function (${ReflectionKind.Function}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Function) {
+      throw new Error(`Expected Function (${ReflectionKind.Function}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     return new FunctionParser({
       id,

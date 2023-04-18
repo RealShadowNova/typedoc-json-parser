@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { SignatureParser, SourceParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { SignatureParser, SourceParser } from '../misc';
 import { ClassParser } from './ClassParser';
 
 /**
@@ -101,9 +101,11 @@ export class ClassMethodParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): ClassMethodParser {
-    const { kind, kindString = 'Unknown', id, name, sources = [], flags, signatures = [] } = reflection;
+    const { kind, id, name, sources = [], flags, signatures = [] } = reflection;
 
-    if (kind !== ReflectionKind.Method) throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Method) {
+      throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     return new ClassMethodParser({
       id,

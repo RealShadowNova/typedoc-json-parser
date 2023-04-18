@@ -1,5 +1,5 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { TypeParser } from '../type-parsers';
 
 /**
@@ -62,10 +62,10 @@ export class TypeParameterParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.TypeParameterReflection): TypeParameterParser {
-    const { kind, kindString = 'Unknown', id, name, type, default: _default } = reflection;
+    const { kind, id, name, type, default: _default } = reflection;
 
     if (kind !== ReflectionKind.TypeParameter) {
-      throw new Error(`Expected TypeParameter (${ReflectionKind.TypeParameter}), but received ${kindString} (${kind})`);
+      throw new Error(`Expected TypeParameter (${ReflectionKind.TypeParameter}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
     return new TypeParameterParser({

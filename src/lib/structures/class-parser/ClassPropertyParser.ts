@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, SourceParser } from '../misc';
 import { TypeParser } from '../type-parsers';
 import { ClassParser } from './ClassParser';
 
@@ -126,11 +126,13 @@ export class ClassPropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): ClassPropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags, getSignature } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], type, flags, getSignature } = reflection;
 
     if (kind !== ReflectionKind.Property && kind !== ReflectionKind.Accessor) {
       throw new Error(
-        `Expected Property (${ReflectionKind.Property}) or Accessor (${ReflectionKind.Accessor}), but received ${kindString} (${kind})`
+        `Expected Property (${ReflectionKind.Property}) or Accessor (${ReflectionKind.Accessor}), but received ${reflectionKindToString(
+          kind
+        )} (${kind})`
       );
     }
 

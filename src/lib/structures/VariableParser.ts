@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../types';
-import { CommentParser, SourceParser } from './misc';
+import { ReflectionKind, reflectionKindToString } from '../types';
 import { Parser } from './Parser';
+import { CommentParser, SourceParser } from './misc';
 import { TypeParser } from './type-parsers';
 
 /**
@@ -67,9 +67,11 @@ export class VariableParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): VariableParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, type, defaultValue } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, defaultValue } = reflection;
 
-    if (kind !== ReflectionKind.Variable) throw new Error(`Expected Variable (${ReflectionKind.Variable}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Variable) {
+      throw new Error(`Expected Variable (${ReflectionKind.Variable}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     return new VariableParser({
       id,

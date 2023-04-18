@@ -1,5 +1,5 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { TypeParser } from '../type-parsers';
 import { CommentParser } from './CommentParser';
 
@@ -77,11 +77,11 @@ export class ParameterParser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ParameterParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, flags, type } = reflection;
+  public static generateFromTypeDoc(reflection: JSONOutput.ParameterReflection): ParameterParser {
+    const { kind, id, name, comment = { summary: [] }, flags, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
-      throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${kindString} (${kind})`);
+      throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
     return new ParameterParser({

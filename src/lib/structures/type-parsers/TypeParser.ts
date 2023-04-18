@@ -1,4 +1,4 @@
-import type { JSONOutput } from 'typedoc';
+import { type JSONOutput } from 'typedoc';
 import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
 import type { ProjectParser } from '../ProjectParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
@@ -144,7 +144,7 @@ export namespace TypeParser {
         });
       }
 
-      case 'named-tuple-member': {
+      case 'namedTupleMember': {
         const { element, isOptional, name } = type;
 
         return new NamedTupleMemberTypeParser({
@@ -177,10 +177,10 @@ export namespace TypeParser {
       }
 
       case 'reference': {
-        const { id, name, package: _package, qualifiedName, typeArguments = [] } = type;
+        const { target, name, package: _package, qualifiedName, typeArguments = [] } = type;
 
         return new ReferenceTypeParser({
-          id: id ?? null,
+          id: typeof target === 'number' ? target : null,
           name: qualifiedName ?? name,
           packageName: _package ?? null,
           typeArguments: typeArguments.map((type) => generateFromTypeDoc(type))
@@ -199,7 +199,7 @@ export namespace TypeParser {
         return new RestTypeParser({ type: generateFromTypeDoc(elementType) });
       }
 
-      case 'template-literal': {
+      case 'templateLiteral': {
         const { head, tail } = type;
 
         return new TemplateLiteralTypeParser({
