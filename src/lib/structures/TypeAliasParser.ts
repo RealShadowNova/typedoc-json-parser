@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../types';
-import { CommentParser, SourceParser, TypeParameterParser } from './misc/';
+import { ReflectionKind, reflectionKindToString } from '../types';
 import { Parser } from './Parser';
+import { CommentParser, SourceParser, TypeParameterParser } from './misc/';
 import { TypeParser } from './type-parsers';
 
 /**
@@ -66,9 +66,11 @@ export class TypeAliasParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): TypeAliasParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, type, typeParameters = [] } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, typeParameters = [] } = reflection;
 
-    if (kind !== ReflectionKind.TypeAlias) throw new Error(`Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.TypeAlias) {
+      throw new Error(`Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     return new TypeAliasParser({
       id,

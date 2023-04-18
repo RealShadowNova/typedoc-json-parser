@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, ParameterParser, SourceParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, ParameterParser, SourceParser } from '../misc';
 import { ClassParser } from './ClassParser';
 
 export class ClassConstructorParser extends Parser {
@@ -89,10 +89,10 @@ export class ClassConstructorParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): ClassConstructorParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Constructor) {
-      throw new Error(`Expected Constructor (${ReflectionKind.Constructor}), but received ${kindString} (${kind})`);
+      throw new Error(`Expected Constructor (${ReflectionKind.Constructor}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
     const signature = signatures.find((signature) => signature.kind === ReflectionKind.ConstructorSignature);

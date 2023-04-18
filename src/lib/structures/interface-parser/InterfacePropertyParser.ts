@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, SourceParser } from '../misc';
 import { TypeParser } from '../type-parsers';
 
 /**
@@ -66,9 +66,11 @@ export class InterfacePropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): InterfacePropertyParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type, flags } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], type, flags } = reflection;
 
-    if (kind !== ReflectionKind.Property) throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Property) {
+      throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     return new InterfacePropertyParser({
       id,

@@ -1,5 +1,5 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { TypeParser } from '../type-parsers';
 import { CommentParser } from './CommentParser';
 import { ParameterParser } from './ParameterParser';
@@ -80,19 +80,10 @@ export class SignatureParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection): SignatureParser {
-    const {
-      kind,
-      kindString = 'Unknown',
-      id,
-      name,
-      comment = { summary: [] },
-      typeParameter: typeParameters = [],
-      parameters = [],
-      type
-    } = reflection;
+    const { kind, id, name, comment = { summary: [] }, typeParameter: typeParameters = [], parameters = [], type } = reflection;
 
     if (kind !== ReflectionKind.CallSignature) {
-      throw new Error(`Expected Call Signature (${ReflectionKind.CallSignature}), but received ${kindString} (${kind})`);
+      throw new Error(`Expected Call Signature (${ReflectionKind.CallSignature}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
     return new SignatureParser({

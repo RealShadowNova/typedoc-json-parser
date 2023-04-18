@@ -25,3 +25,82 @@ export enum ReflectionKind {
   Event = 0x800000,
   Reference = 0x1000000
 }
+
+export function reflectionKindToString(kind: ReflectionKind): string {
+  switch (kind) {
+    case ReflectionKind.Project:
+      return 'Project';
+
+    case ReflectionKind.Module:
+      return 'Module';
+
+    case ReflectionKind.Namespace:
+      return 'Namespace';
+
+    case ReflectionKind.Enum:
+      return 'Enum';
+
+    case ReflectionKind.EnumMember:
+      return 'EnumMember';
+
+    case ReflectionKind.Variable:
+      return 'Variable';
+
+    case ReflectionKind.Function:
+      return 'Function';
+
+    case ReflectionKind.Class:
+      return 'Class';
+
+    case ReflectionKind.Interface:
+      return 'Interface';
+
+    case ReflectionKind.Constructor:
+      return 'Constructor';
+
+    case ReflectionKind.Property:
+      return 'Property';
+
+    case ReflectionKind.Method:
+      return 'Method';
+
+    case ReflectionKind.CallSignature:
+      return 'CallSignature';
+
+    case ReflectionKind.IndexSignature:
+      return 'IndexSignature';
+
+    case ReflectionKind.ConstructorSignature:
+      return 'ConstructorSignature';
+
+    case ReflectionKind.Parameter:
+      return 'Parameter';
+
+    case ReflectionKind.TypeLiteral:
+      return 'TypeLiteral';
+
+    case ReflectionKind.TypeParameter:
+      return 'TypeParameter';
+
+    case ReflectionKind.Accessor:
+      return 'Accessor';
+
+    case ReflectionKind.GetSignature:
+      return 'GetSignature';
+
+    case ReflectionKind.SetSignature:
+      return 'SetSignature';
+
+    case ReflectionKind.ObjectLiteral:
+      return 'ObjectLiteral';
+
+    case ReflectionKind.TypeAlias:
+      return 'TypeAlias';
+
+    case ReflectionKind.Event:
+      return 'Event';
+
+    case ReflectionKind.Reference:
+      return 'Reference';
+  }
+}

@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
 import { TypeParser } from '../type-parsers';
 import { ClassConstructorParser } from './ClassConstructorParser';
 import { ClassMethodParser } from './ClassMethodParser';
@@ -111,7 +111,6 @@ export class ClassParser extends Parser {
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ClassParser {
     const {
       kind,
-      kindString = 'Unknown',
       id,
       name,
       comment = { summary: [] },
@@ -123,7 +122,9 @@ export class ClassParser extends Parser {
       typeParameters = []
     } = reflection;
 
-    if (kind !== ReflectionKind.Class) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Class) {
+      throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     const construct = children.find((child) => child.kind === ReflectionKind.Constructor);
 

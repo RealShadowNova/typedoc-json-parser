@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
 import { InterfaceMethodParser } from './InterfaceMethodParser';
 import { InterfacePropertyParser } from './InterfacePropertyParser';
 
@@ -75,9 +75,11 @@ export class InterfaceParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): InterfaceParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], flags, typeParameters = [], children = [] } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], flags, typeParameters = [], children = [] } = reflection;
 
-    if (kind !== ReflectionKind.Interface) throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${kindString} (${kind})`);
+    if (kind !== ReflectionKind.Interface) {
+      throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${reflectionKindToString(kind)} (${kind})`);
+    }
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property)

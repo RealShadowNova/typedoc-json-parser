@@ -1,7 +1,7 @@
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { CommentParser, SourceParser } from '../misc';
+import { ReflectionKind, reflectionKindToString } from '../../types';
 import { Parser } from '../Parser';
+import { CommentParser, SourceParser } from '../misc';
 import { TypeParser } from '../type-parsers';
 
 /**
@@ -58,10 +58,10 @@ export class EnumMemberParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, parentId: number): EnumMemberParser {
-    const { kind, kindString = 'Unknown', id, name, comment = { summary: [] }, sources = [], type } = reflection;
+    const { kind, id, name, comment = { summary: [] }, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
-      throw new Error(`Expected EnumMember (${ReflectionKind.EnumMember}), but received ${kindString} (${kind})`);
+      throw new Error(`Expected EnumMember (${ReflectionKind.EnumMember}), but received ${reflectionKindToString(kind)} (${kind})`);
     }
 
     return new EnumMemberParser({

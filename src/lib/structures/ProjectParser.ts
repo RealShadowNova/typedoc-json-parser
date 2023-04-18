@@ -1,13 +1,13 @@
 import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, type SearchResult } from '../types';
-import { ClassParser } from './class-parser/';
-import { EnumParser } from './enum-parser';
+import { ReflectionKind, reflectionKindToString, type SearchResult } from '../types';
 import { FunctionParser } from './FunctionParser';
-import { InterfaceParser } from './interface-parser';
 import { NamespaceParser } from './NamespaceParser';
 import { TypeAliasParser } from './TypeAliasParser';
 import { VariableParser } from './VariableParser';
+import { ClassParser } from './class-parser/';
+import { EnumParser } from './enum-parser';
+import { InterfaceParser } from './interface-parser';
 
 /**
  * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.Json}
@@ -146,9 +146,11 @@ export class ProjectParser {
       this.typeAliases = typeAliases.map((json) => TypeAliasParser.generateFromJson(json));
       this.variables = variables.map((json) => VariableParser.generateFromJson(json));
     } else {
-      const { kind, kindString = 'Unknown', children = [] } = data;
+      const { kind, children = [] } = data;
 
-      if (kind !== ReflectionKind.Project) throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${kindString} (${kind})`);
+      if (kind !== ReflectionKind.Project) {
+        throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${reflectionKindToString(kind)} (${kind})`);
+      }
 
       this.version = version ?? null;
       this.readme = readme ?? null;
