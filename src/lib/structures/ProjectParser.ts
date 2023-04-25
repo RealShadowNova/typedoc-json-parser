@@ -155,24 +155,28 @@ export class ProjectParser {
       this.version = version ?? null;
       this.readme = readme ?? null;
       this.changelog = changelog ?? null;
-      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child));
+      this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, null));
 
-      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child));
-      this.functions = children.filter((child) => child.kind === ReflectionKind.Function).map((child) => FunctionParser.generateFromTypeDoc(child));
+      this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, null));
+      this.functions = children
+        .filter((child) => child.kind === ReflectionKind.Function)
+        .map((child) => FunctionParser.generateFromTypeDoc(child, null));
 
       this.interfaces = children
         .filter((child) => child.kind === ReflectionKind.Interface)
-        .map((child) => InterfaceParser.generateFromTypeDoc(child));
+        .map((child) => InterfaceParser.generateFromTypeDoc(child, null));
 
       this.namespaces = children
         .filter((child) => child.kind === ReflectionKind.Namespace)
-        .map((child) => NamespaceParser.generateFromTypeDoc(child));
+        .map((child) => NamespaceParser.generateFromTypeDoc(child, null));
 
       this.typeAliases = children
         .filter((child) => child.kind === ReflectionKind.TypeAlias)
-        .map((child) => TypeAliasParser.generateFromTypeDoc(child));
+        .map((child) => TypeAliasParser.generateFromTypeDoc(child, null));
 
-      this.variables = children.filter((child) => child.kind === ReflectionKind.Variable).map((child) => VariableParser.generateFromTypeDoc(child));
+      this.variables = children
+        .filter((child) => child.kind === ReflectionKind.Variable)
+        .map((child) => VariableParser.generateFromTypeDoc(child, null));
     }
   }
 
