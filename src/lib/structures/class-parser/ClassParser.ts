@@ -13,6 +13,12 @@ import { ClassPropertyParser } from './ClassPropertyParser';
  */
 export class ClassParser extends Parser {
   /**
+   * The namespace parent id of this class, if any.
+   * @since 7.3.0
+   */
+  public readonly namespaceParentId: number | null;
+
+  /**
    * The comment parser of this class.
    * @since 1.0.0
    */
@@ -69,8 +75,9 @@ export class ClassParser extends Parser {
   public constructor(data: ClassParser.Data) {
     super(data);
 
-    const { comment, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = data;
+    const { namespaceParentId, comment, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = data;
 
+    this.namespaceParentId = namespaceParentId;
     this.comment = comment;
     this.external = external;
     this.abstract = abstract;
@@ -90,6 +97,7 @@ export class ClassParser extends Parser {
   public override toJSON(): ClassParser.Json {
     return {
       ...super.toJSON(),
+      namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
       abstract: this.abstract,
@@ -108,7 +116,7 @@ export class ClassParser extends Parser {
    * @param reflection The reflection to generate the parser from.
    * @returns The generated parser.
    */
-  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): ClassParser {
+  public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): ClassParser {
     const {
       kind,
       id,
@@ -139,6 +147,7 @@ export class ClassParser extends Parser {
     return new ClassParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromTypeDoc(comment),
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       external: Boolean(flags.isExternal),
@@ -158,11 +167,26 @@ export class ClassParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: ClassParser.Json): ClassParser {
-    const { id, name, comment, source, external, abstract, extendsType, implementsType, typeParameters, construct, properties, methods } = json;
+    const {
+      id,
+      name,
+      namespaceParentId,
+      comment,
+      source,
+      external,
+      abstract,
+      extendsType,
+      implementsType,
+      typeParameters,
+      construct,
+      properties,
+      methods
+    } = json;
 
     return new ClassParser({
       id,
       name,
+      namespaceParentId,
       comment: CommentParser.generateFromJson(comment),
       source: source ? SourceParser.generateFromJson(source) : null,
       external,
@@ -179,6 +203,12 @@ export class ClassParser extends Parser {
 
 export namespace ClassParser {
   export interface Data extends Parser.Data {
+    /**
+     * The namespace parent id of this class, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this class.
      * @since 1.0.0
@@ -235,6 +265,12 @@ export namespace ClassParser {
   }
 
   export interface Json extends Parser.Json {
+    /**
+     * The namespace parent id of this class, if any.
+     * @since 7.3.0
+     */
+    namespaceParentId: number | null;
+
     /**
      * The comment parser of this class.
      * @since 1.0.0
