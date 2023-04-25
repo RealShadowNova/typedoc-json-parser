@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.3.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.0...v7.3.1) - (2023-04-25)
+
+## 🐛 Bug Fixes
+
+- **bin:** Migrate `namespaceParentId` for older versions ([23228a9](https://github.com/RealShadowNova/typedoc-json-parser/commit/23228a9154e3007dafc26188dae0af8ef12d4251))
+
 # [7.3.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.2.0...v7.3.0) - (2023-04-25)
 
 ## 🐛 Bug Fixes
