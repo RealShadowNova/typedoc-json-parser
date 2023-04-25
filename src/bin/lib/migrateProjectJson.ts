@@ -73,13 +73,13 @@ export function migrateProjectJson(
         version: 'version' in projectJson ? projectJson.version : null,
         readme: 'readme' in projectJson ? projectJson.readme : null,
         changelog: 'changelog' in projectJson ? projectJson.changelog : null,
-        classes: classes.map((classJson) => migrateClassJson(classJson, typeDocJsonParserVersion)),
-        enums: enums.map((enumJson) => migrateEnum(enumJson, typeDocJsonParserVersion)),
-        functions: functions.map((functionJson) => migrateFunction(functionJson, typeDocJsonParserVersion)),
-        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, typeDocJsonParserVersion)),
-        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, typeDocJsonParserVersion)),
-        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, typeDocJsonParserVersion)),
-        variables: constants.map((constantJson) => migrateVariable(constantJson, typeDocJsonParserVersion))
+        classes: classes.map((classJson) => migrateClassJson(classJson, null, typeDocJsonParserVersion)),
+        enums: enums.map((enumJson) => migrateEnum(enumJson, null, typeDocJsonParserVersion)),
+        functions: functions.map((functionJson) => migrateFunction(functionJson, null, typeDocJsonParserVersion)),
+        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, null, typeDocJsonParserVersion)),
+        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, null, typeDocJsonParserVersion)),
+        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, null, typeDocJsonParserVersion)),
+        variables: constants.map((constantJson) => migrateVariable(constantJson, null, typeDocJsonParserVersion))
       };
     }
 
@@ -97,7 +97,11 @@ export function migrateProjectJson(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
@@ -107,13 +111,13 @@ export function migrateProjectJson(
         version: 'version' in projectJson ? projectJson.version : null,
         readme: 'readme' in projectJson ? projectJson.readme : null,
         changelog: 'changelog' in projectJson ? projectJson.changelog : null,
-        classes: classes.map((classJson) => migrateClassJson(classJson, typeDocJsonParserVersion)),
-        enums: enums.map((enumJson) => migrateEnum(enumJson, typeDocJsonParserVersion)),
-        functions: functions.map((functionJson) => migrateFunction(functionJson, typeDocJsonParserVersion)),
-        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, typeDocJsonParserVersion)),
-        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, typeDocJsonParserVersion)),
-        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, typeDocJsonParserVersion)),
-        variables: variables.map((variableJson) => migrateVariable(variableJson, typeDocJsonParserVersion))
+        classes: classes.map((classJson) => migrateClassJson(classJson, null, typeDocJsonParserVersion)),
+        enums: enums.map((enumJson) => migrateEnum(enumJson, null, typeDocJsonParserVersion)),
+        functions: functions.map((functionJson) => migrateFunction(functionJson, null, typeDocJsonParserVersion)),
+        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, null, typeDocJsonParserVersion)),
+        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, null, typeDocJsonParserVersion)),
+        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, null, typeDocJsonParserVersion)),
+        variables: variables.map((variableJson) => migrateVariable(variableJson, null, typeDocJsonParserVersion))
       };
     }
   }
@@ -135,6 +139,7 @@ function migrateClassJson(
     | Migration.MajorSeven.MinorZero.ClassJson
     | Migration.MajorSeven.MinorOne.ClassJson
     | Migration.MajorSeven.MinorTwo.ClassJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): ClassParser.Json {
   const { id, name, comment, source, external, abstract, extendsType, implementsType, construct, properties, methods } = classJson;
@@ -168,7 +173,7 @@ function migrateClassJson(
       return {
         id,
         name,
-        namespaceParentId: null,
+        namespaceParentId,
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
@@ -228,7 +233,7 @@ function migrateClassJson(
       return {
         id,
         name,
-        namespaceParentId: null,
+        namespaceParentId,
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
@@ -287,71 +292,18 @@ function migrateClassJson(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorTwo.ClassJson;
 
       return {
         id,
         name,
         comment,
-        namespaceParentId: null,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        abstract,
-        extendsType,
-        implementsType,
-        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
-        construct: {
-          id: construct.id,
-          name: construct.name,
-          comment: construct.comment,
-          source: construct.source ? migrateSourceJson(construct.source, typeDocJsonParserVersion) : null,
-          parentId: id,
-          accessibility: construct.accessibility,
-          parameters: construct.parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion))
-        },
-        properties: properties.map((propertyJson) => {
-          const { id, name, comment, source, accessibility, abstract, static: _static, readonly, optional, type } = propertyJson;
-
-          return {
-            id,
-            name,
-            comment,
-            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-            parentId: id,
-            accessibility,
-            abstract,
-            static: _static,
-            readonly,
-            optional,
-            type
-          };
-        }),
-        methods: methods.map((methodJson) => {
-          const { id, name, source, accessibility, abstract, static: _static, signatures } = methodJson;
-
-          return {
-            id,
-            name,
-            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-            parentId: id,
-            accessibility,
-            abstract,
-            static: _static,
-            signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
-          };
-        })
-      };
-    }
-
-    case '7.3.0': {
-      const { namespaceParentId, typeParameters, construct } = classJson as Migration.MajorSeven.MinorThree.ClassJson;
-
-      return {
-        id,
-        name,
         namespaceParentId,
-        comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
         abstract,
@@ -412,6 +364,7 @@ function migrateEnum(
     | Migration.MajorFour.MinorZero.EnumJson
     | Migration.MajorSix.MinorZero.EnumJson
     | Migration.MajorSeven.MinorThree.EnumJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): EnumParser.Json {
   const { id, name, comment, source, external } = enumJson;
@@ -451,7 +404,7 @@ function migrateEnum(
         id,
         name,
         comment,
-        namespaceParentId: null,
+        namespaceParentId,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
         members: properties.map((propertyJson) => {
@@ -483,33 +436,12 @@ function migrateEnum(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
-
-      return {
-        id,
-        name,
-        comment,
-        namespaceParentId: null,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        members: members.map((memberJson) => {
-          const { id, name, comment, source, value } = memberJson;
-
-          return {
-            id,
-            name,
-            comment,
-            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-            parentId: enumJson.id,
-            value
-          };
-        })
-      };
-    }
-
-    case '7.3.0': {
-      const { namespaceParentId, members } = enumJson as Migration.MajorSeven.MinorThree.EnumJson;
 
       return {
         id,
@@ -546,6 +478,7 @@ function migrateFunction(
     | Migration.MajorSeven.MinorOne.FunctionJson
     | Migration.MajorSeven.MinorTwo.FunctionJson
     | Migration.MajorSeven.MinorThree.FunctionJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): FunctionParser.Json {
   const { id, name, comment, source, external, signatures } = functionJson;
@@ -592,19 +525,10 @@ function migrateFunction(
     case '7.1.0':
 
     case '7.2.0':
-      return {
-        id,
-        name,
-        namespaceParentId: null,
-        comment,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
-      };
 
-    case '7.3.0': {
-      const { namespaceParentId } = functionJson as Migration.MajorSeven.MinorThree.FunctionJson;
+    case '7.3.0':
 
+    case '7.3.1':
       return {
         id,
         name,
@@ -614,7 +538,6 @@ function migrateFunction(
         external,
         signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
       };
-    }
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
@@ -630,6 +553,7 @@ function migrateInterface(
     | Migration.MajorSeven.MinorOne.InterfaceJson
     | Migration.MajorSeven.MinorTwo.InterfaceJson
     | Migration.MajorSeven.MinorThree.InterfaceJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): InterfaceParser.Json {
   const { id, name, comment, source, external, properties } = interfaceJson;
@@ -649,7 +573,7 @@ function migrateInterface(
       return {
         id,
         name,
-        namespaceParentId: null,
+        namespaceParentId,
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
@@ -694,7 +618,7 @@ function migrateInterface(
       return {
         id,
         name,
-        namespaceParentId: null,
+        namespaceParentId,
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
@@ -734,46 +658,12 @@ function migrateInterface(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorOne.InterfaceJson;
-
-      return {
-        id,
-        name,
-        namespaceParentId: null,
-        comment,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        typeParameters,
-        properties: properties.map((propertyJson) => {
-          const { id, name, comment, source, readonly, type } = propertyJson;
-
-          return {
-            id,
-            name,
-            comment,
-            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-            parentId: id,
-            readonly,
-            type
-          };
-        }),
-        methods: methods.map((methodJson) => {
-          const { id, name, source, signatures } = methodJson;
-
-          return {
-            id,
-            name,
-            source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-            parentId: id,
-            signatures: signatures.map((signatureJson) => migrateSignatureJson(signatureJson, typeDocJsonParserVersion))
-          };
-        })
-      };
-    }
-
-    case '7.3.0': {
-      const { namespaceParentId, typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorThree.InterfaceJson;
 
       return {
         id,
@@ -823,6 +713,7 @@ function migrateNamespace(
     | Migration.MajorSeven.MinorOne.NamespaceJson
     | Migration.MajorSeven.MinorTwo.NamespaceJson
     | Migration.MajorSeven.MinorThree.NamespaceJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): NamespaceParser.Json {
   const { id, name, comment, source, external, classes, enums, functions, interfaces, namespaces, typeAliases } = namespaceJson;
@@ -858,17 +749,17 @@ function migrateNamespace(
       return {
         id,
         name,
-        namespaceParentId: null,
+        namespaceParentId,
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
-        classes: classes.map((classJson) => migrateClassJson(classJson, typeDocJsonParserVersion)),
-        enums: enums.map((enumJson) => migrateEnum(enumJson, typeDocJsonParserVersion)),
-        functions: functions.map((functionJson) => migrateFunction(functionJson, typeDocJsonParserVersion)),
-        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, typeDocJsonParserVersion)),
-        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, typeDocJsonParserVersion)),
-        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, typeDocJsonParserVersion)),
-        variables: constants.map((constantJson) => migrateVariable(constantJson, typeDocJsonParserVersion))
+        classes: classes.map((classJson) => migrateClassJson(classJson, id, typeDocJsonParserVersion)),
+        enums: enums.map((enumJson) => migrateEnum(enumJson, id, typeDocJsonParserVersion)),
+        functions: functions.map((functionJson) => migrateFunction(functionJson, id, typeDocJsonParserVersion)),
+        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, id, typeDocJsonParserVersion)),
+        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, id, typeDocJsonParserVersion)),
+        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, id, typeDocJsonParserVersion)),
+        variables: constants.map((constantJson) => migrateVariable(constantJson, id, typeDocJsonParserVersion))
       };
     }
 
@@ -886,28 +777,12 @@ function migrateNamespace(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
-
-      return {
-        id,
-        name,
-        namespaceParentId: null,
-        comment,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        classes: classes.map((classJson) => migrateClassJson(classJson, typeDocJsonParserVersion)),
-        enums: enums.map((enumJson) => migrateEnum(enumJson, typeDocJsonParserVersion)),
-        functions: functions.map((functionJson) => migrateFunction(functionJson, typeDocJsonParserVersion)),
-        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, typeDocJsonParserVersion)),
-        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, typeDocJsonParserVersion)),
-        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, typeDocJsonParserVersion)),
-        variables: variables.map((variableJson) => migrateVariable(variableJson, typeDocJsonParserVersion))
-      };
-    }
-
-    case '7.3.0': {
-      const { namespaceParentId, variables } = namespaceJson as Migration.MajorSeven.MinorThree.NamespaceJson;
 
       return {
         id,
@@ -916,13 +791,13 @@ function migrateNamespace(
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
-        classes: classes.map((classJson) => migrateClassJson(classJson, typeDocJsonParserVersion)),
-        enums: enums.map((enumJson) => migrateEnum(enumJson, typeDocJsonParserVersion)),
-        functions: functions.map((functionJson) => migrateFunction(functionJson, typeDocJsonParserVersion)),
-        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, typeDocJsonParserVersion)),
-        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, typeDocJsonParserVersion)),
-        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, typeDocJsonParserVersion)),
-        variables: variables.map((variableJson) => migrateVariable(variableJson, typeDocJsonParserVersion))
+        classes: classes.map((classJson) => migrateClassJson(classJson, id, typeDocJsonParserVersion)),
+        enums: enums.map((enumJson) => migrateEnum(enumJson, id, typeDocJsonParserVersion)),
+        functions: functions.map((functionJson) => migrateFunction(functionJson, id, typeDocJsonParserVersion)),
+        interfaces: interfaces.map((interfaceJson) => migrateInterface(interfaceJson, id, typeDocJsonParserVersion)),
+        namespaces: namespaces.map((namespaceJson) => migrateNamespace(namespaceJson, id, typeDocJsonParserVersion)),
+        typeAliases: typeAliases.map((typeAliasJson) => migrateTypeAlias(typeAliasJson, id, typeDocJsonParserVersion)),
+        variables: variables.map((variableJson) => migrateVariable(variableJson, id, typeDocJsonParserVersion))
       };
     }
   }
@@ -935,6 +810,7 @@ function migrateTypeAlias(
     | Migration.MajorTwo.MinorOne.TypeAliasJson
     | Migration.MajorThree.MinorZero.TypeAliasJson
     | Migration.MajorSeven.MinorThree.TypeAliasJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): TypeAliasParser.Json {
   const { id, name, comment, source, external, typeParameters, type } = typeAliasJson;
@@ -981,20 +857,10 @@ function migrateTypeAlias(
     case '7.1.0':
 
     case '7.2.0':
-      return {
-        id,
-        name,
-        namespaceParentId: null,
-        comment,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
-        type
-      };
 
-    case '7.3.0': {
-      const { namespaceParentId } = typeAliasJson as Migration.MajorSeven.MinorThree.TypeAliasJson;
+    case '7.3.0':
 
+    case '7.3.1':
       return {
         id,
         name,
@@ -1005,7 +871,6 @@ function migrateTypeAlias(
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         type
       };
-    }
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
@@ -1013,6 +878,7 @@ function migrateTypeAlias(
 
 function migrateVariable(
   variableJson: Migration.MajorTwo.MinorOne.ConstantJson | Migration.MajorThree.MinorZero.ConstantJson | Migration.MajorSeven.MinorThree.VariableJson,
+  namespaceParentId: number | null,
   typeDocJsonParserVersion: string
 ): VariableParser.Json {
   const { id, name, comment, source, external, type, value } = variableJson;
@@ -1059,20 +925,10 @@ function migrateVariable(
     case '7.1.0':
 
     case '7.2.0':
-      return {
-        id,
-        name,
-        namespaceParentId: null,
-        comment,
-        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
-        external,
-        type,
-        value
-      };
 
-    case '7.3.0': {
-      const { namespaceParentId } = variableJson as Migration.MajorSeven.MinorThree.VariableJson;
+    case '7.3.0':
 
+    case '7.3.1':
       return {
         id,
         name,
@@ -1083,7 +939,6 @@ function migrateVariable(
         type,
         value
       };
-    }
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
@@ -1142,7 +997,11 @@ function migrateSourceJson(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
@@ -1242,7 +1101,11 @@ function migrateParameterJson(
       };
     }
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { comment, rest, optional } = parameterJson as Migration.MajorSeven.MinorTwo.Misc.ParameterJson;
 
       return { id, name, comment, rest, optional, type };
@@ -1313,7 +1176,11 @@ function migrateSignatureJson(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
@@ -1386,7 +1253,11 @@ function migrateTypeParameterJson(
 
     case '7.1.0':
 
-    case '7.2.0': {
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1': {
       const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
 
       return {
