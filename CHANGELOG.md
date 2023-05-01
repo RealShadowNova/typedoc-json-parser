@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.3.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.1...v7.3.2) - (2023-05-01)
+
+## 🐛 Bug Fixes
+
+- **type-parser:** Add `project` parameter for all `toString()` instances ([024fa76](https://github.com/RealShadowNova/typedoc-json-parser/commit/024fa76eef28b5ce4a348182db4d0dc2739a17f8))
+
 # [7.3.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.0...v7.3.1) - (2023-04-25)
 
 ## 🐛 Bug Fixes
