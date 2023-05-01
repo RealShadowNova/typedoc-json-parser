@@ -396,8 +396,8 @@ export namespace TypeParser {
    * @param binding The binding power of the type parser.
    * @returns The wrapped type parser.
    */
-  export function wrap(type: TypeParser, binding: number) {
-    return BindingPowers[type.kind] < binding ? `(${type.toString()})` : type.toString();
+  export function wrap(type: TypeParser, binding: number, project?: ProjectParser) {
+    return BindingPowers[type.kind] < binding ? `(${type.toString(project)})` : type.toString(project);
   }
 
   /**

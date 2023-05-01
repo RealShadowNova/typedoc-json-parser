@@ -53,9 +53,9 @@ export class ArrayTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<ArrayTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Array])}[]`;
+    return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Array], project)}[]`;
   }
 }
 

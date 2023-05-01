@@ -52,9 +52,9 @@ export class OptionalTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<OptionalTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Optional])}?`;
+    return `${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Optional], project)}?`;
   }
 }
 

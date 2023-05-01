@@ -78,9 +78,11 @@ export class ConditionalTypeParser implements TypeParser {
   public static formatToString(options: TypeParser.FormatToStringOptions<ConditionalTypeParser>): string {
     const { parser, project } = options;
 
-    return `${TypeParser.wrap(parser.checkType, TypeParser.BindingPowers[TypeParser.Kind.Conditional])} extends ${parser.extendsType.toString(
+    return `${TypeParser.wrap(
+      parser.checkType,
+      TypeParser.BindingPowers[TypeParser.Kind.Conditional],
       project
-    )} ? ${parser.trueType.toString(project)} : ${parser.falseType.toString(project)}`;
+    )} extends ${parser.extendsType.toString(project)} ? ${parser.trueType.toString(project)} : ${parser.falseType.toString(project)}`;
   }
 }
 

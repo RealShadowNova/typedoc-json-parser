@@ -52,9 +52,9 @@ export class IntersectionTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<IntersectionTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Intersection])).join(' & ');
+    return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Intersection], project)).join(' & ');
   }
 }
 

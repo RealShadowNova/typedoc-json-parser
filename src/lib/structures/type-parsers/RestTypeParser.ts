@@ -52,9 +52,9 @@ export class RestTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<RestTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return `...${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Rest])}`;
+    return `...${TypeParser.wrap(parser.type, TypeParser.BindingPowers[TypeParser.Kind.Rest], project)}`;
   }
 }
 

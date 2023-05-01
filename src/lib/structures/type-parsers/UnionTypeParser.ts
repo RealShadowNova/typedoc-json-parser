@@ -52,9 +52,9 @@ export class UnionTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<UnionTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Union])).join(' | ');
+    return parser.types.map((type) => TypeParser.wrap(type, TypeParser.BindingPowers[TypeParser.Kind.Union], project)).join(' | ');
   }
 }
 
