@@ -91,6 +91,10 @@ export class NamespaceParser extends Parser {
     this.variables = variables;
   }
 
+  public get children(): (ClassParser | EnumParser | FunctionParser | InterfaceParser | NamespaceParser | TypeAliasParser | VariableParser)[] {
+    return [...this.classes, ...this.enums, ...this.functions, ...this.interfaces, ...this.namespaces, ...this.typeAliases, ...this.variables];
+  }
+
   /**
    * Find a parser by id.
    * @since 3.0.0
