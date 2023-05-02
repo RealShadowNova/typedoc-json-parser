@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [7.4.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.2...v7.4.0) - (2023-05-02)
+
+## 🚀 Features
+
+- **NamespaceParser:** Add `children` getter ([0fcacbf](https://github.com/RealShadowNova/typedoc-json-parser/commit/0fcacbf6c792451cd143599ac8b89b44b97a6424))
+- **ProjectParser:** Add `children` getter ([694f659](https://github.com/RealShadowNova/typedoc-json-parser/commit/694f6598df0ec0c9367bfab9c8259fc700d22a4f))
+
 # [7.3.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.1...v7.3.2) - (2023-05-01)
 
 ## 🐛 Bug Fixes
