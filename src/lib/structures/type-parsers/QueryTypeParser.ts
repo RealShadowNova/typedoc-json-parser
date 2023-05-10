@@ -72,7 +72,7 @@ export namespace QueryTypeParser {
     kind: TypeParser.Kind.Query;
 
     /**
-     * The query of this query type in a Json compatible format.
+     * The query of this query type in a json compatible format.
      * @since 1.0.0
      */
     query: ReferenceTypeParser.Json;

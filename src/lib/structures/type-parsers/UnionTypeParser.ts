@@ -61,7 +61,7 @@ export class UnionTypeParser implements TypeParser {
 export namespace UnionTypeParser {
   export interface Data {
     /**
-     * The types of this union type in a Json compatible format.
+     * The types of this union type in a json compatible format.
      * @since 5.0.0
      */
     types: TypeParser[];
@@ -71,7 +71,7 @@ export namespace UnionTypeParser {
     kind: TypeParser.Kind.Union;
 
     /**
-     * The types of this union type in a Json compatible format.
+     * The types of this union type in a json compatible format.
      * @since 1.0.0
      */
     types: TypeParser.Json[];

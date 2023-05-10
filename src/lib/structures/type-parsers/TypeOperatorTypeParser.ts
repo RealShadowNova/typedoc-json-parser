@@ -91,7 +91,7 @@ export namespace TypeOperatorTypeParser {
     operator: Operator;
 
     /**
-     * The type of this type operator type in a Json compatible format.
+     * The type of this type operator type in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

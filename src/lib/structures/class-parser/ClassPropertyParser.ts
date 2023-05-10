@@ -298,7 +298,7 @@ export namespace ClassPropertyParser {
     optional: boolean;
 
     /**
-     * The type parser of this property in a Json compatible format.
+     * The type parser of this property in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

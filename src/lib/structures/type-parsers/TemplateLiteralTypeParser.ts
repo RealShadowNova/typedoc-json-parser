@@ -114,7 +114,7 @@ export namespace TemplateLiteralTypeParser {
   export namespace Tail {
     export interface Json {
       /**
-       * The type of this template literal tail type in a Json compatible format.
+       * The type of this template literal tail type in a json compatible format.
        * @since 1.0.0
        */
       type: TypeParser.Json;

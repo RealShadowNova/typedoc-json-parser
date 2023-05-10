@@ -166,13 +166,13 @@ export namespace TypeAliasParser {
     external: boolean;
 
     /**
-     * The type parameters of this type alias in a Json compatible format.
+     * The type parameters of this type alias in a json compatible format.
      * @since 1.0.0
      */
     typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The type of this type alias in a Json compatible format.
+     * The type of this type alias in a json compatible format.
      */
     type: TypeParser.Json;
   }

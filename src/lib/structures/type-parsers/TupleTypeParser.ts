@@ -71,7 +71,7 @@ export namespace TupleTypeParser {
     kind: TypeParser.Kind.Tuple;
 
     /**
-     * The types of this tuple type in a Json compatible format.
+     * The types of this tuple type in a json compatible format.
      * @since 1.0.0
      */
     types: TypeParser.Json[];

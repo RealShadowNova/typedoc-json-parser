@@ -55,7 +55,7 @@ export class EnumParser extends Parser {
       namespaceParentId: this.namespaceParentId,
       comment: this.comment.toJSON(),
       external: this.external,
-      members: this.members
+      members: this.members.map((member) => member.toJSON())
     };
   }
 
@@ -154,7 +154,7 @@ export namespace EnumParser {
     external: boolean;
 
     /**
-     * The property parsers of this enum in a Json compatible format.
+     * The property parsers of this enum in a json compatible format.
      */
     members: EnumMemberParser.Json[];
   }

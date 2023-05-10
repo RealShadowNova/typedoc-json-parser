@@ -184,7 +184,7 @@ export namespace ParameterParser {
     optional: boolean;
 
     /**
-     * The type of this parameter in a Json compatible format.
+     * The type of this parameter in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

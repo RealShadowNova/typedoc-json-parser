@@ -447,43 +447,43 @@ export namespace NamespaceParser {
     external: boolean;
 
     /**
-     * The class parsers of this namespace in a Json compatible format.
+     * The class parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     classes: ClassParser.Json[];
 
     /**
-     * The enum parsers of this namespace in a Json compatible format.
+     * The enum parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     enums: EnumParser.Json[];
 
     /**
-     * The function parsers of this namespace in a Json compatible format.
+     * The function parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     functions: FunctionParser.Json[];
 
     /**
-     * The interface parsers of this namespace in a Json compatible format.
+     * The interface parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     interfaces: InterfaceParser.Json[];
 
     /**
-     * The namespace parsers of this namespace in a Json compatible format.
+     * The namespace parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     namespaces: Json[];
 
     /**
-     * The type alias parsers of this namespace in a Json compatible format.
+     * The type alias parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     typeAliases: TypeAliasParser.Json[];
 
     /**
-     * The variable parsers of this namespace in a Json compatible format.
+     * The variable parsers of this namespace in a json compatible format.
      * @since 1.0.0
      */
     variables: VariableParser.Json[];

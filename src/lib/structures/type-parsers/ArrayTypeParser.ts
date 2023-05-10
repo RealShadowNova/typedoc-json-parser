@@ -72,7 +72,7 @@ export namespace ArrayTypeParser {
     kind: TypeParser.Kind.Array;
 
     /**
-     * The type of this array in a Json compatible format.
+     * The type of this array in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

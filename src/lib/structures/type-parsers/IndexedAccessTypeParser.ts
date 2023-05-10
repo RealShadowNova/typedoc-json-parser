@@ -85,13 +85,13 @@ export namespace IndexedAccessTypeParser {
     kind: TypeParser.Kind.IndexedAccess;
 
     /**
-     * The object type of this indexed access type in a Json compatible format.
+     * The object type of this indexed access type in a json compatible format.
      * @since 1.0.0
      */
     objectType: TypeParser.Json;
 
     /**
-     * The index type of this indexed access type in a Json compatible format.
+     * The index type of this indexed access type in a json compatible format.
      * @since 1.0.0
      */
     indexType: TypeParser.Json;

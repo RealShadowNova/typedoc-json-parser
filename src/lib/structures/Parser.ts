@@ -80,7 +80,7 @@ export namespace Parser {
     name: string;
 
     /**
-     * The source parser for this parser in a Json compatible format.
+     * The source parser for this parser in a json compatible format.
      * @since 1.0.0
      */
     source: SourceParser.Json | null;

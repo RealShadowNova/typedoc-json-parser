@@ -149,7 +149,7 @@ export namespace FunctionParser {
     external: boolean;
 
     /**
-     * The signature parsers of this function in a Json compatible format.
+     * The signature parsers of this function in a json compatible format.
      * @since 1.0.0
      */
     signatures: SignatureParser.Json[];

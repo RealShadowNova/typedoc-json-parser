@@ -71,7 +71,7 @@ export namespace OptionalTypeParser {
     kind: TypeParser.Kind.Optional;
 
     /**
-     * The type of this optional type in a Json compatible format.
+     * The type of this optional type in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

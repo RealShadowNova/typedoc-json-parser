@@ -71,7 +71,7 @@ export namespace IntersectionTypeParser {
     kind: TypeParser.Kind.Intersection;
 
     /**
-     * The types of this intersection type in a Json compatible format.
+     * The types of this intersection type in a json compatible format.
      * @since 1.0.0
      */
     types: TypeParser.Json[];

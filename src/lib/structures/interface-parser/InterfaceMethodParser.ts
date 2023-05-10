@@ -105,7 +105,7 @@ export namespace InterfaceMethodParser {
     parentId: number;
 
     /**
-     * The signature parsers of this method in a Json compatible format.
+     * The signature parsers of this method in a json compatible format.
      * @since 3.1.0
      */
     signatures: SignatureParser.Json[];

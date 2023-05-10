@@ -167,7 +167,7 @@ export namespace VariableParser {
     external: boolean;
 
     /**
-     * The type of this variable in a Json compatible format.
+     * The type of this variable in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

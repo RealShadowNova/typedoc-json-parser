@@ -197,13 +197,13 @@ export namespace InterfaceParser {
     typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The property parsers of this interface in a Json compatible format.
+     * The property parsers of this interface in a json compatible format.
      * @since 1.0.0
      */
     properties: InterfacePropertyParser.Json[];
 
     /**
-     * The method parsers of this interface in a Json compatible format.
+     * The method parsers of this interface in a json compatible format.
      * @since 3.1.0
      */
     methods: InterfaceMethodParser.Json[];

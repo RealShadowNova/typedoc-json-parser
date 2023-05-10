@@ -105,7 +105,7 @@ export namespace NamedTupleMemberTypeParser {
     name: string;
 
     /**
-     * The type of this named tuple member in a Json compatible format.
+     * The type of this named tuple member in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

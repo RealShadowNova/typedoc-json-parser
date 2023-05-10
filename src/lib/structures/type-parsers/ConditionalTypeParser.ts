@@ -117,25 +117,25 @@ export namespace ConditionalTypeParser {
     kind: TypeParser.Kind.Conditional;
 
     /**
-     * The check type of this conditional type in a Json compatible format.
+     * The check type of this conditional type in a json compatible format.
      * @since 1.0.0
      */
     checkType: TypeParser.Json;
 
     /**
-     * The extends type of this conditional type in a Json compatible format.
+     * The extends type of this conditional type in a json compatible format.
      * @since 1.0.0
      */
     extendsType: TypeParser.Json;
 
     /**
-     * The type of this conditional type when the check type is true in a Json compatible format.
+     * The type of this conditional type when the check type is true in a json compatible format.
      * @since 1.0.0
      */
     trueType: TypeParser.Json;
 
     /**
-     * The type of this conditional type when the check type is false in a Json compatible format.
+     * The type of this conditional type when the check type is false in a json compatible format.
      * @since 1.0.0
      */
     falseType: TypeParser.Json;

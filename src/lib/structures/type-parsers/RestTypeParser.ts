@@ -71,7 +71,7 @@ export namespace RestTypeParser {
     kind: TypeParser.Kind.Rest;
 
     /**
-     * The type of this rest type in a Json compatible format.
+     * The type of this rest type in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

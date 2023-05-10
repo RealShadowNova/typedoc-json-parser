@@ -290,37 +290,37 @@ export namespace ClassParser {
     abstract: boolean;
 
     /**
-     * The `extends` type of this class in a Json compatible format.
+     * The `extends` type of this class in a json compatible format.
      * @since 1.0.0
      */
     extendsType: TypeParser.Json | null;
 
     /**
-     * The `implements` type of this class in a Json compatible format.
+     * The `implements` type of this class in a json compatible format.
      * @since 1.0.0
      */
     implementsType: TypeParser.Json[];
 
     /**
-     * The type parameter parsers of this class in a Json compatible format.
+     * The type parameter parsers of this class in a json compatible format.
      * @since 6.0.0
      */
     typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The constructor parser of this class in a Json compatible format.
+     * The constructor parser of this class in a json compatible format.
      * @since 1.0.0
      */
     construct: ClassConstructorParser.Json;
 
     /**
-     * The property parsers of this class in a Json compatible format.
+     * The property parsers of this class in a json compatible format.
      * @since 1.0.0
      */
     properties: ClassPropertyParser.Json[];
 
     /**
-     * The method parsers of this class in a Json compatible format.
+     * The method parsers of this class in a json compatible format.
      * @since 1.0.0
      */
     methods: ClassMethodParser.Json[];

@@ -142,7 +142,7 @@ export namespace ReferenceTypeParser {
     packageName: string | null;
 
     /**
-     * The type arguments of this reference type in a Json compatible format.
+     * The type arguments of this reference type in a json compatible format.
      * @since 1.0.0
      */
     typeArguments: TypeParser.Json[];

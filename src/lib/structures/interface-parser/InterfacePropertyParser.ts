@@ -150,7 +150,7 @@ export namespace InterfacePropertyParser {
     readonly: boolean;
 
     /**
-     * The type of this property in a Json compatible format.
+     * The type of this property in a json compatible format.
      * @since 1.0.0
      */
     type: TypeParser.Json;

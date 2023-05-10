@@ -174,19 +174,19 @@ export namespace SignatureParser {
     comment: CommentParser.Json;
 
     /**
-     * The type parameters of this signature in a Json compatible format.
+     * The type parameters of this signature in a json compatible format.
      * @since 1.0.0
      */
     typeParameters: TypeParameterParser.Json[];
 
     /**
-     * The parameters of this signature in a Json compatible format.
+     * The parameters of this signature in a json compatible format.
      * @since 1.0.0
      */
     parameters: ParameterParser.Json[];
 
     /**
-     * The return type of this signature in a Json compatible format.
+     * The return type of this signature in a json compatible format.
      * @since 1.0.0
      */
     returnType: TypeParser.Json;

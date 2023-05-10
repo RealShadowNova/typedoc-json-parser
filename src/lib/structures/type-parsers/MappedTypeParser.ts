@@ -151,19 +151,19 @@ export namespace MappedTypeParser {
     parameter: string;
 
     /**
-     * The parameter type of this mapped type in a Json compatible format.
+     * The parameter type of this mapped type in a json compatible format.
      * @since 1.0.0
      */
     parameterType: TypeParser.Json;
 
     /**
-     * The name type of this mapped type in a Json compatible format.
+     * The name type of this mapped type in a json compatible format.
      * @since 1.0.0
      */
     nameType: TypeParser.Json | null;
 
     /**
-     * The template type of this mapped type in a Json compatible format.
+     * The template type of this mapped type in a json compatible format.
      * @since 1.0.0
      */
     templateType: TypeParser.Json;

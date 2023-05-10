@@ -134,13 +134,13 @@ export namespace TypeParameterParser {
     name: string;
 
     /**
-     * The constraint of this type parameter in a Json compatible format.
+     * The constraint of this type parameter in a json compatible format.
      * @since 1.0.0
      */
     constraint: TypeParser.Json | null;
 
     /**
-     * The default value of this type parameter in a Json compatible format.
+     * The default value of this type parameter in a json compatible format.
      * @since 1.0.0
      */
     default: TypeParser.Json | null;

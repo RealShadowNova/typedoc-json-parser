@@ -114,7 +114,7 @@ export namespace PredicateTypeParser {
     name: string;
 
     /**
-     * The type of this predicate type in a Json compatible format.
+     * The type of this predicate type in a json compatible format.
      *
      * If this {@link PredicateTypeParser.asserts} is `false` this will not be `null`
      * @since 1.0.0

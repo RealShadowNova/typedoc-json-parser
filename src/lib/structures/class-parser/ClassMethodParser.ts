@@ -203,7 +203,7 @@ export namespace ClassMethodParser {
     static: boolean;
 
     /**
-     * The signature parsers of this method in a Json compatible format.
+     * The signature parsers of this method in a json compatible format.
      * @since 1.0.0
      */
     signatures: SignatureParser.Json[];
