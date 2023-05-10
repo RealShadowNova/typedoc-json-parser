@@ -1,4 +1,5 @@
 import { bold, yellow } from 'colorette';
+import { JSONOutput } from 'typedoc';
 import type { FunctionParser } from '../../lib/structures/FunctionParser';
 import type { NamespaceParser } from '../../lib/structures/NamespaceParser';
 import { ProjectParser } from '../../lib/structures/ProjectParser';
@@ -7,7 +8,8 @@ import type { VariableParser } from '../../lib/structures/VariableParser';
 import { ClassParser } from '../../lib/structures/class-parser';
 import type { EnumParser } from '../../lib/structures/enum-parser';
 import type { InterfaceParser } from '../../lib/structures/interface-parser';
-import type { ParameterParser, SignatureParser, SourceParser, TypeParameterParser } from '../../lib/structures/misc';
+import { PropertyParser, SignatureParser, type ParameterParser, type SourceParser, type TypeParameterParser } from '../../lib/structures/misc';
+import { TypeParser } from '../../lib/structures/type-parsers';
 
 const currentTypeDocJsonParserVersion = ProjectParser.version
   .split('.')
@@ -101,7 +103,11 @@ export function migrateProjectJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
@@ -204,7 +210,7 @@ function migrateClassJson(
             static: _static,
             readonly,
             optional,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: methods.map((methodJson) => {
@@ -238,8 +244,8 @@ function migrateClassJson(
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
         abstract,
-        extendsType,
-        implementsType,
+        extendsType: extendsType ? migrateTypeJson(extendsType, typeDocJsonParserVersion) : null,
+        implementsType: implementsType.map((implementsTypeJson) => migrateTypeJson(implementsTypeJson, typeDocJsonParserVersion)),
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         construct: {
           id: construct.id,
@@ -264,7 +270,7 @@ function migrateClassJson(
             static: _static,
             readonly,
             optional,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: methods.map((methodJson) => {
@@ -296,7 +302,11 @@ function migrateClassJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorTwo.ClassJson;
 
       return {
@@ -307,8 +317,8 @@ function migrateClassJson(
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
         abstract,
-        extendsType,
-        implementsType,
+        extendsType: extendsType ? migrateTypeJson(extendsType, typeDocJsonParserVersion) : null,
+        implementsType: implementsType.map((implementsTypeJson) => migrateTypeJson(implementsTypeJson, typeDocJsonParserVersion)),
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         construct: {
           id: construct.id,
@@ -333,7 +343,7 @@ function migrateClassJson(
             static: _static,
             readonly,
             optional,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: methods.map((methodJson) => {
@@ -440,7 +450,11 @@ function migrateEnum(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
 
       return {
@@ -529,6 +543,10 @@ function migrateFunction(
     case '7.3.0':
 
     case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0':
       return {
         id,
         name,
@@ -588,7 +606,7 @@ function migrateInterface(
             source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
             parentId: id,
             readonly,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: []
@@ -633,7 +651,7 @@ function migrateInterface(
             source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
             parentId: id,
             readonly,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: methods.map((methodJson) => {
@@ -662,7 +680,11 @@ function migrateInterface(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorOne.InterfaceJson;
 
       return {
@@ -683,7 +705,7 @@ function migrateInterface(
             source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
             parentId: id,
             readonly,
-            type
+            type: migrateTypeJson(type, typeDocJsonParserVersion)
           };
         }),
         methods: methods.map((methodJson) => {
@@ -781,7 +803,11 @@ function migrateNamespace(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
 
       return {
@@ -861,6 +887,10 @@ function migrateTypeAlias(
     case '7.3.0':
 
     case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0':
       return {
         id,
         name,
@@ -869,7 +899,7 @@ function migrateTypeAlias(
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
-        type
+        type: migrateTypeJson(type, typeDocJsonParserVersion)
       };
   }
 
@@ -929,6 +959,10 @@ function migrateVariable(
     case '7.3.0':
 
     case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0':
       return {
         id,
         name,
@@ -936,7 +970,7 @@ function migrateVariable(
         comment,
         source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
         external,
-        type,
+        type: migrateTypeJson(type, typeDocJsonParserVersion),
         value
       };
   }
@@ -1001,7 +1035,11 @@ function migrateSourceJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
@@ -1062,7 +1100,7 @@ function migrateParameterJson(
         },
         rest: false,
         optional: false,
-        type
+        type: migrateTypeJson(type, typeDocJsonParserVersion)
       };
 
     case '6.0.0':
@@ -1084,7 +1122,7 @@ function migrateParameterJson(
         comment,
         rest: false,
         optional: false,
-        type
+        type: migrateTypeJson(type, typeDocJsonParserVersion)
       };
     }
 
@@ -1097,7 +1135,7 @@ function migrateParameterJson(
         comment,
         rest: false,
         optional,
-        type
+        type: migrateTypeJson(type, typeDocJsonParserVersion)
       };
     }
 
@@ -1105,10 +1143,14 @@ function migrateParameterJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { comment, rest, optional } = parameterJson as Migration.MajorSeven.MinorTwo.Misc.ParameterJson;
 
-      return { id, name, comment, rest, optional, type };
+      return { id, name, comment, rest, optional, type: migrateTypeJson(type, typeDocJsonParserVersion) };
     }
   }
 
@@ -1137,7 +1179,7 @@ function migrateSignatureJson(
         comment: { description: null, blockTags: [], modifierTags: [] },
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         parameters: parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion)),
-        returnType
+        returnType: migrateTypeJson(returnType, typeDocJsonParserVersion)
       };
 
     case '2.3.0':
@@ -1180,7 +1222,11 @@ function migrateSignatureJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
@@ -1189,7 +1235,7 @@ function migrateSignatureJson(
         comment,
         typeParameters: typeParameters.map((typeParameterJson) => migrateTypeParameterJson(typeParameterJson, typeDocJsonParserVersion)),
         parameters: parameters.map((parameterJson) => migrateParameterJson(parameterJson, typeDocJsonParserVersion)),
-        returnType
+        returnType: migrateTypeJson(returnType, typeDocJsonParserVersion)
       };
     }
   }
@@ -1240,8 +1286,8 @@ function migrateTypeParameterJson(
       return {
         id,
         name,
-        constraint: type,
-        default: _default
+        constraint: type ? migrateTypeJson(type, typeDocJsonParserVersion) : null,
+        default: _default ? migrateTypeJson(_default, typeDocJsonParserVersion) : null
       };
     }
 
@@ -1257,16 +1303,94 @@ function migrateTypeParameterJson(
 
     case '7.3.0':
 
-    case '7.3.1': {
+    case '7.3.1':
+
+    case '7.4.0':
+
+    case '8.0.0': {
       const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
 
       return {
         id,
         name,
-        constraint,
-        default: _default
+        constraint: constraint ? migrateTypeJson(constraint, typeDocJsonParserVersion) : null,
+        default: _default ? migrateTypeJson(_default, typeDocJsonParserVersion) : null
       };
     }
+  }
+
+  throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
+}
+
+export function migrateTypeJson(typeJson: Migration.MajorTwo.MinorOne.TypeJson, typeDocJsonParserVersion: string): TypeParser.Json {
+  const { kind } = typeJson;
+
+  switch (typeDocJsonParserVersion) {
+    case '2.1.0':
+
+    case '2.2.0':
+
+    case '2.2.1':
+
+    case '2.3.0':
+
+    case '2.3.1':
+
+    case '3.0.0':
+
+    case '3.1.0':
+
+    case '3.2.0':
+
+    case '4.0.0':
+
+    case '5.0.0':
+
+    case '5.0.1':
+
+    case '5.1.0':
+
+    case '5.2.0':
+
+    case '6.0.0':
+
+    case '6.0.1':
+
+    case '6.0.2':
+
+    case '7.0.0':
+
+    case '7.0.1':
+
+    case '7.0.2':
+
+    case '7.1.0':
+
+    case '7.2.0':
+
+    case '7.3.0':
+
+    case '7.3.1':
+
+    case '7.4.0': {
+      switch (kind) {
+        case 'reflection': {
+          const { reflection } = typeJson as Migration.MajorTwo.MinorOne.TypeJson.ReflectionTypeJson;
+
+          return {
+            kind: TypeParser.Kind.Reflection,
+            properties: reflection.children?.map((child) => PropertyParser.generateFromTypeDoc(child).toJSON()) ?? null,
+            signatures: reflection.signatures?.map((child) => SignatureParser.generateFromTypeDoc(child).toJSON()) ?? null
+          } as TypeParser.Json;
+        }
+
+        default:
+          return typeJson;
+      }
+    }
+
+    case '8.0.0':
+      return typeJson;
   }
 
   throw new Error(`Unsupported typeDocJsonParserVersion: ${typeDocJsonParserVersion}`);
@@ -1411,6 +1535,10 @@ export namespace Migration {
           TypeOperator = 'typeOperator',
           Union = 'union',
           Unknown = 'unknown'
+        }
+
+        export interface ReflectionTypeJson extends TypeJson {
+          reflection: JSONOutput.DeclarationReflection;
         }
       }
 
@@ -1915,6 +2043,26 @@ export namespace Migration {
 
       export interface TypeAliasJson extends MajorThree.MinorZero.TypeAliasJson {
         namespaceParentId: number | null;
+      }
+    }
+  }
+
+  export namespace MajorEight {
+    export namespace MinorZero {
+      export namespace Misc {
+        export interface PropertyParser {
+          id: number;
+          name: string;
+          comment: MajorTwo.MinorOne.Misc.CommentJson;
+          type: MajorTwo.MinorOne.TypeJson;
+        }
+      }
+
+      export namespace TypeJson {
+        export interface ReflectionTypeJson extends Omit<MajorTwo.MinorOne.TypeJson.ReflectionTypeJson, 'reflection'> {
+          properties: Misc.PropertyParser[] | null;
+          signatures: MajorSeven.MinorOne.Misc.SignatureJson[] | null;
+        }
       }
     }
   }

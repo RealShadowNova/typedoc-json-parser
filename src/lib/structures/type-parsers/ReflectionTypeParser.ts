@@ -1,5 +1,6 @@
-import type { JSONOutput } from 'typedoc';
 import type { ProjectParser } from '../ProjectParser';
+import { SignatureParser } from '../misc';
+import { PropertyParser } from '../misc/PropertyParser';
 import { TypeParser } from './TypeParser';
 
 /**
@@ -14,15 +15,22 @@ export class ReflectionTypeParser implements TypeParser {
   public readonly kind = TypeParser.Kind.Reflection;
 
   /**
-   * The reflection of this reflection type.
-   * @since 1.0.0
+   * The properties of this reflection type.
+   * @since 8.0.0
    */
-  public reflection: JSONOutput.DeclarationReflection | null;
+  public properties: PropertyParser[] | null;
+
+  /**
+   * The signatures of this reflection type.
+   * @since 8.0.0
+   */
+  public signatures: SignatureParser[] | null;
 
   public constructor(data: ReflectionTypeParser.Data) {
-    const { reflection } = data;
+    const { properties, signatures } = data;
 
-    this.reflection = reflection;
+    this.properties = properties;
+    this.signatures = signatures;
   }
 
   /**
@@ -33,7 +41,8 @@ export class ReflectionTypeParser implements TypeParser {
   public toJSON(): ReflectionTypeParser.Json {
     return {
       kind: this.kind,
-      reflection: this.reflection
+      properties: this.properties?.map((property) => property.toJSON()) ?? null,
+      signatures: this.signatures?.map((signature) => signature.toJSON()) ?? null
     };
   }
 
@@ -53,28 +62,69 @@ export class ReflectionTypeParser implements TypeParser {
    * @returns The string representation of this parser.
    */
   public static formatToString(options: TypeParser.FormatToStringOptions<ReflectionTypeParser>): string {
-    const { parser } = options;
+    const { parser, project } = options;
 
-    return !parser.reflection?.children && parser.reflection?.signatures ? 'Function' : 'Object';
+    return `{ ${
+      parser.signatures
+        ? `${parser.signatures
+            .map(
+              (signature) =>
+                `${
+                  signature.typeParameters.length
+                    ? `<${signature.typeParameters
+                        .map(
+                          (typeParameter) =>
+                            `${typeParameter.name}${typeParameter.constraint ? ` extends ${typeParameter.constraint.toString(project)}` : ''}${
+                              typeParameter.default ? ` = ${typeParameter.default.toString(project)}` : ''
+                            }`
+                        )
+                        .join(', ')}>`
+                    : ''
+                }(${
+                  signature.parameters.length
+                    ? signature.parameters
+                        .map(
+                          (parameter) =>
+                            `${parameter.rest ? '...' : ''}${parameter.name}${parameter.optional ? '?:' : ':'} ${parameter.type.toString(project)}`
+                        )
+                        .join(', ')
+                    : ''
+                }): ${signature.returnType.toString(project)};`
+            )
+            .join(' ')} `
+        : ''
+    }${parser.properties ? `${parser.properties.map((property) => `${property.name}: ${property.type.toString(project)};`).join(' ')} ` : ''}}`;
   }
 }
 
 export namespace ReflectionTypeParser {
   export interface Data {
     /**
-     * The reflection of this reflection type.
-     * @since 5.0.0
+     * The properties of this reflection type.
+     * @since 8.0.0
      */
-    reflection: JSONOutput.DeclarationReflection | null;
+    properties: PropertyParser[] | null;
+
+    /**
+     * The signatures of this reflection type.
+     * @since 8.0.0
+     */
+    signatures: SignatureParser[] | null;
   }
 
   export interface Json extends TypeParser.Json {
     kind: TypeParser.Kind.Reflection;
 
     /**
-     * The reflection of this reflection type.
-     * @since 1.0.0
+     * The properties of this reflection type in a json compatible format.
+     * @since 8.0.0
      */
-    reflection: JSONOutput.DeclarationReflection | null;
+    properties: PropertyParser.Json[] | null;
+
+    /**
+     * The signatures of this reflection type in a json compatible format.
+     * @since 8.0.0
+     */
+    signatures: SignatureParser.Json[] | null;
   }
 }

@@ -1,6 +1,8 @@
 import { type JSONOutput } from 'typedoc';
 import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
 import type { ProjectParser } from '../ProjectParser';
+import { SignatureParser } from '../misc';
+import { PropertyParser } from '../misc/PropertyParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
 import { ConditionalTypeParser } from './ConditionalTypeParser';
 import { IndexedAccessTypeParser } from './IndexedAccessTypeParser';
@@ -190,7 +192,10 @@ export namespace TypeParser {
       case 'reflection': {
         const { declaration } = type;
 
-        return new ReflectionTypeParser({ reflection: declaration ?? null });
+        return new ReflectionTypeParser({
+          properties: declaration.children?.map((child) => PropertyParser.generateFromTypeDoc(child)) ?? null,
+          signatures: declaration.signatures?.map((signature) => SignatureParser.generateFromTypeDoc(signature)) ?? null
+        });
       }
 
       case 'rest': {
@@ -343,9 +348,12 @@ export namespace TypeParser {
       }
 
       case Kind.Reflection: {
-        const { reflection } = json as ReflectionTypeParser.Json;
+        const { properties, signatures } = json as ReflectionTypeParser.Json;
 
-        return new ReflectionTypeParser({ reflection });
+        return new ReflectionTypeParser({
+          properties: properties?.map((property) => PropertyParser.generateFromJson(property)) ?? null,
+          signatures: signatures?.map((signature) => SignatureParser.generateFromJson(signature)) ?? null
+        });
       }
 
       case Kind.Rest: {
