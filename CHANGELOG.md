@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.4.0...v8.0.0) - (2023-05-10)
+
+## 🏠 Refactor
+
+- **ReflectionTypeParser:** Add `properties` & `signatures` properties ([ef566a1](https://github.com/RealShadowNova/typedoc-json-parser/commit/ef566a1f47bec908bf8f4ac742699d6e150a000e))
+
+## 🐛 Bug Fixes
+
+- **deps:** Update dependency typedoc to ^0.24.7 (#127) ([b9112e7](https://github.com/RealShadowNova/typedoc-json-parser/commit/b9112e74f353777185d01188e0e74d966c1e0a7d))
+
+## 📝 Documentation
+
+- Change Json to json ([4f8c019](https://github.com/RealShadowNova/typedoc-json-parser/commit/4f8c01994022bb639449580d8f2dcc33a1573f61))
+
 # [7.4.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.3.2...v7.4.0) - (2023-05-02)
 
 ## 🚀 Features
