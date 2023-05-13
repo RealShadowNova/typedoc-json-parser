@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.0.0...v8.0.1) - (2023-05-13)
+
+## 🐛 Bug Fixes
+
+- **SignatureParser:** Accept `ConstructorSignature` and `IndexSignature` kinds ([2735942](https://github.com/RealShadowNova/typedoc-json-parser/commit/273594299e05db721ba3450a190eb3f084da093c))
+
 # [8.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v7.4.0...v8.0.0) - (2023-05-10)
 
 ## 🏠 Refactor
