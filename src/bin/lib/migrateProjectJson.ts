@@ -107,7 +107,9 @@ export function migrateProjectJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { variables } = projectJson as Migration.MajorSix.MinorZero.ProjectJson;
 
       return {
@@ -306,7 +308,9 @@ function migrateClassJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { typeParameters, construct } = classJson as Migration.MajorSeven.MinorTwo.ClassJson;
 
       return {
@@ -454,7 +458,9 @@ function migrateEnum(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { members } = enumJson as Migration.MajorSix.MinorZero.EnumJson;
 
       return {
@@ -547,6 +553,8 @@ function migrateFunction(
     case '7.4.0':
 
     case '8.0.0':
+
+    case '8.0.1':
       return {
         id,
         name,
@@ -684,7 +692,9 @@ function migrateInterface(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { typeParameters, methods } = interfaceJson as Migration.MajorSeven.MinorOne.InterfaceJson;
 
       return {
@@ -807,7 +817,9 @@ function migrateNamespace(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { variables } = namespaceJson as Migration.MajorSix.MinorZero.NamespaceJson;
 
       return {
@@ -891,6 +903,8 @@ function migrateTypeAlias(
     case '7.4.0':
 
     case '8.0.0':
+
+    case '8.0.1':
       return {
         id,
         name,
@@ -963,6 +977,8 @@ function migrateVariable(
     case '7.4.0':
 
     case '8.0.0':
+
+    case '8.0.1':
       return {
         id,
         name,
@@ -1039,7 +1055,9 @@ function migrateSourceJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { url } = sourceJson as Migration.MajorThree.MinorZero.Misc.SourceJson;
 
       return {
@@ -1147,7 +1165,9 @@ function migrateParameterJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { comment, rest, optional } = parameterJson as Migration.MajorSeven.MinorTwo.Misc.ParameterJson;
 
       return { id, name, comment, rest, optional, type: migrateTypeJson(type, typeDocJsonParserVersion) };
@@ -1226,7 +1246,9 @@ function migrateSignatureJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { comment } = signatureJson as Migration.MajorTwo.MinorThree.Misc.SignatureJson;
 
       return {
@@ -1307,7 +1329,9 @@ function migrateTypeParameterJson(
 
     case '7.4.0':
 
-    case '8.0.0': {
+    case '8.0.0':
+
+    case '8.0.1': {
       const { constraint } = typeParameterJson as Migration.MajorSeven.MinorZero.Misc.TypeParameterJson;
 
       return {
@@ -1390,6 +1414,8 @@ export function migrateTypeJson(typeJson: Migration.MajorTwo.MinorOne.TypeJson, 
     }
 
     case '8.0.0':
+
+    case '8.0.1':
       return typeJson;
   }
 

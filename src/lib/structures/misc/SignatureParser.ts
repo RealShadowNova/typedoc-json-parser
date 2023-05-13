@@ -82,8 +82,12 @@ export class SignatureParser {
   public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection): SignatureParser {
     const { kind, id, name, comment = { summary: [] }, typeParameter: typeParameters = [], parameters = [], type } = reflection;
 
-    if (kind !== ReflectionKind.CallSignature) {
-      throw new Error(`Expected Call Signature (${ReflectionKind.CallSignature}), but received ${reflectionKindToString(kind)} (${kind})`);
+    if (![ReflectionKind.CallSignature, ReflectionKind.ConstructorSignature, ReflectionKind.IndexSignature].includes(kind)) {
+      throw new Error(
+        `Expected Signature (${ReflectionKind.CallSignature}, ${ReflectionKind.ConstructorSignature}, ${
+          ReflectionKind.IndexSignature
+        }), but received ${reflectionKindToString(kind)} (${kind})`
+      );
     }
 
     return new SignatureParser({
