@@ -47,7 +47,7 @@ export class InterfacePropertyParser extends Parser {
   /**
    * Converts this parser to a JSON compatible format.
    * @since 1.0.0
-   * @returns The Json compatible format of this parser.
+   * @returns The json compatible format of this parser.
    */
   public override toJSON(): InterfacePropertyParser.Json {
     return {

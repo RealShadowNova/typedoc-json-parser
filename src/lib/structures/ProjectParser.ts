@@ -355,9 +355,9 @@ export class ProjectParser {
   }
 
   /**
-   * Converts this project to a Json compatible format.
+   * Converts this project to a json compatible format.
    * @since 1.0.0
-   * @returns The Json compatible format of this project.
+   * @returns The json compatible format of this project.
    */
   public toJSON(): ProjectParser.Json {
     return {

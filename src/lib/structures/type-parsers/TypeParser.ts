@@ -37,7 +37,7 @@ export interface TypeParser {
   kind: TypeParser.Kind;
 
   /**
-   * The method to convert this type parser to a Json compatible format.
+   * The method to convert this type parser to a json compatible format.
    * @since 1.0.0
    */
   toJSON(): TypeParser.Json;
@@ -492,7 +492,7 @@ export namespace TypeParser {
   };
 
   /**
-   * The base interface for the Json compatible format of type parsers.
+   * The base interface for the json compatible format of type parsers.
    * @since 1.0.0
    */
   export interface Json {

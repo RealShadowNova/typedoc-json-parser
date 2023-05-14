@@ -266,9 +266,9 @@ export class NamespaceParser extends Parser {
   }
 
   /**
-   * Converts this parser to a Json compatible format.
+   * Converts this parser to a json compatible format.
    * @since 1.0.0
-   * @returns The Json compatible format.
+   * @returns The json compatible format.
    */
   public override toJSON(): NamespaceParser.Json {
     return {

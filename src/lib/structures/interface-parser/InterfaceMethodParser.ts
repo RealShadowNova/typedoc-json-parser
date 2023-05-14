@@ -30,9 +30,9 @@ export class InterfaceMethodParser extends Parser {
   }
 
   /**
-   * Convert this parser to a Json compatible format.
+   * Convert this parser to a json compatible format.
    * @since 3.1.0
-   * @returns The Json compatible format of this parser.
+   * @returns The json compatible format of this parser.
    */
   public override toJSON(): InterfaceMethodParser.Json {
     return {

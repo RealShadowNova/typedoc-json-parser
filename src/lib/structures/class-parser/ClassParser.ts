@@ -90,9 +90,9 @@ export class ClassParser extends Parser {
   }
 
   /**
-   * Converts this parser to a Json compatible format.
+   * Converts this parser to a json compatible format.
    * @since 1.0.0
-   * @returns The Json compatible format of this parser.
+   * @returns The json compatible format of this parser.
    */
   public override toJSON(): ClassParser.Json {
     return {

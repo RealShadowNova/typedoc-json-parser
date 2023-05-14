@@ -41,9 +41,9 @@ export class TypeParameterParser {
   }
 
   /**
-   * Converts this type parameter to a Json compatible format.
+   * Converts this type parameter to a json compatible format.
    * @since 1.0.0
-   * @returns The Json compatible format of this type parameter.
+   * @returns The json compatible format of this type parameter.
    */
   public toJSON(): TypeParameterParser.Json {
     return {
