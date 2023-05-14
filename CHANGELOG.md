@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.1.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.0.1...v8.1.0) - (2023-05-14)
+
+## 🐛 Bug Fixes
+
+- Add unique identifiers at the end of errors to help trace errors ([ff5d483](https://github.com/RealShadowNova/typedoc-json-parser/commit/ff5d4838c1d55c52990ee072646fe5c495e776d1))
+
+## 📝 Documentation
+
+- Change Json to json... again ([af89478](https://github.com/RealShadowNova/typedoc-json-parser/commit/af89478da2edd4c9105c24aa553d0676fac11018))
+
+## 🚀 Features
+
+- **ReflectionTypeParser:** Add `methods` property ([d6863b7](https://github.com/RealShadowNova/typedoc-json-parser/commit/d6863b7d8ec06615157b1692618df74ffa20853d))
+
 # [8.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.0.0...v8.0.1) - (2023-05-13)
 
 ## 🐛 Bug Fixes
