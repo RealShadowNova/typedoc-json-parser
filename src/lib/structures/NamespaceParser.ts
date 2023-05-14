@@ -296,7 +296,9 @@ export class NamespaceParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, children = [] } = reflection;
 
     if (kind !== ReflectionKind.Namespace) {
-      throw new Error(`Expected Namespace (${ReflectionKind.Namespace}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Namespace (${ReflectionKind.Namespace}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     const classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, id));

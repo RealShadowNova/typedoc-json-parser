@@ -44,7 +44,7 @@ export class MethodParser {
     const { kind, id, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) {
-      throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kind} (${reflection.kind})`);
+      throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${kind} (${reflection.kind}). ID=${id}`);
     }
 
     return new MethodParser({

@@ -131,7 +131,7 @@ export class ClassParser extends Parser {
     } = reflection;
 
     if (kind !== ReflectionKind.Class) {
-      throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${reflectionKindToString(kind)} (${kind}) NAME=${name};ID=${id}`);
     }
 
     const construct = children.find((child) => child.kind === ReflectionKind.Constructor);

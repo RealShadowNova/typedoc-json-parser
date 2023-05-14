@@ -78,7 +78,9 @@ export class VariableParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, defaultValue } = reflection;
 
     if (kind !== ReflectionKind.Variable) {
-      throw new Error(`Expected Variable (${ReflectionKind.Variable}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Variable (${ReflectionKind.Variable}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new VariableParser({

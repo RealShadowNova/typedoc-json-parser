@@ -86,7 +86,7 @@ export class SignatureParser {
       throw new Error(
         `Expected Signature (${ReflectionKind.CallSignature}, ${ReflectionKind.ConstructorSignature}, ${
           ReflectionKind.IndexSignature
-        }), but received ${reflectionKindToString(kind)} (${kind})`
+        }), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
       );
     }
 

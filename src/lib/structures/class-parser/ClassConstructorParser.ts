@@ -92,7 +92,9 @@ export class ClassConstructorParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Constructor) {
-      throw new Error(`Expected Constructor (${ReflectionKind.Constructor}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Constructor (${ReflectionKind.Constructor}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     const signature = signatures.find((signature) => signature.kind === ReflectionKind.ConstructorSignature);

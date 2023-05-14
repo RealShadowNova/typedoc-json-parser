@@ -81,7 +81,9 @@ export class ParameterParser {
     const { kind, id, name, comment = { summary: [] }, flags, type } = reflection;
 
     if (kind !== ReflectionKind.Parameter) {
-      throw new Error(`Expected Parameter (${ReflectionKind.Parameter}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Parameter (${ReflectionKind.Parameter}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new ParameterParser({

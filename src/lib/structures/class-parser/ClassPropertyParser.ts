@@ -132,7 +132,7 @@ export class ClassPropertyParser extends Parser {
       throw new Error(
         `Expected Property (${ReflectionKind.Property}) or Accessor (${ReflectionKind.Accessor}), but received ${reflectionKindToString(
           kind
-        )} (${kind})`
+        )} (${kind}). NAME=${name};ID=${id}`
       );
     }
 

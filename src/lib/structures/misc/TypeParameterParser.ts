@@ -65,7 +65,9 @@ export class TypeParameterParser {
     const { kind, id, name, type, default: _default } = reflection;
 
     if (kind !== ReflectionKind.TypeParameter) {
-      throw new Error(`Expected TypeParameter (${ReflectionKind.TypeParameter}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected TypeParameter (${ReflectionKind.TypeParameter}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new TypeParameterParser({

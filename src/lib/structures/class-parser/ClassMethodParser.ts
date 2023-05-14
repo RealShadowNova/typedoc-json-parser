@@ -104,7 +104,7 @@ export class ClassMethodParser extends Parser {
     const { kind, id, name, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Method) {
-      throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(`Expected Method (${ReflectionKind.Method}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`);
     }
 
     return new ClassMethodParser({

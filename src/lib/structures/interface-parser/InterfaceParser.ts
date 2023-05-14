@@ -86,7 +86,9 @@ export class InterfaceParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, typeParameters = [], children = [] } = reflection;
 
     if (kind !== ReflectionKind.Interface) {
-      throw new Error(`Expected Interface (${ReflectionKind.Interface}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Interface (${ReflectionKind.Interface}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     const properties = children

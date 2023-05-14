@@ -69,7 +69,9 @@ export class InterfacePropertyParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], type, flags } = reflection;
 
     if (kind !== ReflectionKind.Property) {
-      throw new Error(`Expected Property (${ReflectionKind.Property}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Property (${ReflectionKind.Property}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new InterfacePropertyParser({

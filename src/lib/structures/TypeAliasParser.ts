@@ -77,7 +77,9 @@ export class TypeAliasParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, type, typeParameters = [] } = reflection;
 
     if (kind !== ReflectionKind.TypeAlias) {
-      throw new Error(`Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected TypeAlias (${ReflectionKind.TypeAlias}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new TypeAliasParser({

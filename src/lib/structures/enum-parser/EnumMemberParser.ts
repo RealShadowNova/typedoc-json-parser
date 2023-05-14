@@ -61,7 +61,9 @@ export class EnumMemberParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], type } = reflection;
 
     if (kind !== ReflectionKind.EnumMember) {
-      throw new Error(`Expected EnumMember (${ReflectionKind.EnumMember}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected EnumMember (${ReflectionKind.EnumMember}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new EnumMemberParser({

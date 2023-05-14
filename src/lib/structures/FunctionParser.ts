@@ -68,7 +68,9 @@ export class FunctionParser extends Parser {
     const { kind, id, name, comment = { summary: [] }, sources = [], flags, signatures = [] } = reflection;
 
     if (kind !== ReflectionKind.Function) {
-      throw new Error(`Expected Function (${ReflectionKind.Function}), but received ${reflectionKindToString(kind)} (${kind})`);
+      throw new Error(
+        `Expected Function (${ReflectionKind.Function}), but received ${reflectionKindToString(kind)} (${kind}). NAME=${name};ID=${id}`
+      );
     }
 
     return new FunctionParser({
