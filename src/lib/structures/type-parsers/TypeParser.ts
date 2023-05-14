@@ -1,7 +1,8 @@
 import { type JSONOutput } from 'typedoc';
 import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
+import { ReflectionKind } from '../../types';
 import type { ProjectParser } from '../ProjectParser';
-import { SignatureParser } from '../misc';
+import { MethodParser, SignatureParser } from '../misc';
 import { PropertyParser } from '../misc/PropertyParser';
 import { ArrayTypeParser } from './ArrayTypeParser';
 import { ConditionalTypeParser } from './ConditionalTypeParser';
@@ -191,10 +192,18 @@ export namespace TypeParser {
 
       case 'reflection': {
         const { declaration } = type;
+        const properties =
+          declaration.children?.filter((child) => child.kind === ReflectionKind.Property).map((child) => PropertyParser.generateFromTypeDoc(child)) ??
+          null;
+
+        const methods =
+          declaration.children?.filter((child) => child.kind === ReflectionKind.Method).map((child) => MethodParser.generateFromTypeDoc(child)) ??
+          null;
 
         return new ReflectionTypeParser({
-          properties: declaration.children?.map((child) => PropertyParser.generateFromTypeDoc(child)) ?? null,
-          signatures: declaration.signatures?.map((signature) => SignatureParser.generateFromTypeDoc(signature)) ?? null
+          properties: properties?.length ? properties : null,
+          signatures: declaration.signatures?.map((signature) => SignatureParser.generateFromTypeDoc(signature)) ?? null,
+          methods: methods?.length ? methods : null
         });
       }
 
@@ -348,11 +357,12 @@ export namespace TypeParser {
       }
 
       case Kind.Reflection: {
-        const { properties, signatures } = json as ReflectionTypeParser.Json;
+        const { properties, signatures, methods } = json as ReflectionTypeParser.Json;
 
         return new ReflectionTypeParser({
           properties: properties?.map((property) => PropertyParser.generateFromJson(property)) ?? null,
-          signatures: signatures?.map((signature) => SignatureParser.generateFromJson(signature)) ?? null
+          signatures: signatures?.map((signature) => SignatureParser.generateFromJson(signature)) ?? null,
+          methods: methods?.map((method) => MethodParser.generateFromJson(method)) ?? null
         });
       }
 

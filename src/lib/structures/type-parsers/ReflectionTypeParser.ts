@@ -1,5 +1,5 @@
 import type { ProjectParser } from '../ProjectParser';
-import { SignatureParser } from '../misc';
+import { MethodParser, SignatureParser } from '../misc';
 import { PropertyParser } from '../misc/PropertyParser';
 import { TypeParser } from './TypeParser';
 
@@ -26,11 +26,18 @@ export class ReflectionTypeParser implements TypeParser {
    */
   public signatures: SignatureParser[] | null;
 
+  /**
+   * The methods of this reflection type.
+   * @since 8.1.0
+   */
+  public methods: MethodParser[] | null;
+
   public constructor(data: ReflectionTypeParser.Data) {
-    const { properties, signatures } = data;
+    const { properties, signatures, methods } = data;
 
     this.properties = properties;
     this.signatures = signatures;
+    this.methods = methods;
   }
 
   /**
@@ -42,7 +49,8 @@ export class ReflectionTypeParser implements TypeParser {
     return {
       kind: this.kind,
       properties: this.properties?.map((property) => property.toJSON()) ?? null,
-      signatures: this.signatures?.map((signature) => signature.toJSON()) ?? null
+      signatures: this.signatures?.map((signature) => signature.toJSON()) ?? null,
+      methods: this.methods?.map((method) => method.toJSON()) ?? null
     };
   }
 
@@ -65,7 +73,9 @@ export class ReflectionTypeParser implements TypeParser {
     const { parser, project } = options;
 
     return `{ ${
-      parser.signatures
+      parser.properties?.length ? `${parser.properties.map((property) => `${property.name}: ${property.type.toString(project)};`).join(' ')} ` : ''
+    }${
+      parser.signatures?.length
         ? `${parser.signatures
             .map(
               (signature) =>
@@ -93,7 +103,44 @@ export class ReflectionTypeParser implements TypeParser {
             )
             .join(' ')} `
         : ''
-    }${parser.properties ? `${parser.properties.map((property) => `${property.name}: ${property.type.toString(project)};`).join(' ')} ` : ''}}`;
+    }${
+      parser.methods?.length
+        ? `${parser.methods.map((method) =>
+            method.signatures.length
+              ? method.signatures.length
+                ? method.signatures
+                    .map(
+                      (signature) =>
+                        `${
+                          signature.typeParameters.length
+                            ? `<${signature.typeParameters
+                                .map(
+                                  (typeParameter) =>
+                                    `${typeParameter.name}${
+                                      typeParameter.constraint ? ` extends ${typeParameter.constraint.toString(project)}` : ''
+                                    }${typeParameter.default ? ` = ${typeParameter.default.toString(project)}` : ''}`
+                                )
+                                .join(', ')}>`
+                            : ''
+                        }(${
+                          signature.parameters.length
+                            ? signature.parameters
+                                .map(
+                                  (parameter) =>
+                                    `${parameter.rest ? '...' : ''}${parameter.name}${parameter.optional ? '?:' : ':'} ${parameter.type.toString(
+                                      project
+                                    )}`
+                                )
+                                .join(', ')
+                            : ''
+                        }): ${signature.returnType.toString(project)};`
+                    )
+                    .join(' ')
+                : ''
+              : ''
+          )}`
+        : ''
+    }}`;
   }
 }
 
@@ -110,6 +157,12 @@ export namespace ReflectionTypeParser {
      * @since 8.0.0
      */
     signatures: SignatureParser[] | null;
+
+    /**
+     * The methods of this reflection type.
+     * @since 8.1.0
+     */
+    methods: MethodParser[] | null;
   }
 
   export interface Json extends TypeParser.Json {
@@ -126,5 +179,11 @@ export namespace ReflectionTypeParser {
      * @since 8.0.0
      */
     signatures: SignatureParser.Json[] | null;
+
+    /**
+     * The methods of this reflection type in a json compatible format.
+     * @since 8.1.0
+     */
+    methods: MethodParser.Json[] | null;
   }
 }
