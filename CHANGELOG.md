@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.1.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.1...v8.1.2) - (2023-05-27)
+
+## 🐛 Bug Fixes
+
+- **bin:** Add migrations for `v7.3.2` ([a2abeba](https://github.com/RealShadowNova/typedoc-json-parser/commit/a2abebad325960fa9a93b6f9ad72f0fc2e1a06fc))
+
 # [8.1.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.0...v8.1.1) - (2023-05-27)
 
 ## 🐛 Bug Fixes
