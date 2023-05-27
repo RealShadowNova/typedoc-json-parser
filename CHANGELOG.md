@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.1.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.0...v8.1.1) - (2023-05-27)
+
+## 🐛 Bug Fixes
+
+- **bin:** Add migrations for `v8.1.1` ([4a583d5](https://github.com/RealShadowNova/typedoc-json-parser/commit/4a583d545489bcc5b1c06005f3a45ab2900dbc2b))
+- **deps:** Update dependency tslib to ^2.5.2 (#131) ([20daac8](https://github.com/RealShadowNova/typedoc-json-parser/commit/20daac8f6a910972cd15170b6e5034fe538c5538))
+
 # [8.1.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.0.1...v8.1.0) - (2023-05-14)
 
 ## 🐛 Bug Fixes
