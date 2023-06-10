@@ -2,9 +2,9 @@ import { Spinner } from '@favware/colorette-spinner';
 import { findFilesRecursivelyStringEndsWith } from '@sapphire/node-utilities';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { ProjectParser } from '../../lib/structures/ProjectParser';
 import { migrateProjectJson } from '../lib/migrateProjectJson';
-import type { Options } from '../lib/types/Options';
-import type { RequiredExcept } from '../lib/types/RequiredExcept';
+import type { Options, RequiredExcept } from '../lib/types';
 
 export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
   const spinner = new Spinner().start({ text: 'Migrating TypeDoc JSON Parser output files' });
@@ -17,16 +17,16 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
     for await (const path of findFilesRecursivelyStringEndsWith(directory, '.json')) {
       const data = JSON.parse(await readFile(path, 'utf-8'));
 
-      if ('typeDocJsonParserVersion' in data) {
-        const migrated = migrateProjectJson(data);
+      if ('typeDocJsonParserVersion' in data && data.typeDocJsonParserVersion === ProjectParser.version) continue;
 
-        if (typeof migrated === 'string') {
-          warnings.push(migrated);
-        } else {
-          await writeFile(path, JSON.stringify(migrated, null, 2), 'utf-8');
+      const migrated = migrateProjectJson(data);
 
-          migratedFiles++;
-        }
+      if (typeof migrated === 'string') {
+        warnings.push(migrated);
+      } else {
+        await writeFile(path, JSON.stringify(migrated, null, 2), 'utf-8');
+
+        migratedFiles++;
       }
     }
 

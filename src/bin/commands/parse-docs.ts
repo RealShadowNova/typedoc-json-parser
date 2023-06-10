@@ -4,8 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import type { JSONOutput } from 'typedoc';
 import { ProjectParser } from '../../lib/structures/ProjectParser';
-import type { Options } from '../lib/types/Options';
-import type { RequiredExcept } from '../lib/types/RequiredExcept';
+import type { Options, RequiredExcept } from '../lib/types';
 
 export async function parseDocs(options: RequiredExcept<Options, 'migrate'>) {
   const spinner = new Spinner().start({ text: 'Parsing TypeDoc JSON output file' });
