@@ -28,6 +28,12 @@ export class InterfacePropertyParser extends Parser {
   public readonly readonly: boolean;
 
   /**
+   * Whether this interface property is optional.
+   * @since 8.3.0
+   */
+  public readonly optional: boolean;
+
+  /**
    * The type of this property.
    * @since 1.0.0
    */
@@ -36,11 +42,12 @@ export class InterfacePropertyParser extends Parser {
   public constructor(data: InterfacePropertyParser.Data) {
     super(data);
 
-    const { comment, parentId, readonly, type } = data;
+    const { comment, parentId, readonly, optional, type } = data;
 
     this.comment = comment;
     this.parentId = parentId;
     this.readonly = readonly;
+    this.optional = optional;
     this.type = type;
   }
 
@@ -55,6 +62,7 @@ export class InterfacePropertyParser extends Parser {
       comment: this.comment.toJSON(),
       parentId: this.parentId,
       readonly: this.readonly,
+      optional: this.optional,
       type: this.type.toJSON()
     };
   }
@@ -81,6 +89,7 @@ export class InterfacePropertyParser extends Parser {
       source: sources.length ? SourceParser.generateFromTypeDoc(sources[0]) : null,
       parentId,
       readonly: Boolean(flags.isReadonly),
+      optional: Boolean(flags.isOptional),
       type: TypeParser.generateFromTypeDoc(type!)
     });
   }
@@ -91,7 +100,7 @@ export class InterfacePropertyParser extends Parser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: InterfacePropertyParser.Json): InterfacePropertyParser {
-    const { id, name, comment, source, parentId, readonly, type } = json;
+    const { id, name, comment, source, parentId, readonly, optional, type } = json;
 
     return new InterfacePropertyParser({
       id,
@@ -100,6 +109,7 @@ export class InterfacePropertyParser extends Parser {
       source: source ? SourceParser.generateFromJson(source) : null,
       parentId,
       readonly,
+      optional,
       type: TypeParser.generateFromJson(type)
     });
   }
@@ -126,6 +136,12 @@ export namespace InterfacePropertyParser {
     readonly: boolean;
 
     /**
+     * Whether this interface property is optional.
+     * @since 8.3.0
+     */
+    optional: boolean;
+
+    /**
      * The type of this property.
      * @since 1.0.0
      */
@@ -150,6 +166,12 @@ export namespace InterfacePropertyParser {
      * @since 1.0.0
      */
     readonly: boolean;
+
+    /**
+     * Whether this interface property is optional.
+     * @since 8.3.0
+     */
+    optional: boolean;
 
     /**
      * The type of this property in a json compatible format.
