@@ -6,7 +6,7 @@ export const typeParameterReflection: JSONOutput.TypeParameterReflection = {
   id: 1,
   name: 'T',
   kind: 131072,
-  kindString: 'Type Parameter',
+  variant: 'typeParam',
   flags: {},
   type: intrinsicTypeReflection,
   default: intrinsicTypeReflection

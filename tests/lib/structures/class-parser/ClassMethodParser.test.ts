@@ -7,7 +7,7 @@ export const classMethodReflection: JSONOutput.DeclarationReflection = {
   id: 1,
   name: 'method',
   kind: 2048,
-  kindString: 'Method',
+  variant: 'declaration',
   flags: { isPublic: true },
   sources: [sourceReflection],
   signatures: [signatureReflection]

@@ -3,12 +3,15 @@ import { ParameterParser } from '../../../../src/';
 import { intrinsicTypeJson, intrinsicTypeReflection } from '../type-parsers/IntrinsicTypeParser.test';
 import { commentJson, commentReflection } from './CommentParser.test';
 
-export const parameterReflection: JSONOutput.DeclarationReflection = {
+export const parameterReflection: JSONOutput.ParameterReflection = {
   id: 1,
   name: 'parameter',
   kind: 32768,
-  kindString: 'Parameter',
-  flags: {},
+  variant: 'param',
+  flags: {
+    isOptional: false,
+    isRest: false
+  },
   comment: commentReflection,
   type: intrinsicTypeReflection
 };
@@ -17,7 +20,9 @@ export const parameterJson: ParameterParser.Json = {
   id: 1,
   name: 'parameter',
   comment: commentJson,
-  type: intrinsicTypeJson
+  type: intrinsicTypeJson,
+  optional: false,
+  rest: false
 };
 
 describe('ParameterParser', () => {

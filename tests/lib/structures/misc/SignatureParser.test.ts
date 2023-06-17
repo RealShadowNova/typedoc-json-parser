@@ -9,7 +9,7 @@ export const signatureReflection: JSONOutput.SignatureReflection = {
   id: 1,
   name: 'signature',
   kind: 4096,
-  kindString: 'Call Signature',
+  variant: 'signature',
   flags: {},
   comment: commentReflection,
   typeParameter: [typeParameterReflection],

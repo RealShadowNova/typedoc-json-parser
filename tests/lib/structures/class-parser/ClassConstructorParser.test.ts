@@ -9,7 +9,7 @@ export const classConstructorReflection: JSONOutput.DeclarationReflection = {
   id: 1,
   name: 'constructor',
   kind: 512,
-  kindString: 'Constructor',
+  variant: 'declaration',
   flags: { isPublic: true },
   comment: commentReflection,
   sources: [sourceReflection],
