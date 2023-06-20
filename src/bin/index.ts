@@ -7,8 +7,7 @@ import { checkRepository } from './commands/check-repository';
 import { migrateDocs } from './commands/migrate-docs';
 import { parseDocs } from './commands/parse-docs';
 import { parseOptions } from './lib/parseOptions';
-import type { Options } from './lib/types/Options';
-import type { RequiredExcept } from './lib/types/RequiredExcept';
+import type { Options, RequiredExcept } from './lib/types';
 
 async function run() {
   const command = new Command()
