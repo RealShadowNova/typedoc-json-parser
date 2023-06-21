@@ -109,7 +109,8 @@ export function migrateProjectJson(
     | Version.Seven.Three.ProjectJson
     | Version.Seven.Four.ProjectJson
     | Version.Eight.Zero.ProjectJson
-    | Version.Eight.One.ProjectJson;
+    | Version.Eight.One.ProjectJson
+    | Version.Eight.Two.ProjectJson;
 
   return {
     typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
@@ -179,7 +180,8 @@ function migrateClassJson(
     | Version.Seven.Three.ClassJson
     | Version.Seven.Four.ClassJson
     | Version.Eight.Zero.ClassJson
-    | Version.Eight.One.ClassJson;
+    | Version.Eight.One.ClassJson
+    | Version.Eight.Two.ClassJson;
 
   return {
     id,
@@ -244,7 +246,8 @@ function migrateClassConstructorJson(
     | Version.Seven.Three.ClassJson.ConstructorJson
     | Version.Seven.Four.ClassJson.ConstructorJson
     | Version.Eight.Zero.ClassJson.ConstructorJson
-    | Version.Eight.One.ClassJson.ConstructorJson;
+    | Version.Eight.One.ClassJson.ConstructorJson
+    | Version.Eight.Two.ClassJson.ConstructorJson;
 
   return {
     id,
@@ -388,7 +391,8 @@ function migrateEnumJson(
     | Version.Seven.Three.EnumJson
     | Version.Seven.Four.EnumJson
     | Version.Eight.Zero.EnumJson
-    | Version.Eight.One.EnumJson;
+    | Version.Eight.One.EnumJson
+    | Version.Eight.Two.EnumJson;
 
   return {
     id,
@@ -506,7 +510,8 @@ function migrateInterfaceJson(
     | Version.Seven.Three.InterfaceJson
     | Version.Seven.Four.InterfaceJson
     | Version.Eight.Zero.InterfaceJson
-    | Version.Eight.One.InterfaceJson;
+    | Version.Eight.One.InterfaceJson
+    | Version.Eight.Two.InterfaceJson;
 
   return {
     id,
@@ -543,7 +548,25 @@ function migrateInterfacePropertyJson(
   parentId: number,
   typeDocJsonParserVersion: [number, number, number]
 ): InterfacePropertyParser.Json {
+  const [major, minor] = typeDocJsonParserVersion;
   const { id, name, comment, source, readonly, type } = propertyJson;
+
+  if (major < 9) {
+    if (major === 8 && minor < 2) {
+      return {
+        id,
+        name,
+        comment: migrateCommentJson(comment, typeDocJsonParserVersion),
+        source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
+        parentId,
+        readonly,
+        optional: false,
+        type: migrateTypeJson(type!, typeDocJsonParserVersion)
+      };
+    }
+  }
+
+  const { optional } = propertyJson as Version.Eight.Two.InterfaceJson.PropertyJson;
 
   return {
     id,
@@ -552,6 +575,7 @@ function migrateInterfacePropertyJson(
     source: source ? migrateSourceJson(source, typeDocJsonParserVersion) : null,
     parentId,
     readonly,
+    optional,
     type: migrateTypeJson(type!, typeDocJsonParserVersion)
   };
 }
@@ -743,7 +767,8 @@ function migrateSignatureJson(
     | Version.Seven.Three.Misc.SignatureJson
     | Version.Seven.Four.Misc.SignatureJson
     | Version.Eight.Zero.Misc.SignatureJson
-    | Version.Eight.One.Misc.SignatureJson;
+    | Version.Eight.One.Misc.SignatureJson
+    | Version.Eight.Two.Misc.SignatureJson;
 
   return {
     id,
@@ -796,7 +821,8 @@ function migrateSourceJson(
     | Version.Seven.Three.Misc.SourceJson
     | Version.Seven.Four.Misc.SourceJson
     | Version.Eight.Zero.Misc.SourceJson
-    | Version.Eight.One.Misc.SourceJson;
+    | Version.Eight.One.Misc.SourceJson
+    | Version.Eight.Two.Misc.SourceJson;
 
   return { line, file, path, url };
 }
@@ -853,7 +879,8 @@ function migrateTypeParameterJson(
     | Version.Seven.Three.Misc.TypeParameterJson
     | Version.Seven.Four.Misc.TypeParameterJson
     | Version.Eight.Zero.Misc.TypeParameterJson
-    | Version.Eight.One.Misc.TypeParameterJson;
+    | Version.Eight.One.Misc.TypeParameterJson
+    | Version.Eight.Two.Misc.TypeParameterJson;
 
   return {
     id,
@@ -906,7 +933,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.ArrayJson
         | Version.Seven.Four.TypeJson.ArrayJson
         | Version.Eight.Zero.TypeJson.ArrayJson
-        | Version.Eight.One.TypeJson.ArrayJson;
+        | Version.Eight.One.TypeJson.ArrayJson
+        | Version.Eight.Two.TypeJson.ArrayJson;
 
       return { kind, type: migrateTypeJson(type, typeDocJsonParserVersion) } as TypeParser.Json;
     }
@@ -929,7 +957,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.ConditionalJson
         | Version.Seven.Four.TypeJson.ConditionalJson
         | Version.Eight.Zero.TypeJson.ConditionalJson
-        | Version.Eight.One.TypeJson.ConditionalJson;
+        | Version.Eight.One.TypeJson.ConditionalJson
+        | Version.Eight.Two.TypeJson.ConditionalJson;
 
       return {
         kind,
@@ -958,7 +987,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.IndexedAccessJson
         | Version.Seven.Four.TypeJson.IndexedAccessJson
         | Version.Eight.Zero.TypeJson.IndexedAccessJson
-        | Version.Eight.One.TypeJson.IndexedAccessJson;
+        | Version.Eight.One.TypeJson.IndexedAccessJson
+        | Version.Eight.Two.TypeJson.IndexedAccessJson;
 
       return {
         kind,
@@ -985,7 +1015,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.InferredJson
         | Version.Seven.Four.TypeJson.InferredJson
         | Version.Eight.Zero.TypeJson.InferredJson
-        | Version.Eight.One.TypeJson.InferredJson;
+        | Version.Eight.One.TypeJson.InferredJson
+        | Version.Eight.Two.TypeJson.InferredJson;
 
       return { kind, type } as TypeParser.Json;
     }
@@ -1008,7 +1039,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.IntersectionJson
         | Version.Seven.Four.TypeJson.IntersectionJson
         | Version.Eight.Zero.TypeJson.IntersectionJson
-        | Version.Eight.One.TypeJson.IntersectionJson;
+        | Version.Eight.One.TypeJson.IntersectionJson
+        | Version.Eight.Two.TypeJson.IntersectionJson;
 
       return { kind, types: types.map((type) => migrateTypeJson(type, typeDocJsonParserVersion)) } as TypeParser.Json;
     }
@@ -1031,7 +1063,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.IntrinsicJson
         | Version.Seven.Four.TypeJson.IntrinsicJson
         | Version.Eight.Zero.TypeJson.IntrinsicJson
-        | Version.Eight.One.TypeJson.IntrinsicJson;
+        | Version.Eight.One.TypeJson.IntrinsicJson
+        | Version.Eight.Two.TypeJson.IntrinsicJson;
 
       return { kind, type } as TypeParser.Json;
     }
@@ -1054,7 +1087,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.LiteralJson
         | Version.Seven.Four.TypeJson.LiteralJson
         | Version.Eight.Zero.TypeJson.LiteralJson
-        | Version.Eight.One.TypeJson.LiteralJson;
+        | Version.Eight.One.TypeJson.LiteralJson
+        | Version.Eight.Two.TypeJson.LiteralJson;
 
       return { kind, value } as TypeParser.Json;
     }
@@ -1077,7 +1111,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.MappedJson
         | Version.Seven.Four.TypeJson.MappedJson
         | Version.Eight.Zero.TypeJson.MappedJson
-        | Version.Eight.One.TypeJson.MappedJson;
+        | Version.Eight.One.TypeJson.MappedJson
+        | Version.Eight.Two.TypeJson.MappedJson;
 
       return {
         kind,
@@ -1108,7 +1143,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.NamedTupleMemberJson
         | Version.Seven.Four.TypeJson.NamedTupleMemberJson
         | Version.Eight.Zero.TypeJson.NamedTupleMemberJson
-        | Version.Eight.One.TypeJson.NamedTupleMemberJson;
+        | Version.Eight.One.TypeJson.NamedTupleMemberJson
+        | Version.Eight.Two.TypeJson.NamedTupleMemberJson;
 
       return { kind, name, type: migrateTypeJson(type, typeDocJsonParserVersion), optional } as TypeParser.Json;
     }
@@ -1131,7 +1167,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.OptionalJson
         | Version.Seven.Four.TypeJson.OptionalJson
         | Version.Eight.Zero.TypeJson.OptionalJson
-        | Version.Eight.One.TypeJson.OptionalJson;
+        | Version.Eight.One.TypeJson.OptionalJson
+        | Version.Eight.Two.TypeJson.OptionalJson;
 
       return { kind, type: migrateTypeJson(type, typeDocJsonParserVersion) } as TypeParser.Json;
     }
@@ -1154,7 +1191,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.PredicateJson
         | Version.Seven.Four.TypeJson.PredicateJson
         | Version.Eight.Zero.TypeJson.PredicateJson
-        | Version.Eight.One.TypeJson.PredicateJson;
+        | Version.Eight.One.TypeJson.PredicateJson
+        | Version.Eight.Two.TypeJson.PredicateJson;
 
       return { kind, name, asserts, type: type ? migrateTypeJson(type, typeDocJsonParserVersion) : null } as TypeParser.Json;
     }
@@ -1177,7 +1215,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.QueryJson
         | Version.Seven.Four.TypeJson.QueryJson
         | Version.Eight.Zero.TypeJson.QueryJson
-        | Version.Eight.One.TypeJson.QueryJson;
+        | Version.Eight.One.TypeJson.QueryJson
+        | Version.Eight.Two.TypeJson.QueryJson;
 
       return { kind, queryType: migrateTypeJson(queryType, typeDocJsonParserVersion) } as TypeParser.Json;
     }
@@ -1200,7 +1239,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.ReferenceJson
         | Version.Seven.Four.TypeJson.ReferenceJson
         | Version.Eight.Zero.TypeJson.ReferenceJson
-        | Version.Eight.One.TypeJson.ReferenceJson;
+        | Version.Eight.One.TypeJson.ReferenceJson
+        | Version.Eight.Two.TypeJson.ReferenceJson;
 
       return {
         kind,
@@ -1282,7 +1322,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.RestJson
         | Version.Seven.Four.TypeJson.RestJson
         | Version.Eight.Zero.TypeJson.RestJson
-        | Version.Eight.One.TypeJson.RestJson;
+        | Version.Eight.One.TypeJson.RestJson
+        | Version.Eight.Two.TypeJson.RestJson;
 
       return { kind, type: migrateTypeJson(type, typeDocJsonParserVersion) } as TypeParser.Json;
     }
@@ -1305,7 +1346,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.TemplateLiteralJson
         | Version.Seven.Four.TypeJson.TemplateLiteralJson
         | Version.Eight.Zero.TypeJson.TemplateLiteralJson
-        | Version.Eight.One.TypeJson.TemplateLiteralJson;
+        | Version.Eight.One.TypeJson.TemplateLiteralJson
+        | Version.Eight.Two.TypeJson.TemplateLiteralJson;
 
       return {
         kind,
@@ -1332,7 +1374,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.TupleJson
         | Version.Seven.Four.TypeJson.TupleJson
         | Version.Eight.Zero.TypeJson.TupleJson
-        | Version.Eight.One.TypeJson.TupleJson;
+        | Version.Eight.One.TypeJson.TupleJson
+        | Version.Eight.Two.TypeJson.TupleJson;
 
       return { kind, types: types.map((type) => migrateTypeJson(type, typeDocJsonParserVersion)) } as TypeParser.Json;
     }
@@ -1355,7 +1398,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.TypeOperatorJson
         | Version.Seven.Four.TypeJson.TypeOperatorJson
         | Version.Eight.Zero.TypeJson.TypeOperatorJson
-        | Version.Eight.One.TypeJson.TypeOperatorJson;
+        | Version.Eight.One.TypeJson.TypeOperatorJson
+        | Version.Eight.Two.TypeJson.TypeOperatorJson;
 
       return { kind, operator, type: migrateTypeJson(type, typeDocJsonParserVersion) } as TypeParser.Json;
     }
@@ -1378,7 +1422,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.UnionJson
         | Version.Seven.Four.TypeJson.UnionJson
         | Version.Eight.Zero.TypeJson.UnionJson
-        | Version.Eight.One.TypeJson.UnionJson;
+        | Version.Eight.One.TypeJson.UnionJson
+        | Version.Eight.Two.TypeJson.UnionJson;
 
       return { kind, types: types.map((type) => migrateTypeJson(type, typeDocJsonParserVersion)) } as TypeParser.Json;
     }
@@ -1401,7 +1446,8 @@ function migrateTypeJson(
         | Version.Seven.Three.TypeJson.UnknownJson
         | Version.Seven.Four.TypeJson.UnknownJson
         | Version.Eight.Zero.TypeJson.UnknownJson
-        | Version.Eight.One.TypeJson.UnknownJson;
+        | Version.Eight.One.TypeJson.UnknownJson
+        | Version.Eight.Two.TypeJson.UnknownJson;
 
       return { kind, name } as TypeParser.Json;
     }
@@ -1505,7 +1551,8 @@ function migrateNamespaceJson(
     | Version.Seven.Three.NamespaceJson
     | Version.Seven.Four.NamespaceJson
     | Version.Eight.Zero.NamespaceJson
-    | Version.Eight.One.NamespaceJson;
+    | Version.Eight.One.NamespaceJson
+    | Version.Eight.Two.NamespaceJson;
 
   return {
     id,
