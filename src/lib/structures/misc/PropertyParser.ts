@@ -27,17 +27,31 @@ export class PropertyParser {
   public readonly comment: CommentParser;
 
   /**
+   * Whether this property is readonly.
+   * @since 8.2.0
+   */
+  public readonly readonly: boolean;
+
+  /**
+   * Whether this property is optional.
+   * @since 8.2.0
+   */
+  public readonly optional: boolean;
+
+  /**
    * The type of this property.
    * @since 8.0.0
    */
   public readonly type: TypeParser;
 
   public constructor(data: PropertyParser.Data) {
-    const { id, name, comment, type } = data;
+    const { id, name, comment, readonly, optional, type } = data;
 
     this.id = id;
     this.name = name;
     this.comment = comment;
+    this.readonly = readonly;
+    this.optional = optional;
     this.type = type;
   }
 
@@ -51,6 +65,8 @@ export class PropertyParser {
       id: this.id,
       name: this.name,
       comment: this.comment.toJSON(),
+      readonly: this.readonly,
+      optional: this.optional,
       type: this.type.toJSON()
     };
   }
@@ -62,7 +78,7 @@ export class PropertyParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection): PropertyParser {
-    const { kind, id, name, comment = { summary: [] }, type } = reflection;
+    const { kind, id, name, comment = { summary: [] }, flags, type } = reflection;
 
     if (kind !== ReflectionKind.Property) {
       throw new Error(
@@ -74,6 +90,8 @@ export class PropertyParser {
       id,
       name,
       comment: CommentParser.generateFromTypeDoc(comment),
+      readonly: Boolean(flags?.isReadonly),
+      optional: Boolean(flags?.isOptional),
       type: TypeParser.generateFromTypeDoc(type!)
     });
   }
@@ -85,12 +103,14 @@ export class PropertyParser {
    * @returns The generated parser.
    */
   public static generateFromJson(json: PropertyParser.Json): PropertyParser {
-    const { id, name, comment, type } = json;
+    const { id, name, comment, readonly, optional, type } = json;
 
     return new PropertyParser({
       id,
       name,
       comment: CommentParser.generateFromJson(comment),
+      readonly,
+      optional,
       type: TypeParser.generateFromJson(type)
     });
   }
@@ -117,6 +137,18 @@ export namespace PropertyParser {
     comment: CommentParser;
 
     /**
+     * Whether this property is readonly.
+     * @since 8.2.0
+     */
+    readonly: boolean;
+
+    /**
+     * Whether this property is optional.
+     * @since 8.2.0
+     */
+    optional: boolean;
+
+    /**
      * The type of this property.
      * @since 8.0.0
      */
@@ -141,6 +173,18 @@ export namespace PropertyParser {
      * @since 8.0.0
      */
     comment: CommentParser.Json;
+
+    /**
+     * Whether this property is readonly in a json compatible format.
+     * @since 8.2.0
+     */
+    readonly: boolean;
+
+    /**
+     * Whether this property is optional in a json compatible format.
+     * @since 8.2.0
+     */
+    optional: boolean;
 
     /**
      * The type of this property in a json compatible format.

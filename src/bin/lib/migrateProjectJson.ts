@@ -715,10 +715,35 @@ function migrateParameterJson(
 }
 
 function migratePropertyJson(
-  propertyJson: Version.Eight.Zero.Misc.PropertyJson | Version.Eight.One.Misc.PropertyJson,
-  _typeDocJsonParserVersion: [number, number, number]
+  propertyJson: Version.Eight.Zero.Misc.PropertyJson | Version.Eight.One.Misc.PropertyJson | Version.Eight.Two.Misc.PropertyJson,
+  typeDocJsonParserVersion: [number, number, number]
 ): PropertyParser.Json {
-  return propertyJson;
+  const [major, minor] = typeDocJsonParserVersion;
+  const { id, name, comment, type } = propertyJson;
+
+  if (major < 9) {
+    if (major === 8 && minor < 2) {
+      return {
+        id,
+        name,
+        comment: migrateCommentJson(comment, typeDocJsonParserVersion),
+        readonly: false,
+        optional: false,
+        type: migrateTypeJson(type, typeDocJsonParserVersion)
+      };
+    }
+  }
+
+  const { readonly, optional } = propertyJson as Version.Eight.Two.Misc.PropertyJson;
+
+  return {
+    id,
+    name,
+    comment: migrateCommentJson(comment, typeDocJsonParserVersion),
+    readonly,
+    optional,
+    type: migrateTypeJson(type, typeDocJsonParserVersion)
+  };
 }
 
 function migrateSignatureJson(
