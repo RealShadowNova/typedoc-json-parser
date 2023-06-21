@@ -29,7 +29,7 @@ export class InterfacePropertyParser extends Parser {
 
   /**
    * Whether this interface property is optional.
-   * @since 8.3.0
+   * @since 8.2.0
    */
   public readonly optional: boolean;
 
@@ -137,7 +137,7 @@ export namespace InterfacePropertyParser {
 
     /**
      * Whether this interface property is optional.
-     * @since 8.3.0
+     * @since 8.2.0
      */
     optional: boolean;
 
@@ -169,7 +169,7 @@ export namespace InterfacePropertyParser {
 
     /**
      * Whether this interface property is optional.
-     * @since 8.3.0
+     * @since 8.2.0
      */
     optional: boolean;
 
