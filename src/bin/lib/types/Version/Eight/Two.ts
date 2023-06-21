@@ -168,6 +168,8 @@ export namespace Misc {
 
     comment: CommentJson;
 
+    readonly: boolean;
+
     type: TypeJson;
   }
 
