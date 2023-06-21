@@ -170,6 +170,8 @@ export namespace Misc {
 
     readonly: boolean;
 
+    optional: boolean;
+
     type: TypeJson;
   }
 

@@ -728,18 +728,20 @@ function migratePropertyJson(
         name,
         comment: migrateCommentJson(comment, typeDocJsonParserVersion),
         readonly: false,
+        optional: false,
         type: migrateTypeJson(type, typeDocJsonParserVersion)
       };
     }
   }
 
-  const { readonly } = propertyJson as Version.Eight.Two.Misc.PropertyJson;
+  const { readonly, optional } = propertyJson as Version.Eight.Two.Misc.PropertyJson;
 
   return {
     id,
     name,
     comment: migrateCommentJson(comment, typeDocJsonParserVersion),
     readonly,
+    optional,
     type: migrateTypeJson(type, typeDocJsonParserVersion)
   };
 }
