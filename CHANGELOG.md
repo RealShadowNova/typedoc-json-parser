@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+# [8.2.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.2...v8.2.0) - (2023-06-21)
+
+## 🏠 Refactor
+
+- **bin:** Rewrite migrations (#138) ([380e3c7](https://github.com/RealShadowNova/typedoc-json-parser/commit/380e3c75f2bda8f2b97473bb757fb1400f226268))
+
+## 🐛 Bug Fixes
+
+- **deps:** Update dependency commander to v11 (#145) ([19777aa](https://github.com/RealShadowNova/typedoc-json-parser/commit/19777aa80db9ef53a007f12fc07c91e6b8194de4))
+- **deps:** Update dependency typedoc to ^0.24.8 (#141) ([ba480bd](https://github.com/RealShadowNova/typedoc-json-parser/commit/ba480bd8f65dc7564203d697cffaee465aae26d2))
+- **deps:** Update dependency tslib to ^2.5.3 (#136) ([2728b53](https://github.com/RealShadowNova/typedoc-json-parser/commit/2728b532ba70c4a809f594fbadec3cf9a2b5b907))
+
+## 📝 Documentation
+
+- **InterfacePropertyParser:** Correct `@since` version (#147) ([6a3b31c](https://github.com/RealShadowNova/typedoc-json-parser/commit/6a3b31c71732ab7d8dff39ef423412d06af7b159))
+
+## 🚀 Features
+
+- **PropertyParser:** Add properties (#146) ([d6fc2bd](https://github.com/RealShadowNova/typedoc-json-parser/commit/d6fc2bd200be7d358f3155fe91f07e7cccba57c1))
+- **InterfacePropertyParser:** Add `optional` property (#139) ([24643a8](https://github.com/RealShadowNova/typedoc-json-parser/commit/24643a82219d2ae02ac5998e24c4572d2b4972f6))
+
 # [8.1.2](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.1...v8.1.2) - (2023-05-27)
 
 ## 🐛 Bug Fixes
