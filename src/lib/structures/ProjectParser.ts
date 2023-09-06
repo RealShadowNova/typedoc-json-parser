@@ -192,46 +192,98 @@ export class ProjectParser {
    */
   public find(id: number): SearchResult | null {
     for (const classParser of this.classes) {
-      if (classParser.id === id) return classParser;
-      if (classParser.construct.id === id) return classParser.construct;
+      if (classParser.id === id) {
+        return classParser;
+      }
+
+      if (classParser.construct.id === id) {
+        return classParser.construct;
+      }
 
       for (const methodParser of classParser.methods) {
-        if (methodParser.id === id) return methodParser;
+        if (methodParser.id === id) {
+          return methodParser;
+        }
 
         for (const signature of methodParser.signatures) {
-          if (signature.id === id) return signature;
+          if (signature.id === id) {
+            return signature;
+          }
 
-          for (const typeParameter of signature.typeParameters) if (typeParameter.id === id) return typeParameter;
-          for (const parameter of signature.parameters) if (parameter.id === id) return parameter;
+          for (const typeParameter of signature.typeParameters) {
+            if (typeParameter.id === id) {
+              return typeParameter;
+            }
+          }
+
+          for (const parameter of signature.parameters) {
+            if (parameter.id === id) {
+              return parameter;
+            }
+          }
         }
       }
 
-      for (const propertyParser of classParser.properties) if (propertyParser.id === id) return propertyParser;
+      for (const propertyParser of classParser.properties) {
+        if (propertyParser.id === id) {
+          return propertyParser;
+        }
+      }
     }
 
     for (const enumParser of this.enums) {
-      if (enumParser.id === id) return enumParser;
+      if (enumParser.id === id) {
+        return enumParser;
+      }
 
-      for (const propertyParser of enumParser.members) if (propertyParser.id === id) return propertyParser;
+      for (const propertyParser of enumParser.members) {
+        if (propertyParser.id === id) {
+          return propertyParser;
+        }
+      }
     }
 
-    for (const functionParser of this.functions) if (functionParser.id === id) return functionParser;
-    for (const interfaceParser of this.interfaces) {
-      if (interfaceParser.id === id) return interfaceParser;
+    for (const functionParser of this.functions) {
+      if (functionParser.id === id) {
+        return functionParser;
+      }
+    }
 
-      for (const propertyParser of interfaceParser.properties) if (propertyParser.id === id) return propertyParser;
+    for (const interfaceParser of this.interfaces) {
+      if (interfaceParser.id === id) {
+        return interfaceParser;
+      }
+
+      for (const propertyParser of interfaceParser.properties) {
+        if (propertyParser.id === id) {
+          return propertyParser;
+        }
+      }
     }
 
     for (const namespaceParser of this.namespaces) {
-      if (namespaceParser.id === id) return namespaceParser;
+      if (namespaceParser.id === id) {
+        return namespaceParser;
+      }
 
       const found = namespaceParser.find(id);
 
-      if (found) return found;
+      if (found) {
+        return found;
+      }
     }
 
-    for (const typeAliasParser of this.typeAliases) if (typeAliasParser.id === id) return typeAliasParser;
-    for (const variableParser of this.variables) if (variableParser.id === id) return variableParser;
+    for (const typeAliasParser of this.typeAliases) {
+      if (typeAliasParser.id === id) {
+        return typeAliasParser;
+      }
+    }
+
+    for (const variableParser of this.variables) {
+      if (variableParser.id === id) {
+        return variableParser;
+      }
+    }
 
     return null;
   }
@@ -331,7 +383,9 @@ export class ProjectParser {
 
         const subResults = namespaceParser.search(query.substring(words[0].length));
 
-        for (const subResult of subResults) results.push(subResult);
+        for (const subResult of subResults) {
+          results.push(subResult);
+        }
       }
     }
 

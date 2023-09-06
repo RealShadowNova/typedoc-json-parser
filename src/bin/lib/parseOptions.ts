@@ -26,7 +26,9 @@ export async function parseOptions(options: Partial<Options>): Promise<Options> 
 
       console.log('Failed to parse yaml config file');
 
-      if (options.verbose) console.log(cause.stack ?? cause.message);
+      if (options.verbose) {
+        console.log(cause.stack ?? cause.message);
+      }
 
       process.exit(1);
     }
@@ -38,7 +40,9 @@ export async function parseOptions(options: Partial<Options>): Promise<Options> 
 
       console.log('Failed to parse json config file');
 
-      if (options.verbose) console.log(cause.stack ?? cause.message);
+      if (options.verbose) {
+        console.log(cause.stack ?? cause.message);
+      }
 
       process.exit(1);
     }

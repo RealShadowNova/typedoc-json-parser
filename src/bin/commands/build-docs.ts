@@ -16,7 +16,9 @@ export async function buildDocs(options: Options) {
     if (options.verbose) {
       spinner.error({ text: 'Failed to build TypeDoc documentation' });
       console.log(cause.stack ?? cause.message);
-    } else spinner.error({ text: 'Failed to build TypeDoc documentation. Add the --verbose flag to view these errors.' });
+    } else {
+      spinner.error({ text: 'Failed to build TypeDoc documentation. Add the --verbose flag to view these errors.' });
+    }
 
     process.exit(1);
   }

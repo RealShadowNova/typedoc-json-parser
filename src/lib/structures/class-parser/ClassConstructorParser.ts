@@ -99,7 +99,9 @@ export class ClassConstructorParser extends Parser {
 
     const signature = signatures.find((signature) => signature.kind === ReflectionKind.ConstructorSignature);
 
-    if (signature === undefined) throw new Error(`Expected Constructor (${ReflectionKind.Constructor}) with a signature, but there was none`);
+    if (signature === undefined) {
+      throw new Error(`Expected Constructor (${ReflectionKind.Constructor}) with a signature, but there was none`);
+    }
 
     const { parameters = [] } = signature;
 

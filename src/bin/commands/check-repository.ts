@@ -10,7 +10,9 @@ export async function checkRepository(options: Options) {
   if (!packageJsonExists) {
     spinner.error({ text: 'Could not find "package.json" in the current working directory. Are you sure this is a Node.js repository?' });
 
-    if (options.verbose) console.log('I detected this current working directory: ', process.cwd());
+    if (options.verbose) {
+      console.log('I detected this current working directory: ', process.cwd());
+    }
 
     process.exit(1);
   }
