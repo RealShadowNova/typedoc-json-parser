@@ -137,7 +137,9 @@ export class ClassPropertyParser extends Parser {
     }
 
     if (kind === ReflectionKind.Accessor) {
-      if (getSignature === undefined) throw new Error(`Expected Accessor (${ReflectionKind.Accessor}) with a getter, but there was none`);
+      if (getSignature === undefined) {
+        throw new Error(`Expected Accessor (${ReflectionKind.Accessor}) with a getter, but there was none`);
+      }
 
       const { id, name, comment = { summary: [] }, type, flags } = getSignature;
 

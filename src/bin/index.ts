@@ -18,7 +18,10 @@ async function run() {
   const program = command.parse(process.argv);
   const options = await parseOptions(program.opts<Partial<Options>>());
 
-  if (options.verbose) console.log(`Resolved Options:`, options);
+  if (options.verbose) {
+    console.log(`Resolved Options:`, options);
+  }
+
   if (!Reflect.has(options, 'json') && !Reflect.has(options, 'migrate')) {
     console.error(red(`${bold('[ERROR]')} You must specify either the --json or --migrate option`));
   }

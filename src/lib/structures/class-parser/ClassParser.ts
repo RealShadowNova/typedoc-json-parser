@@ -136,7 +136,9 @@ export class ClassParser extends Parser {
 
     const construct = children.find((child) => child.kind === ReflectionKind.Constructor);
 
-    if (construct === undefined) throw new Error(`Expected Class (${ReflectionKind.Class}) with a constructor, but there was none`);
+    if (construct === undefined) {
+      throw new Error(`Expected Class (${ReflectionKind.Class}) with a constructor, but there was none`);
+    }
 
     const properties = children
       .filter((child) => child.kind === ReflectionKind.Property || (child.kind === ReflectionKind.Accessor && child.getSignature))
