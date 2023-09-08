@@ -1,9 +1,8 @@
+import { Parser } from '#lib/structures/Parser';
+import { InterfaceMethodParser, InterfacePropertyParser } from '#lib/structures/interface-parser';
+import { CommentParser, SourceParser, TypeParameterParser } from '#lib/structures/misc';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { Parser } from '../Parser';
-import { CommentParser, SourceParser, TypeParameterParser } from '../misc';
-import { InterfaceMethodParser } from './InterfaceMethodParser';
-import { InterfacePropertyParser } from './InterfacePropertyParser';
 
 /**
  * Parses data from an interface reflection.

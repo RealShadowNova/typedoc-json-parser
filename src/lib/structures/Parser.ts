@@ -1,4 +1,4 @@
-import type { SourceParser } from './misc';
+import type { SourceParser } from '#lib/structures/misc';
 
 /**
  * The base parser for all top level exported parsers.

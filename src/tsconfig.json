@@ -5,7 +5,20 @@
     "outDir": "../dist",
     "composite": true,
     "preserveConstEnums": true,
-    "tsBuildInfoFile": "../dist/.tsbuildinfo"
+    "tsBuildInfoFile": "../dist/.tsbuildinfo",
+    "paths": {
+      "#bin/commands/*": ["./bin/commands/*"],
+      "#bin/lib/*": ["./bin/lib/*"],
+      "#bin/lib/types": ["./bin/lib/types/index.ts"],
+      "#bin/types/version": ["./bin/types/Version/index.ts"],
+      "#lib/structures/*": ["./lib/structures/*"],
+      "#lib/structures/class-parser": ["./lib/structures/class-parser/index.ts"],
+      "#lib/structures/enum-parser": ["./lib/structures/enum-parser/index.ts"],
+      "#lib/structures/interface-parser": ["./lib/structures/interface-parser/index.ts"],
+      "#lib/structures/misc": ["./lib/structures/misc/index.ts"],
+      "#lib/structures/type-parsers": ["./lib/structures/type-parsers/index.ts"],
+      "#lib/types": ["./lib/types/index.ts"]
+    }
   },
   "include": ["."]
 }

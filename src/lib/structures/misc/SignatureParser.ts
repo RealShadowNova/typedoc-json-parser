@@ -1,9 +1,7 @@
+import { CommentParser, ParameterParser, TypeParameterParser } from '#lib/structures/misc';
+import { TypeParser } from '#lib/structures/type-parsers';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { TypeParser } from '../type-parsers';
-import { CommentParser } from './CommentParser';
-import { ParameterParser } from './ParameterParser';
-import { TypeParameterParser } from './TypeParameterParser';
 
 /**
  * Parses data from a signature reflection.

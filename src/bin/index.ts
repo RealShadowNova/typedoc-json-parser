@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
+import { buildDocs } from '#bin/commands/build-docs';
+import { checkRepository } from '#bin/commands/check-repository';
+import { migrateDocs } from '#bin/commands/migrate-docs';
+import { parseDocs } from '#bin/commands/parse-docs';
+import { parseOptions } from '#bin/lib/parseOptions';
+import type { Options, RequiredExcept } from '#bin/lib/types';
 import { bold, red } from 'colorette';
 import { Command } from 'commander';
-import { buildDocs } from './commands/build-docs';
-import { checkRepository } from './commands/check-repository';
-import { migrateDocs } from './commands/migrate-docs';
-import { parseDocs } from './commands/parse-docs';
-import { parseOptions } from './lib/parseOptions';
-import type { Options, RequiredExcept } from './lib/types';
 
 async function run() {
   const command = new Command()

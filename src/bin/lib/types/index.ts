@@ -1,3 +1,3 @@
-export * from './Options';
-export * from './RequiredExcept';
-export * as Version from './Version';
+export * from './Options.js';
+export * from './RequiredExcept.js';
+export * as Version from './Version/index.js';

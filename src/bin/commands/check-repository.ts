@@ -1,7 +1,7 @@
+import type { Options } from '#bin/lib/types';
 import { Spinner } from '@favware/colorette-spinner';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { Options } from '../lib/types';
 
 export async function checkRepository(options: Options) {
   const spinner = new Spinner().start({ text: 'Checking if "package.json" exists in the current working directory' });

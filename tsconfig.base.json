@@ -1,9 +1,10 @@
 {
-  "extends": ["@sapphire/ts-config", "@sapphire/ts-config/extra-strict"],
+  "extends": ["@sapphire/ts-config", "@sapphire/ts-config/extra-strict", "@sapphire/ts-config/verbatim"],
   "compilerOptions": {
     "importHelpers": true,
     "noEmitHelpers": true,
-    "target": "ES2021",
+    "target": "ES2022",
+    "module": "Node16",
     "lib": ["ESNext", "DOM"]
   }
 }

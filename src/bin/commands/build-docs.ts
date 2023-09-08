@@ -1,7 +1,7 @@
+import type { Options } from '#bin/lib/types';
 import { Spinner } from '@favware/colorette-spinner';
 import { exec as execSync } from 'node:child_process';
 import { promisify } from 'node:util';
-import type { Options } from '../lib/types';
 
 const exec = promisify(execSync);
 

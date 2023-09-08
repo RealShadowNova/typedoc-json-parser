@@ -1,28 +1,29 @@
+import type { ProjectParser } from '#lib/structures/ProjectParser';
+import { MethodParser, PropertyParser, SignatureParser } from '#lib/structures/misc';
+import {
+  ArrayTypeParser,
+  ConditionalTypeParser,
+  IndexedAccessTypeParser,
+  InferredTypeParser,
+  IntersectionTypeParser,
+  IntrinsicTypeParser,
+  LiteralTypeParser,
+  MappedTypeParser,
+  NamedTupleMemberTypeParser,
+  OptionalTypeParser,
+  PredicateTypeParser,
+  QueryTypeParser,
+  ReferenceTypeParser,
+  ReflectionTypeParser,
+  RestTypeParser,
+  TemplateLiteralTypeParser,
+  TupleTypeParser,
+  TypeOperatorTypeParser,
+  UnionTypeParser,
+  UnknownTypeParser
+} from '#lib/structures/type-parsers';
+import { ReflectionKind } from '#lib/types';
 import { type JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import type { ProjectParser } from '../ProjectParser';
-import { MethodParser, SignatureParser } from '../misc';
-import { PropertyParser } from '../misc/PropertyParser';
-import { ArrayTypeParser } from './ArrayTypeParser';
-import { ConditionalTypeParser } from './ConditionalTypeParser';
-import { IndexedAccessTypeParser } from './IndexedAccessTypeParser';
-import { InferredTypeParser } from './InferredTypeParser';
-import { IntersectionTypeParser } from './IntersectionTypeParser';
-import { IntrinsicTypeParser } from './IntrinsicTypeParser';
-import { LiteralTypeParser } from './LiteralTypeParser';
-import { MappedTypeParser } from './MappedTypeParser';
-import { NamedTupleMemberTypeParser } from './NamedTupleMemberTypeParser';
-import { OptionalTypeParser } from './OptionalTypeParser';
-import { PredicateTypeParser } from './PredicateTypeParser';
-import { QueryTypeParser } from './QueryTypeParser';
-import { ReferenceTypeParser } from './ReferenceTypeParser';
-import { ReflectionTypeParser } from './ReflectionTypeParser';
-import { RestTypeParser } from './RestTypeParser';
-import { TemplateLiteralTypeParser } from './TemplateLiteralTypeParser';
-import { TupleTypeParser } from './TupleTypeParser';
-import { TypeOperatorTypeParser } from './TypeOperatorTypeParser';
-import { UnionTypeParser } from './UnionTypeParser';
-import { UnknownTypeParser } from './UnknownTypeParser';
 
 /**
  * The base interface for all type parsers.

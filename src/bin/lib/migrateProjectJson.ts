@@ -1,12 +1,12 @@
-import { bold, yellow } from 'colorette';
-import { FunctionParser } from '../../lib/structures/FunctionParser';
-import { NamespaceParser } from '../../lib/structures/NamespaceParser';
-import { ProjectParser } from '../../lib/structures/ProjectParser';
-import { TypeAliasParser } from '../../lib/structures/TypeAliasParser';
-import { VariableParser } from '../../lib/structures/VariableParser';
-import { ClassConstructorParser, ClassMethodParser, ClassParser, ClassPropertyParser } from '../../lib/structures/class-parser';
-import { EnumMemberParser, EnumParser } from '../../lib/structures/enum-parser';
-import { InterfaceMethodParser, InterfaceParser, InterfacePropertyParser } from '../../lib/structures/interface-parser';
+import { Version } from '#bin/lib/types';
+import { FunctionParser } from '#lib/structures/FunctionParser';
+import { NamespaceParser } from '#lib/structures/NamespaceParser';
+import { ProjectParser } from '#lib/structures/ProjectParser';
+import { TypeAliasParser } from '#lib/structures/TypeAliasParser';
+import { VariableParser } from '#lib/structures/VariableParser';
+import { ClassConstructorParser, ClassMethodParser, ClassParser, ClassPropertyParser } from '#lib/structures/class-parser';
+import { EnumMemberParser, EnumParser } from '#lib/structures/enum-parser';
+import { InterfaceMethodParser, InterfaceParser, InterfacePropertyParser } from '#lib/structures/interface-parser';
 import {
   CommentParser,
   MethodParser,
@@ -15,10 +15,10 @@ import {
   SignatureParser,
   SourceParser,
   TypeParameterParser
-} from '../../lib/structures/misc';
-import { TypeParser } from '../../lib/structures/type-parsers';
-import { ReflectionKind } from '../../lib/types';
-import { Version } from './types';
+} from '#lib/structures/misc';
+import { TypeParser } from '#lib/structures/type-parsers';
+import { ReflectionKind } from '#lib/types';
+import { bold, yellow } from 'colorette';
 
 const currentTypeDocJsonParserVersion = ProjectParser.version
   .split('.')

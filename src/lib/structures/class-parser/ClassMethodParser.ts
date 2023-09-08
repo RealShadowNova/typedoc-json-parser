@@ -1,8 +1,8 @@
+import { Parser } from '#lib/structures/Parser';
+import { ClassParser } from '#lib/structures/class-parser';
+import { SignatureParser, SourceParser } from '#lib/structures/misc';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { Parser } from '../Parser';
-import { SignatureParser, SourceParser } from '../misc';
-import { ClassParser } from './ClassParser';
 
 /**
  * Parses data from a class method reflection.

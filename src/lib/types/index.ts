@@ -1,2 +1,2 @@
-export * from './ReflectionKind';
-export * from './SearchResult';
+export * from './ReflectionKind.js';
+export * from './SearchResult.js';

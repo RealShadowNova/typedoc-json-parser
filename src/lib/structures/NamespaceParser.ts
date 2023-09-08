@@ -1,13 +1,13 @@
+import { FunctionParser } from '#lib/structures/FunctionParser';
+import { Parser } from '#lib/structures/Parser';
+import { TypeAliasParser } from '#lib/structures/TypeAliasParser';
+import { VariableParser } from '#lib/structures/VariableParser';
+import { ClassParser } from '#lib/structures/class-parser';
+import { EnumParser } from '#lib/structures/enum-parser';
+import { InterfaceParser } from '#lib/structures/interface-parser';
+import { CommentParser, SourceParser } from '#lib/structures/misc';
+import { ReflectionKind, reflectionKindToString, type SearchResult } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString, type SearchResult } from '../types';
-import { ClassParser } from './class-parser/';
-import { EnumParser } from './enum-parser';
-import { FunctionParser } from './FunctionParser';
-import { InterfaceParser } from './interface-parser';
-import { CommentParser, SourceParser } from './misc';
-import { Parser } from './Parser';
-import { TypeAliasParser } from './TypeAliasParser';
-import { VariableParser } from './VariableParser';
 
 /**
  * Parses data from a namespace reflection.

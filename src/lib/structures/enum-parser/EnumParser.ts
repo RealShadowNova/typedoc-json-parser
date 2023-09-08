@@ -1,8 +1,8 @@
+import { Parser } from '#lib/structures/Parser';
+import { EnumMemberParser } from '#lib/structures/enum-parser';
+import { CommentParser, SourceParser } from '#lib/structures/misc';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { Parser } from '../Parser';
-import { CommentParser, SourceParser } from '../misc';
-import { EnumMemberParser } from './EnumMemberParser';
 
 /**
  * Parses data from an enum reflection.

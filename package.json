@@ -4,13 +4,26 @@
   "description": "A package to parse TypeDoc JSON output",
   "author": "Hezekiah Hendry <hezekiah.hendry@gmail.com>",
   "license": "MIT",
+  "type": "module",
+  "imports": {
+    "#bin/commands/*": "./dist/bin/commands/*.js",
+    "#bin/lib/*": "./dist/bin/lib/*.js",
+    "#bin/lib/types": "./dist/bin/lib/types/index.js",
+    "#bin/lib/types/version": "./dist/bin/lib/types/Version/index.js",
+    "#lib/structures/*": "./dist/lib/structures/*.js",
+    "#lib/structures/class-parser": "./dist/lib/structures/class-parser/index.js",
+    "#lib/structures/enum-parser": "./dist/lib/structures/enum-parser/index.js",
+    "#lib/structures/interface-parser": "./dist/lib/structures/interface-parser/index.js",
+    "#lib/structures/misc": "./dist/lib/structures/misc/index.js",
+    "#lib/structures/type-parsers": "./dist/lib/structures/type-parsers/index.js",
+    "#lib/types": "./dist/lib/types/index.js"
+  },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.js",
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
   },
   "bin": "./dist/bin/index.js",
   "sideEffects": false,
@@ -21,7 +34,7 @@
     "format": "prettier --write src/**/*.ts",
     "test": "vitest run",
     "test:coverage": "yarn test --coverage",
-    "build": "rimraf dist && tsc -b src && gen-esm-wrapper dist/index.js dist/index.mjs && node scripts/versionInjector.mjs",
+    "build": "rimraf dist && tsc -b src && node scripts/versionInjector.mjs",
     "update": "yarn upgrade-interactive",
     "bump": "cliff-jumper",
     "check-update": "cliff-jumper --dry-run",
@@ -71,7 +84,7 @@
     "!dist/*.tsbuildinfo"
   ],
   "engines": {
-    "node": ">=16",
+    "node": ">=18.17.0",
     "npm": ">=6"
   },
   "keywords": [],

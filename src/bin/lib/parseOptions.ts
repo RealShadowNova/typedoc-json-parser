@@ -1,8 +1,8 @@
+import { readJson } from '#bin/lib/readJson';
+import { readYaml } from '#bin/lib/readYaml';
+import type { Options } from '#bin/lib/types';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { readJson } from './readJson';
-import { readYaml } from './readYaml';
-import type { Options } from './types';
 
 export const typedocJsonParserRcPath = join(process.cwd(), '.typedoc-json-parserrc');
 

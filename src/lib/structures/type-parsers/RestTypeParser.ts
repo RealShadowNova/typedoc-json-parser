@@ -1,5 +1,5 @@
-import type { ProjectParser } from '../ProjectParser';
-import { TypeParser } from './TypeParser';
+import type { ProjectParser } from '#lib/structures/ProjectParser';
+import { TypeParser } from '#lib/structures/type-parsers';
 
 /**
  * Parses data for a rest type.
