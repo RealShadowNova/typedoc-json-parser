@@ -17,7 +17,9 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
     for await (const path of findFilesRecursivelyStringEndsWith(directory, '.json')) {
       const data = JSON.parse(await readFile(path, 'utf-8'));
 
-      if ('typeDocJsonParserVersion' in data && data.typeDocJsonParserVersion === ProjectParser.version) continue;
+      if ('typeDocJsonParserVersion' in data && data.typeDocJsonParserVersion === ProjectParser.version) {
+        continue;
+      }
 
       const migrated = migrateProjectJson(data);
 
@@ -32,13 +34,17 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
 
     spinner.success({ text: `Migrated ${migratedFiles} TypeDoc JSON Parser output files` });
 
-    for (const warning of warnings) console.warn(warning);
+    for (const warning of warnings) {
+      console.warn(warning);
+    }
   } catch (error) {
     const cause = error as Error;
 
     spinner.error({ text: 'Failed to migrate TypeDoc JSON Parser output' });
 
-    if (options.verbose) console.log(cause.stack ?? cause.message);
+    if (options.verbose) {
+      console.log(cause.stack ?? cause.message);
+    }
 
     process.exit(1);
   }

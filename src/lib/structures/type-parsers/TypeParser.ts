@@ -1,5 +1,4 @@
 import { type JSONOutput } from 'typedoc';
-import type { NamedTupleMemberType } from 'typedoc/dist/lib/serialization/schema';
 import { ReflectionKind } from '../../types';
 import type { ProjectParser } from '../ProjectParser';
 import { MethodParser, SignatureParser } from '../misc';
@@ -79,7 +78,7 @@ export namespace TypeParser {
           | JSONOutput.UnknownType
           | JSONOutput.MappedType
           | JSONOutput.TemplateLiteralType
-          | NamedTupleMemberType
+          | JSONOutput.NamedTupleMemberType
         )
       | JSONOutput.SomeType
   ): TypeParser {
