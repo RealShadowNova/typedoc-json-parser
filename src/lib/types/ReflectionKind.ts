@@ -20,10 +20,8 @@ export enum ReflectionKind {
   Accessor = 0x40000,
   GetSignature = 0x80000,
   SetSignature = 0x100000,
-  ObjectLiteral = 0x200000,
-  TypeAlias = 0x400000,
-  Event = 0x800000,
-  Reference = 0x1000000
+  TypeAlias = 0x200000,
+  Reference = 0x400000
 }
 
 export function reflectionKindToString(kind: ReflectionKind): string {
@@ -91,14 +89,8 @@ export function reflectionKindToString(kind: ReflectionKind): string {
     case ReflectionKind.SetSignature:
       return 'SetSignature';
 
-    case ReflectionKind.ObjectLiteral:
-      return 'ObjectLiteral';
-
     case ReflectionKind.TypeAlias:
       return 'TypeAlias';
-
-    case ReflectionKind.Event:
-      return 'Event';
 
     case ReflectionKind.Reference:
       return 'Reference';
