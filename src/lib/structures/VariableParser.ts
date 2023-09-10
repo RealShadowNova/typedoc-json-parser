@@ -1,8 +1,8 @@
+import { Parser } from '#lib/structures/Parser';
+import { CommentParser, SourceParser } from '#lib/structures/misc';
+import { TypeParser } from '#lib/structures/type-parsers';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../types';
-import { Parser } from './Parser';
-import { CommentParser, SourceParser } from './misc';
-import { TypeParser } from './type-parsers';
 
 /**
  * Parses data from a variable reflection.

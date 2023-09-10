@@ -1,2 +1,2 @@
-export * from './EnumMemberParser';
-export * from './EnumParser';
+export * from './EnumMemberParser.js';
+export * from './EnumParser.js';

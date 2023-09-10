@@ -1,6 +1,6 @@
+import { SignatureParser } from '#lib/structures/misc';
+import { ReflectionKind } from '#lib/types';
 import { JSONOutput } from 'typedoc';
-import { ReflectionKind } from '../../types';
-import { SignatureParser } from './SignatureParser';
 
 export class MethodParser {
   /**

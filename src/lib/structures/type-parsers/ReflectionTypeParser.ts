@@ -1,7 +1,6 @@
-import type { ProjectParser } from '../ProjectParser';
-import { MethodParser, SignatureParser } from '../misc';
-import { PropertyParser } from '../misc/PropertyParser';
-import { TypeParser } from './TypeParser';
+import type { ProjectParser } from '#lib/structures/ProjectParser';
+import { MethodParser, PropertyParser, SignatureParser } from '#lib/structures/misc';
+import { TypeParser } from '#lib/structures/type-parsers';
 
 /**
  * Parses data for a reflection type.

@@ -1,6 +1,6 @@
+import { TypeParser } from '#lib/structures/type-parsers';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { TypeParser } from '../type-parsers';
 
 /**
  * Parses data from a type parameter reflection.

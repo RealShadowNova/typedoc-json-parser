@@ -1,7 +1,7 @@
+import { CommentParser } from '#lib/structures/misc';
+import { TypeParser } from '#lib/structures/type-parsers';
+import { ReflectionKind, reflectionKindToString } from '#lib/types';
 import { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString } from '../../types';
-import { TypeParser } from '../type-parsers';
-import { CommentParser } from './CommentParser';
 
 /**
  * Parses data from a property reflection.

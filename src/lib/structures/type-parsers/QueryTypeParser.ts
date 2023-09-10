@@ -1,6 +1,5 @@
-import type { ProjectParser } from '../ProjectParser';
-import type { ReferenceTypeParser } from './ReferenceTypeParser';
-import { TypeParser } from './TypeParser';
+import type { ProjectParser } from '#lib/structures/ProjectParser';
+import { TypeParser, type ReferenceTypeParser } from '#lib/structures/type-parsers';
 
 /**
  * Parses data for a query type.

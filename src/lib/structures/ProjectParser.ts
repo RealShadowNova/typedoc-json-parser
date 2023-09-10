@@ -1,13 +1,13 @@
+import { ClassParser } from '#lib/structures/class-parser';
+import { EnumParser } from '#lib/structures/enum-parser';
+import { FunctionParser } from '#lib/structures/FunctionParser';
+import { InterfaceParser } from '#lib/structures/interface-parser';
+import { NamespaceParser } from '#lib/structures/NamespaceParser';
+import { TypeAliasParser } from '#lib/structures/TypeAliasParser';
+import { VariableParser } from '#lib/structures/VariableParser';
+import { ReflectionKind, reflectionKindToString, type SearchResult } from '#lib/types';
 import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
-import { ReflectionKind, reflectionKindToString, type SearchResult } from '../types';
-import { FunctionParser } from './FunctionParser';
-import { NamespaceParser } from './NamespaceParser';
-import { TypeAliasParser } from './TypeAliasParser';
-import { VariableParser } from './VariableParser';
-import { ClassParser } from './class-parser/';
-import { EnumParser } from './enum-parser';
-import { InterfaceParser } from './interface-parser';
 
 /**
  * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.Json}
@@ -18,6 +18,7 @@ export class ProjectParser {
    * The version of `typedoc-json-parser` used to generate this project.
    * @since 1.0.0
    */
+  // @ts-expect-error 2729
   public readonly typeDocJsonParserVersion: string = ProjectParser.version;
 
   /**

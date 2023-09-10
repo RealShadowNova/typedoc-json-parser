@@ -1,10 +1,10 @@
+import { migrateProjectJson } from '#bin/lib/migrateProjectJson';
+import type { Options, RequiredExcept } from '#bin/lib/types';
+import { ProjectParser } from '#lib/structures/ProjectParser';
 import { Spinner } from '@favware/colorette-spinner';
 import { findFilesRecursivelyStringEndsWith } from '@sapphire/node-utilities';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { ProjectParser } from '../../lib/structures/ProjectParser';
-import { migrateProjectJson } from '../lib/migrateProjectJson';
-import type { Options, RequiredExcept } from '../lib/types';
 
 export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
   const spinner = new Spinner().start({ text: 'Migrating TypeDoc JSON Parser output files' });
