@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [9.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.2.0...v9.0.0) - (2023-09-10)
+
+## 🐛 Bug Fixes
+
+- **deps:** Update dependency tslib to ^2.6.0 ([04fbb70](https://github.com/RealShadowNova/typedoc-json-parser/commit/04fbb70604f05866faecaf0b81dc48f09c3ce5f4))
+
+## 🚀 Features
+
+- Switch to esm only (#171) ([4adc848](https://github.com/RealShadowNova/typedoc-json-parser/commit/4adc84817c3bf3c5f96ad37411b9f86d5b4f29a2))
+  - 💥 **BREAKING CHANGE:** This package is now ESM only.
+  - 💥 **BREAKING CHANGE:** This package now only supports `Node.js v18` or higher.
+- **deps:** Update dependency typedoc to 0.25.1 (#170) ([9412411](https://github.com/RealShadowNova/typedoc-json-parser/commit/9412411c5a7ad64e6cdfc7e6ff8e652928180319))
+  - 💥 **BREAKING CHANGE:** This package now depends on `typedoc v0.25`
+
 # [8.2.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.1.2...v8.2.0) - (2023-06-21)
 
 ## 🏠 Refactor
