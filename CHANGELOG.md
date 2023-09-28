@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [9.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v9.0.1...v9.0.1) - (2023-09-28)
+
+## 🐛 Bug Fixes
+
+- **deps:** Move typescript to dependencies from devDependencies ([a2b6cda](https://github.com/RealShadowNova/typedoc-json-parser/commit/a2b6cda5cd7e5c889f6d01e23d60040065a45fcb))
+
 # [9.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v8.2.0...v9.0.0) - (2023-09-10)
 
 ## 🐛 Bug Fixes
