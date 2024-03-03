@@ -95,12 +95,12 @@ jobs:
         with:
           fetch-depth: 2
       - name: Download Coverage report
-        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4
+        uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4
         with:
           name: coverage
           path: coverage/
       - name: Codecov Upload
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: coverage/
