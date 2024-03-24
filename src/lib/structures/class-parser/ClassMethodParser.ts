@@ -115,8 +115,8 @@ export class ClassMethodParser extends Parser {
       accessibility: flags.isPrivate
         ? ClassParser.Accessibility.Private
         : flags.isProtected
-        ? ClassParser.Accessibility.Protected
-        : ClassParser.Accessibility.Public,
+          ? ClassParser.Accessibility.Protected
+          : ClassParser.Accessibility.Public,
       abstract: Boolean(flags.isAbstract),
       static: Boolean(flags.isStatic),
       signatures: signatures.map((signature) => SignatureParser.generateFromTypeDoc(signature))

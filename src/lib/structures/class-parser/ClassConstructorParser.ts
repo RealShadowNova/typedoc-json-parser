@@ -114,8 +114,8 @@ export class ClassConstructorParser extends Parser {
       accessibility: flags.isPrivate
         ? ClassParser.Accessibility.Private
         : flags.isProtected
-        ? ClassParser.Accessibility.Protected
-        : ClassParser.Accessibility.Public,
+          ? ClassParser.Accessibility.Protected
+          : ClassParser.Accessibility.Public,
       parameters: parameters.map((parameter) => ParameterParser.generateFromTypeDoc(parameter))
     });
   }

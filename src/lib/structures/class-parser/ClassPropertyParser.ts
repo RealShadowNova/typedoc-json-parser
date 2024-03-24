@@ -152,8 +152,8 @@ export class ClassPropertyParser extends Parser {
         accessibility: flags.isPrivate
           ? ClassParser.Accessibility.Private
           : flags.isProtected
-          ? ClassParser.Accessibility.Protected
-          : ClassParser.Accessibility.Public,
+            ? ClassParser.Accessibility.Protected
+            : ClassParser.Accessibility.Public,
         abstract: Boolean(flags.isAbstract),
         static: Boolean(flags.isStatic),
         readonly: Boolean(flags.isReadonly),
@@ -171,8 +171,8 @@ export class ClassPropertyParser extends Parser {
       accessibility: flags.isPrivate
         ? ClassParser.Accessibility.Private
         : flags.isProtected
-        ? ClassParser.Accessibility.Protected
-        : ClassParser.Accessibility.Public,
+          ? ClassParser.Accessibility.Protected
+          : ClassParser.Accessibility.Public,
       abstract: Boolean(flags.isAbstract),
       static: Boolean(flags.isStatic),
       readonly: Boolean(flags.isReadonly),
