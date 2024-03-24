@@ -44,13 +44,13 @@
   },
   "dependencies": {
     "@favware/colorette-spinner": "^1.0.1",
-    "@sapphire/node-utilities": "^1.0.0",
+    "@sapphire/node-utilities": "^1.0.2",
     "colorette": "^2.0.20",
-    "commander": "^11.0.0",
+    "commander": "^11.1.0",
     "js-yaml": "^4.1.0",
     "tslib": "^2.6.2",
-    "typedoc": "^0.25.1",
-    "typescript": "^5.2.2"
+    "typedoc": "^0.25.12",
+    "typescript": "^5.4.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
