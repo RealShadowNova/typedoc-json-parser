@@ -50,7 +50,7 @@
     "js-yaml": "^4.1.0",
     "tslib": "^2.6.2",
     "typedoc": "^0.25.12",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
