@@ -1,6 +1,6 @@
 {
   "name": "typedoc-json-parser",
-  "version": "9.0.1",
+  "version": "10.0.0",
   "description": "A package to parse TypeDoc JSON output",
   "author": "Hezekiah Hendry <hezekiah.hendry@gmail.com>",
   "license": "MIT",

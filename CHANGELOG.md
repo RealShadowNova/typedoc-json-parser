@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v9.0.1...v10.0.0) - (2024-04-23)
+
+## 🐛 Bug Fixes
+
+- **deps:** Update all non-major dependencies ([665890e](https://github.com/RealShadowNova/typedoc-json-parser/commit/665890e5f55c2cfa8b993e3681ddaa002e20894e))
+- **deps:** Update dependency typescript to ^5.4.4 ([adf100d](https://github.com/RealShadowNova/typedoc-json-parser/commit/adf100da2be76ea12e793259ab1eb5b25c2e3cd1))
+- **deps:** Update dependency commander to v12 (#203) ([ecfbfe2](https://github.com/RealShadowNova/typedoc-json-parser/commit/ecfbfe2cd34c0f170ee68b3a96e5f4b166660a3e))
+- **deps:** Update all non-major dependencies (#183) ([e2901fe](https://github.com/RealShadowNova/typedoc-json-parser/commit/e2901feb1813061fa8016de77f5c7a7cc21b8dd4))
+
+## 🚀 Features
+
+- Update Node to v20 (#218) ([9ae756b](https://github.com/RealShadowNova/typedoc-json-parser/commit/9ae756bdcc4deaa4fc1e677b3fd828cb0bcf68f1))
+  - 💥 **BREAKING CHANGE:** Drop support for Node.js v16 and v18
+
 # [9.0.1](https://github.com/RealShadowNova/typedoc-json-parser/compare/v9.0.1...v9.0.1) - (2023-09-28)
 
 ## 🐛 Bug Fixes
