@@ -31,17 +31,24 @@ export class ReferenceTypeParser implements TypeParser {
   public readonly packageName: string | null;
 
   /**
+   * The package version of this reference type.
+   * @since 10.0.0
+   */
+  public readonly packageVersion: string | null;
+
+  /**
    * The type arguments of this reference type.
    * @since 1.0.0
    */
   public readonly typeArguments: TypeParser[];
 
   public constructor(data: ReferenceTypeParser.Data) {
-    const { id, name, packageName, typeArguments } = data;
+    const { id, name, packageName, packageVersion, typeArguments } = data;
 
     this.id = id;
     this.name = name;
     this.packageName = packageName;
+    this.packageVersion = packageVersion;
     this.typeArguments = typeArguments;
   }
 
@@ -65,6 +72,7 @@ export class ReferenceTypeParser implements TypeParser {
       id: this.id,
       name: this.name,
       packageName: this.packageName,
+      packageVersion: this.packageVersion,
       typeArguments: this.typeArguments.map((type) => type.toJSON())
     };
   }
@@ -114,6 +122,12 @@ export namespace ReferenceTypeParser {
     packageName: string | null;
 
     /**
+     * The package version of this reference type.
+     * @since 10.0.0
+     */
+    packageVersion: string | null;
+
+    /**
      * The type arguments of this reference type.
      * @since 5.0.0
      */
@@ -140,6 +154,12 @@ export namespace ReferenceTypeParser {
      * @since 1.0.0
      */
     packageName: string | null;
+
+    /**
+     * The package version of this reference type.
+     * @since 10.0.0
+     */
+    packageVersion: string | null;
 
     /**
      * The type arguments of this reference type in a json compatible format.

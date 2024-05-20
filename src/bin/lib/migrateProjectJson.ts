@@ -46,6 +46,8 @@ export function migrateProjectJson(
     | Version.Seven.Four.ProjectJson
     | Version.Eight.Zero.ProjectJson
     | Version.Eight.One.ProjectJson
+    | Version.Nine.Zero.ProjectJson
+    | Version.Ten.Zero.ProjectJson
 ): ProjectParser.Json | string {
   const typeDocJsonParserVersion = 'typeDocJsonParserVersion' in projectJson ? projectJson.typeDocJsonParserVersion : '2.0.0';
 
@@ -89,6 +91,7 @@ export function migrateProjectJson(
       id,
       name,
       version: 'version' in projectJson ? projectJson.version : null,
+      dependencies: {},
       readme: 'readme' in projectJson ? projectJson.readme : null,
       changelog: 'changelog' in projectJson ? projectJson.changelog : null,
       classes: classes.map((classJson) => migrateClassJson(classJson, null, [major, minor, patch])),
@@ -110,13 +113,17 @@ export function migrateProjectJson(
     | Version.Seven.Four.ProjectJson
     | Version.Eight.Zero.ProjectJson
     | Version.Eight.One.ProjectJson
-    | Version.Eight.Two.ProjectJson;
+    | Version.Eight.Two.ProjectJson
+    | Version.Nine.Zero.ProjectJson
+    | Version.Ten.Zero.ProjectJson
+    | Version.Ten.One.ProjectJson;
 
   return {
     typeDocJsonParserVersion: currentTypeDocJsonParserVersion,
     id,
     name,
     version,
+    dependencies: 'dependencies' in projectJson ? (projectJson.dependencies as Record<string, string>) : {},
     readme,
     changelog,
     classes: classes.map((classJson) => migrateClassJson(classJson, null, [major, minor, patch])),

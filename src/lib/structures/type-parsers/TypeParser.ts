@@ -1,4 +1,4 @@
-import type { ProjectParser } from '#lib/structures/ProjectParser';
+import { ProjectParser } from '#lib/structures/ProjectParser';
 import { MethodParser, PropertyParser, SignatureParser } from '#lib/structures/misc';
 import {
   ArrayTypeParser,
@@ -51,6 +51,8 @@ export interface TypeParser {
 }
 
 export namespace TypeParser {
+  export const dependencies = new Map<string, string>();
+
   /**
    * Generates a new {@link TypeParser} instance from the given data.
    * @since 1.0.0
@@ -181,11 +183,13 @@ export namespace TypeParser {
 
       case 'reference': {
         const { target, name, package: _package, qualifiedName, typeArguments = [] } = type;
+        const packageVersion = dependencies.get(name);
 
         return new ReferenceTypeParser({
           id: typeof target === 'number' ? target : null,
           name: qualifiedName ?? name,
           packageName: _package ?? null,
+          packageVersion: packageVersion ?? null,
           typeArguments: typeArguments.map((type) => generateFromTypeDoc(type))
         });
       }
@@ -346,12 +350,13 @@ export namespace TypeParser {
       }
 
       case Kind.Reference: {
-        const { id, name, packageName, typeArguments } = json as ReferenceTypeParser.Json;
+        const { id, name, packageName, packageVersion, typeArguments } = json as ReferenceTypeParser.Json;
 
         return new ReferenceTypeParser({
           id,
           name,
-          packageName: packageName ?? null,
+          packageName,
+          packageVersion,
           typeArguments: typeArguments.map((type) => generateFromJson(type))
         });
       }
