@@ -6,15 +6,20 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import type { JSONOutput } from 'typedoc';
 
+interface PackageJson {
+  version?: string;
+  dependencies?: Record<string, string>;
+}
+
 export async function parseDocs(options: RequiredExcept<Options, 'migrate'>) {
   const spinner = new Spinner().start({ text: 'Parsing TypeDoc JSON output file' });
 
   try {
-    const { version } = JSON.parse(await readFile(resolve(process.cwd(), 'package.json'), 'utf8'));
+    const { version, dependencies = {} } = JSON.parse(await readFile(resolve(process.cwd(), 'package.json'), 'utf8')) as PackageJson;
     const readme = existsSync(resolve(process.cwd(), 'README.md')) ? await readFile(resolve(process.cwd(), 'README.md'), 'utf8') : undefined;
     const changelog = existsSync(resolve(process.cwd(), 'CHANGELOG.md')) ? await readFile(resolve(process.cwd(), 'CHANGELOG.md'), 'utf8') : undefined;
     const data = JSON.parse(await readFile(resolve(process.cwd(), options.json), 'utf-8')) as JSONOutput.ProjectReflection;
-    const parsed = new ProjectParser({ data, version, readme, changelog }).toJSON();
+    const parsed = new ProjectParser({ data, version, readme, changelog, dependencies }).toJSON();
 
     await writeFile(resolve(process.cwd(), options.json), JSON.stringify(parsed, null, 2));
 

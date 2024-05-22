@@ -1,13 +1,14 @@
-import { ClassParser } from '#lib/structures/class-parser';
-import { EnumParser } from '#lib/structures/enum-parser';
 import { FunctionParser } from '#lib/structures/FunctionParser';
-import { InterfaceParser } from '#lib/structures/interface-parser';
 import { NamespaceParser } from '#lib/structures/NamespaceParser';
 import { TypeAliasParser } from '#lib/structures/TypeAliasParser';
 import { VariableParser } from '#lib/structures/VariableParser';
+import { ClassParser } from '#lib/structures/class-parser';
+import { EnumParser } from '#lib/structures/enum-parser';
+import { InterfaceParser } from '#lib/structures/interface-parser';
 import { ReflectionKind, reflectionKindToString, type SearchResult } from '#lib/types';
 import { bold, red, yellow } from 'colorette';
 import type { JSONOutput } from 'typedoc';
+import { TypeParser } from './type-parsers/TypeParser.js';
 
 /**
  * Parses data from `JSONOutput.ProjectReflection` or {@link ProjectParser.Json}
@@ -18,8 +19,7 @@ export class ProjectParser {
    * The version of `typedoc-json-parser` used to generate this project.
    * @since 1.0.0
    */
-  // @ts-expect-error 2729
-  public readonly typeDocJsonParserVersion: string = ProjectParser.version;
+  public readonly typeDocJsonParserVersion: string;
 
   /**
    * The identifier of this project. This is usually `0`
@@ -42,6 +42,14 @@ export class ProjectParser {
    * @since 2.2.0
    */
   public readonly version: string | null;
+
+  /**
+   * The dependencies of the project being parsed in a name and version format.
+   *
+   * Corresponds to the `dependencies` property in your `package.json`
+   * @since 10.0.0
+   */
+  public readonly dependencies: Record<string, string>;
 
   /**
    * The readme content of this project.
@@ -98,7 +106,9 @@ export class ProjectParser {
   public readonly variables: VariableParser[];
 
   public constructor(options: ProjectParser.Options) {
-    const { data, version, readme, changelog } = options;
+    this.typeDocJsonParserVersion = ProjectParser.version;
+
+    const { data, version, dependencies, readme, changelog } = options;
     const { id, name } = data;
 
     this.id = id;
@@ -139,6 +149,7 @@ export class ProjectParser {
       this.version = version ?? data.version;
       this.readme = readme ?? data.readme;
       this.changelog = changelog ?? data.changelog;
+      this.dependencies = dependencies;
       this.classes = classes.map((json) => ClassParser.generateFromJson(json));
       this.enums = enums.map((json) => EnumParser.generateFromJson(json));
       this.functions = functions.map((json) => FunctionParser.generateFromJson(json));
@@ -154,6 +165,7 @@ export class ProjectParser {
       }
 
       this.version = version ?? null;
+      this.dependencies = dependencies;
       this.readme = readme ?? null;
       this.changelog = changelog ?? null;
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, null));
@@ -178,6 +190,10 @@ export class ProjectParser {
       this.variables = children
         .filter((child) => child.kind === ReflectionKind.Variable)
         .map((child) => VariableParser.generateFromTypeDoc(child, null));
+    }
+
+    for (const [dependencyName, dependencyVersion] of Object.entries(dependencies)) {
+      TypeParser.dependencies.set(dependencyName, dependencyVersion);
     }
   }
 
@@ -420,6 +436,7 @@ export class ProjectParser {
       id: this.id,
       name: this.name,
       version: this.version,
+      dependencies: this.dependencies,
       readme: this.readme,
       changelog: this.changelog,
       classes: this.classes.map((parser) => parser.toJSON()),
@@ -448,6 +465,12 @@ export namespace ProjectParser {
      * @since 3.0.0
      */
     version?: string;
+
+    /**
+     * The dependencies of the project being parsed in a name and version format.
+     * @since 10.0.0
+     */
+    dependencies: Record<string, string>;
 
     /**
      * The readme content of this project.
@@ -490,6 +513,12 @@ export namespace ProjectParser {
      * @since 2.2.0
      */
     version: string | null;
+
+    /**
+     * The dependencies of the project being parsed in a name and version format.
+     * @since 10.0.0
+     */
+    dependencies: Record<string, string>;
 
     /**
      * The readme content of this project.
