@@ -4745,6 +4745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.6.3":
+  version: 2.6.3
+  resolution: "tslib@npm:2.6.3"
+  checksum: 74fce0e100f1ebd95b8995fbbd0e6c91bdd8f4c35c00d4da62e285a3363aaa534de40a80db30ecfd388ed7c313c42d930ee0eaf108e8114214b180eec3dbe6f5
+  languageName: node
+  linkType: hard
+
 "type-check@npm:^0.4.0, type-check@npm:~0.4.0":
   version: 0.4.0
   resolution: "type-check@npm:0.4.0"
@@ -4797,7 +4804,7 @@ __metadata:
     pinst: ^3.0.0
     prettier: ^3.3.1
     rimraf: ^5.0.7
-    tslib: ^2.6.2
+    tslib: ^2.6.3
     typedoc: ^0.25.13
     typescript: ^5.4.5
     vite-tsconfig-paths: ^4.3.2
