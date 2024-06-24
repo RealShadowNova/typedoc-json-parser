@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.0](https://github.com/RealShadowNova/property-helpers/compare/v10.0.0...v10.1.0) - (2024-06-24)
+
+## 🐛 Bug Fixes
+
+- **deps:** Update all non-major dependencies ([5885400](https://github.com/RealShadowNova/property-helpers/commit/5885400674b9078c442a728fc4e32c1d098cc2f1))
+- **deps:** Update dependency tslib to ^2.6.3 ([c9d6f53](https://github.com/RealShadowNova/property-helpers/commit/c9d6f5369e7fac2f81fb4484dc5c7c9614518cbb))
+- **deps:** Update dependency commander to ^12.1.0 ([b5b0a41](https://github.com/RealShadowNova/property-helpers/commit/b5b0a417f460386a7e98e66ff4690f20268a6aed))
+
+## 🚀 Features
+
+- **ProjectParser:** Add dependencies property ([c42df89](https://github.com/RealShadowNova/property-helpers/commit/c42df892d2fec38a250711dc8b11cdd6bb30debe))
+
 # [10.0.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v9.0.1...v10.0.0) - (2024-04-23)
 
 ## 🐛 Bug Fixes
