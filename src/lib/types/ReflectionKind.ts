@@ -21,7 +21,8 @@ export enum ReflectionKind {
   GetSignature = 0x80000,
   SetSignature = 0x100000,
   TypeAlias = 0x200000,
-  Reference = 0x400000
+  Reference = 0x400000,
+  Document = 0x800000
 }
 
 export function reflectionKindToString(kind: ReflectionKind): string {
@@ -94,5 +95,8 @@ export function reflectionKindToString(kind: ReflectionKind): string {
 
     case ReflectionKind.Reference:
       return 'Reference';
+
+    case ReflectionKind.Document:
+      return 'Document';
   }
 }

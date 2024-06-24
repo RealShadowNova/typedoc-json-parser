@@ -22,8 +22,7 @@ import { bold, yellow } from 'colorette';
 
 const currentTypeDocJsonParserVersion = ProjectParser.version
   .split('.')
-  // eslint-disable-next-line radix
-  .map((x) => parseInt(x))
+  .map((x) => Number(x))
   .slice(0, 3)
   .join('.');
 

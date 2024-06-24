@@ -78,7 +78,7 @@ export class SignatureParser {
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.SignatureReflection): SignatureParser {
-    const { kind, id, name, comment = { summary: [] }, typeParameter: typeParameters = [], parameters = [], type } = reflection;
+    const { kind, id, name, comment = { summary: [] }, typeParameters = [], parameters = [], type } = reflection;
 
     if (![ReflectionKind.CallSignature, ReflectionKind.ConstructorSignature, ReflectionKind.IndexSignature].includes(kind)) {
       throw new Error(
