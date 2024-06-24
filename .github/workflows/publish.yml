@@ -5,7 +5,7 @@ on:
 
 jobs:
   PublishPackage:
-    name: Publish property-helpers
+    name: Publish typedoc-json-parser
     runs-on: ubuntu-latest
 
     if: github.repository_owner == 'RealShadowNova'
@@ -16,6 +16,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Use Node.js v20
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
         with:
