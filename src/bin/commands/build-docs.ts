@@ -1,9 +1,6 @@
+import { exec } from '#bin/lib/exec';
 import type { Options } from '#bin/lib/types';
 import { Spinner } from '@favware/colorette-spinner';
-import { exec as execSync } from 'node:child_process';
-import { promisify } from 'node:util';
-
-const exec = promisify(execSync);
 
 export async function buildDocs(options: Options) {
   const spinner = new Spinner().start({ text: 'Building TypeDoc documentation' });
