@@ -40,6 +40,7 @@ export namespace v2_0_0 {
 
     export interface SignatureJson {
       id: number;
+      name: string;
       typeParameters: TypeParameterJson[];
       parameters: ParameterJson[];
       returnType: TypeJson;

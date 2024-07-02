@@ -44,6 +44,7 @@ export namespace v3_2_0 {
 
     export interface SignatureJson {
       id: number;
+      name: string;
       comment: CommentJson;
       typeParameters: TypeParameterJson[];
       parameters: ParameterJson[];
