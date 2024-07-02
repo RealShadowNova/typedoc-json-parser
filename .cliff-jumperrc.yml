@@ -7,4 +7,4 @@ identifierBase: false
 pushTag: true
 githubRelease: true
 githubReleaseLatest: true
-githubRepo: RealShadowNova/property-helpers
+githubRepo: RealShadowNova/typedoc-json-parser
