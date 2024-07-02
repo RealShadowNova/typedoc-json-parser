@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.4](https://github.com/RealShadowNova/property-helpers/compare/v10.1.3...v10.1.4) - (2024-07-02)
+
+## 🐛 Bug Fixes
+
+- **migrations:** Add migrations for v10.1.0 to latest... again ([25683aa](https://github.com/RealShadowNova/property-helpers/commit/25683aa86d9d807b3ee56e34f3821f59f9ae5ac5))
+- **deps:** Update all non-major dependencies ([24e254f](https://github.com/RealShadowNova/property-helpers/commit/24e254f5549e3df3a3904d02f0c833b4521d0a5f))
+
 # [10.1.3](https://github.com/RealShadowNova/property-helpers/compare/v10.1.2...v10.1.3) - (2024-07-02)
 
 ## 🐛 Bug Fixes
