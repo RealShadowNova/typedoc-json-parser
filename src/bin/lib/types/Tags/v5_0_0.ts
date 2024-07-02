@@ -117,7 +117,7 @@ export namespace v5_0_0 {
     external: boolean;
     abstract: boolean;
     extendsType: TypeJson | null;
-    implementsTypes: TypeJson[];
+    implementsType: TypeJson[];
     construct: ClassJson.ConstructorJson;
     properties: ClassJson.PropertyJson[];
     methods: ClassJson.MethodJson[];

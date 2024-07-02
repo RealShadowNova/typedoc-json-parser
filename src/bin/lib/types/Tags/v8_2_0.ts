@@ -122,7 +122,7 @@ export namespace v8_2_0 {
     abstract: boolean;
     typeParameters: Misc.TypeParameterJson[];
     extendsType: TypeJson | null;
-    implementsTypes: TypeJson[];
+    implementsType: TypeJson[];
     construct: ClassJson.ConstructorJson;
     properties: ClassJson.PropertyJson[];
     methods: ClassJson.MethodJson[];

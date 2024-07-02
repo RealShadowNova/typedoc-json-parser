@@ -123,7 +123,7 @@ export namespace v10_1_0 {
     abstract: boolean;
     typeParameters: Misc.TypeParameterJson[];
     extendsType: TypeJson | null;
-    implementsTypes: TypeJson[];
+    implementsType: TypeJson[];
     construct: ClassJson.ConstructorJson;
     properties: ClassJson.PropertyJson[];
     methods: ClassJson.MethodJson[];
@@ -240,5 +240,3 @@ export namespace v10_1_0 {
     value: string;
   }
 }
-
-export { v10_1_0 as v10_1_1, v10_1_0 as v10_1_2, v10_1_0 as v10_1_3 };

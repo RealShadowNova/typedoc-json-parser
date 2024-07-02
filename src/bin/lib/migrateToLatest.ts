@@ -31,12 +31,24 @@ export interface MigrationLatest {
   version: string;
 }
 
+function isSemverPatchDiff(version1: string, version2: string): boolean {
+  return version1.split('.').slice(0, 2).join('.') === version2.split('.').slice(0, 2).join('.');
+}
+
 export function migrateToLatest(projectJson: Record<string, unknown>, path: string): MigrationResult {
   let currentVersion = `v${'typeDocJsonParserVersion' in projectJson ? projectJson.typeDocJsonParserVersion : '2.0.0'}` as string;
   const latestVersion = `v${ProjectParser.version}`;
   let result: MigrationResult | undefined;
 
   while (currentVersion !== latestVersion) {
+    if (isSemverPatchDiff(currentVersion, latestVersion)) {
+      projectJson = latest(projectJson as unknown as Tags.v10_1_0.ProjectJson) as unknown as Record<string, unknown>;
+      result = { status: MigrationStatus.Latest, path, name: projectJson.name as string, version: projectJson.version as string };
+      currentVersion = latestVersion;
+
+      break;
+    }
+
     const migration = migrations.find((migration) => migration.from.includes(currentVersion));
 
     if (!migration) {
@@ -833,15 +845,12 @@ const migrations: Migration[] = [
         dependencies: {}
       };
     }
-  },
-  {
-    from: ['v10.1.0', 'v10.1.1', 'v10.1.2'],
-    to: 'v10.1.3',
-    run(projectJson: Tags.v10_1_0.ProjectJson | Tags.v10_1_1.ProjectJson | Tags.v10_1_2.ProjectJson): Tags.v10_1_3.ProjectJson {
-      return {
-        ...projectJson,
-        typeDocJsonParserVersion: '10.1.3'
-      };
-    }
   }
 ];
+
+function latest(projectJson: Tags.v10_1_0.ProjectJson): ProjectParser.Json {
+  return {
+    ...projectJson,
+    typeDocJsonParserVersion: ProjectParser.version
+  };
+}
