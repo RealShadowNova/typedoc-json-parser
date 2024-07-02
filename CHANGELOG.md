@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.5](https://github.com/RealShadowNova/property-helpers/compare/v10.1.4...v10.1.5) - (2024-07-02)
+
+## 🐛 Bug Fixes
+
+- **migrations:** Migrate to latest when patch difference between versions ([6fb8f7e](https://github.com/RealShadowNova/property-helpers/commit/6fb8f7e92c051accc59d2f859673a498934c26fa))
+
 # [10.1.4](https://github.com/RealShadowNova/property-helpers/compare/v10.1.3...v10.1.4) - (2024-07-02)
 
 ## 🐛 Bug Fixes
