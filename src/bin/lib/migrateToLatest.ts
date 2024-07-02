@@ -835,8 +835,8 @@ const migrations: Migration[] = [
     }
   },
   {
-    from: ['v10.1.0'],
-    to: 'v10.1.2',
+    from: ['v10.1.0', 'v10.1.1', 'v10.1.2'],
+    to: 'v10.1.3',
     run(projectJson: Tags.v10_1_0.ProjectJson | Tags.v10_1_1.ProjectJson | Tags.v10_1_2.ProjectJson): Tags.v10_1_3.ProjectJson {
       return {
         ...projectJson,
