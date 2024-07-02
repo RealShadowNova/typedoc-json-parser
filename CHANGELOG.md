@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.3](https://github.com/RealShadowNova/property-helpers/compare/v10.1.2...v10.1.3) - (2024-07-02)
+
+## 🐛 Bug Fixes
+
+- **migrations:** Exit with code 1 on migration fail ([8d21232](https://github.com/RealShadowNova/property-helpers/commit/8d2123247def880e5bdf9d8b19c96a74a491ba47))
+
 # [10.1.2](https://github.com/RealShadowNova/property-helpers/compare/v10.1.1...v10.1.2) - (2024-07-02)
 
 ## 🐛 Bug Fixes
