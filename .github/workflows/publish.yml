@@ -8,6 +8,9 @@ jobs:
     name: Publish typedoc-json-parser
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     if: github.repository_owner == 'RealShadowNova'
 
     steps:
