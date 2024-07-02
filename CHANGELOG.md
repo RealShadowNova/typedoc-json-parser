@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.1](https://github.com/RealShadowNova/property-helpers/compare/v10.1.0...v10.1.1) - (2024-07-02)
+
+## 🏠 Refactor
+
+- **bin:** Migrations ([fbea043](https://github.com/RealShadowNova/property-helpers/commit/fbea043b1abaf01469414bc58da6b6a5f400e563))
+
 # [10.1.0](https://github.com/RealShadowNova/property-helpers/compare/v10.0.0...v10.1.0) - (2024-06-24)
 
 ## 🐛 Bug Fixes
