@@ -4,7 +4,7 @@ import type { RequiredExcept } from '#bin/lib/types/RequiredExcept';
 import { ProjectParser } from '#lib/structures/ProjectParser';
 import { Spinner } from '@favware/colorette-spinner';
 import { findFilesRecursivelyStringEndsWith } from '@sapphire/node-utilities';
-import { blue, green } from 'colorette';
+import { blue, green, red, yellow } from 'colorette';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
@@ -49,7 +49,7 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
     switch (result.status) {
       case MigrationStatus.Success:
         if (failedAny) {
-          console.log(green(`${tick} ${result.data.name}(${result.data.version}) - Skipping due to other failures. "${result.path}"`));
+          console.log(yellow(`${tick} ${result.data.name}(${result.data.version}) - Skipping due to other failures. "${result.path}"`));
         } else {
           console.log(green(`${tick} ${result.data.name}(${result.data.version}) - "${result.path}`));
 
@@ -60,7 +60,7 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
 
       case MigrationStatus.Failed:
         console.log(
-          `${cross} ${result.name}(${result.version}) - Unknown "typedoc-json-parser" version found. Received "${result.from}". "${result.path}"`
+          red(`${cross} ${result.name}(${result.version}) - Unknown "typedoc-json-parser" version found. Received "${result.from}". "${result.path}"`)
         );
 
         break;

@@ -240,3 +240,5 @@ export namespace v10_1_0 {
     value: string;
   }
 }
+
+export { v10_1_0 as v10_1_1, v10_1_0 as v10_1_2 };

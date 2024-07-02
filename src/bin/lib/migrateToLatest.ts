@@ -833,5 +833,15 @@ const migrations: Migration[] = [
         dependencies: {}
       };
     }
+  },
+  {
+    from: ['v10.1.0'],
+    to: 'v10.1.2',
+    run(projectJson: Tags.v10_1_0.ProjectJson | Tags.v10_1_1.ProjectJson): Tags.v10_1_2.ProjectJson {
+      return {
+        ...projectJson,
+        typeDocJsonParserVersion: '10.1.2'
+      };
+    }
   }
 ];
