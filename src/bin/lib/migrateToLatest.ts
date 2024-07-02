@@ -837,10 +837,10 @@ const migrations: Migration[] = [
   {
     from: ['v10.1.0'],
     to: 'v10.1.2',
-    run(projectJson: Tags.v10_1_0.ProjectJson | Tags.v10_1_1.ProjectJson): Tags.v10_1_2.ProjectJson {
+    run(projectJson: Tags.v10_1_0.ProjectJson | Tags.v10_1_1.ProjectJson | Tags.v10_1_2.ProjectJson): Tags.v10_1_3.ProjectJson {
       return {
         ...projectJson,
-        typeDocJsonParserVersion: '10.1.2'
+        typeDocJsonParserVersion: '10.1.3'
       };
     }
   }

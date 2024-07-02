@@ -41,9 +41,13 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
     }
   } catch {}
 
-  spinner.stop({ text: 'Finished migrating TypeDoc JSON Parser output files. Results:' });
-
   const failedAny = results.some((result) => result.status === MigrationStatus.Failed);
+
+  if (failedAny) {
+    spinner.error({ text: 'Failed to migrate TypeDoc JSON Parser output files.' });
+  } else {
+    spinner.success({ text: 'Successfully migrated TypeDoc JSON Parser output files.' });
+  }
 
   for (const result of results) {
     switch (result.status) {
@@ -69,6 +73,10 @@ export async function migrateDocs(options: RequiredExcept<Options, 'json'>) {
         console.log(blue(`${tick} ${result.name}(${result.version}) - "${result.path}`));
 
         break;
+    }
+
+    if (failedAny) {
+      process.exit(1);
     }
   }
 }
