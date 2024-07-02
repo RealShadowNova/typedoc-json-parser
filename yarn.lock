@@ -971,10 +971,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@shikijs/core@npm:1.9.0"
-  checksum: 69936121447fd078b0f628fff7286a28db63b4c50183f5fed698b1a9679458470fe7191d2af7fea6adeb6477b86fd6e89e6c40a78bbcc3e21341cd6b6eaa36ce
+"@shikijs/core@npm:1.10.1":
+  version: 1.10.1
+  resolution: "@shikijs/core@npm:1.10.1"
+  checksum: b2aa039c05b46347d169118c6fe6ec3390ad70f1dc74e1ec46210c1caf4540976ca0d23a7d5c2a0114dff862b3bae5f6c215f95c052f4395d4cc6f96d194b8e9
   languageName: node
   linkType: hard
 
@@ -3757,6 +3757,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "minimatch@npm:9.0.5"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 2c035575eda1e50623c731ec6c14f65a85296268f749b9337005210bb2b34e2705f8ef1a358b188f69892286ab99dc42c8fb98a57bde55c8d81b3023c19cea28
+  languageName: node
+  linkType: hard
+
 "minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
@@ -4564,12 +4573,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "shiki@npm:1.9.0"
+"shiki@npm:^1.9.1":
+  version: 1.10.1
+  resolution: "shiki@npm:1.10.1"
   dependencies:
-    "@shikijs/core": 1.9.0
-  checksum: d92bd313b65ae46edd8ca6289f1bfe56a06cdbb022ff7bbfaa262552d20bc55ff21254e4b89dc1ae5a2261602e9bb573ec4023a0fcc384c786ffe15c37721a64
+    "@shikijs/core": 1.10.1
+  checksum: 54f4da715ca981168805ad11728da0dcf3808e488ac79974d8e0096f86c841aaeb9018e4d78ccba3e71bc067be482f8fa5ccb2c82d77df970f8b784a8cb9d9a8
   languageName: node
   linkType: hard
 
@@ -5000,8 +5009,8 @@ __metadata:
     prettier: ^3.3.2
     rimraf: ^5.0.7
     tslib: ^2.6.3
-    typedoc: ^0.26.2
-    typescript: ^5.5.2
+    typedoc: ^0.26.3
+    typescript: ^5.5.3
     vite-tsconfig-paths: ^4.3.2
     vitest: ^1.6.0
   bin:
@@ -5009,20 +5018,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"typedoc@npm:^0.26.2":
-  version: 0.26.2
-  resolution: "typedoc@npm:0.26.2"
+"typedoc@npm:^0.26.3":
+  version: 0.26.3
+  resolution: "typedoc@npm:0.26.3"
   dependencies:
     lunr: ^2.3.9
     markdown-it: ^14.1.0
-    minimatch: ^9.0.4
-    shiki: ^1.9.0
+    minimatch: ^9.0.5
+    shiki: ^1.9.1
     yaml: ^2.4.5
   peerDependencies:
     typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x || 5.2.x || 5.3.x || 5.4.x || 5.5.x
   bin:
     typedoc: bin/typedoc
-  checksum: c3bf62ddc13c694efe69d88e587bbcaa451363aff32d75a0fa871e92cd14d9fc1ac039a9a2059b1659530d86b0fb2d813b1cd87c7fc17c2148d66c9f90940358
+  checksum: 3e4fc7cbd455e2adf591b4d01f191fa9518e56a4a2ee659ba1d4d221902656dc1f3572a726443b91bb3586bb485e783d924670f7a9087602153ef04ea2dcbd82
   languageName: node
   linkType: hard
 
@@ -5036,13 +5045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.5.2":
-  version: 5.5.2
-  resolution: "typescript@npm:5.5.2"
+"typescript@npm:^5.5.3":
+  version: 5.5.3
+  resolution: "typescript@npm:5.5.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 9c5a7982dadcb2d38d129c575dd38645ae11588ae0d4a12852fb04482bbc5a1660b2371e48fd5b33b6b605cc57cefe777670054546856945a05e77bd22c8c2cd
+  checksum: 4b4f14313484d5c86064d04ba892544801fa551f5cf72719b540b498056fec7fc192d0bbdb2ba1448e759b1548769956da9e43e7c16781e8d8856787b0575004
   languageName: node
   linkType: hard
 
@@ -5056,13 +5065,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.5.2#~builtin<compat/typescript>":
-  version: 5.5.2
-  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=bda367"
+"typescript@patch:typescript@^5.5.3#~builtin<compat/typescript>":
+  version: 5.5.3
+  resolution: "typescript@patch:typescript@npm%3A5.5.3#~builtin<compat/typescript>::version=5.5.3&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 9d89bac0de650e15d6846485f238d1e65f1013f2c260d9e53e86a1da6ecf8109d9fad9402575c5c36a6592dc5d4370db090e12971c8630ae84453654baabb6b4
+  checksum: 6853be4607706cc1ad2f16047cf1cd72d39f79acd5f9716e1d23bc0e462c7f59be7458fe58a21665e7657a05433d7ab8419d093a5a4bd5f3a33f879b35d2769b
   languageName: node
   linkType: hard
 
