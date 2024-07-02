@@ -8,9 +8,6 @@ jobs:
     name: Publish typedoc-json-parser
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     if: github.repository_owner == 'RealShadowNova'
 
     steps:
@@ -40,7 +37,7 @@ jobs:
       - name: Bump Version & Make Release
         run: yarn bump
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.NOVA_TOKEN }}
       - name: Publish to NPM
         run: |
           yarn config set npmAuthToken ${NODE_AUTH_TOKEN}
