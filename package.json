@@ -49,8 +49,8 @@
     "commander": "^12.1.0",
     "js-yaml": "^4.1.0",
     "tslib": "^2.6.3",
-    "typedoc": "^0.26.4",
-    "typescript": "^5.5.3"
+    "typedoc": "^0.26.5",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
