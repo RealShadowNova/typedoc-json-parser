@@ -168,6 +168,7 @@ export class ProjectParser {
       this.dependencies = dependencies;
       this.readme = readme ?? null;
       this.changelog = changelog ?? null;
+
       this.classes = children.filter((child) => child.kind === ReflectionKind.Class).map((child) => ClassParser.generateFromTypeDoc(child, null));
 
       this.enums = children.filter((child) => child.kind === ReflectionKind.Enum).map((child) => EnumParser.generateFromTypeDoc(child, null));
@@ -190,6 +191,45 @@ export class ProjectParser {
       this.variables = children
         .filter((child) => child.kind === ReflectionKind.Variable)
         .map((child) => VariableParser.generateFromTypeDoc(child, null));
+
+      for (const child of children) {
+        if (child.kind === ReflectionKind.Module) {
+          for (const subChild of child.children ?? []) {
+            switch (subChild.kind) {
+              case ReflectionKind.Class:
+                this.classes.push(ClassParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.Enum:
+                this.enums.push(EnumParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.Function:
+                this.functions.push(FunctionParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.Interface:
+                this.interfaces.push(InterfaceParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.Namespace:
+                this.namespaces.push(NamespaceParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.TypeAlias:
+                this.typeAliases.push(TypeAliasParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              case ReflectionKind.Variable:
+                this.variables.push(VariableParser.generateFromTypeDoc(subChild, null));
+                break;
+
+              default:
+                break;
+            }
+          }
+        }
+      }
     }
 
     for (const [dependencyName, dependencyVersion] of Object.entries(dependencies)) {
