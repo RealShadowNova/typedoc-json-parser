@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.1.6](https://github.com/RealShadowNova/typedoc-json-parser/compare/v10.1.5...v10.1.6) - (2024-09-30)
+
+## 🐛 Bug Fixes
+
+- **ProjectParser:** Add module support ([1c431b4](https://github.com/RealShadowNova/typedoc-json-parser/commit/1c431b488a354274a10be39bab9a0ab1011cb15e)) ([#288](https://github.com/RealShadowNova/typedoc-json-parser/pull/288) by @RealShadowNova)
+- **deps:** Update dependency typedoc to ^0.26.4 ([b60f3e5](https://github.com/RealShadowNova/typedoc-json-parser/commit/b60f3e52e51e08cddc634a608143ae90d1fe2517)) ([#258](https://github.com/RealShadowNova/typedoc-json-parser/pull/258) by @renovate[bot])
+
 # [10.1.5](https://github.com/RealShadowNova/property-helpers/compare/v10.1.4...v10.1.5) - (2024-07-02)
 
 ## 🐛 Bug Fixes
