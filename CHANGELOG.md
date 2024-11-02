@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# [10.2.0](https://github.com/RealShadowNova/typedoc-json-parser/compare/v10.1.6...v10.2.0) - (2024-11-02)
+
+## 📝 Documentation
+
+- **VariableParser:** Update docs for generateFromTypeDoc ([9f91975](https://github.com/RealShadowNova/typedoc-json-parser/commit/9f91975b7b7e570a20aab0c8183a492229542664))
+- **TypeParameterParser:** Update docs for generateFromTypeDoc ([556a42b](https://github.com/RealShadowNova/typedoc-json-parser/commit/556a42be2d928ef8fae5cd5d389131fbb14c1429))
+
+## 🚀 Features
+
+- **ClassParser:** Update error messages to be more specific ([e7c07ac](https://github.com/RealShadowNova/typedoc-json-parser/commit/e7c07ac6c7abbc3743766bbaa3961901aebb84e0))
+
 # [10.1.6](https://github.com/RealShadowNova/typedoc-json-parser/compare/v10.1.5...v10.1.6) - (2024-09-30)
 
 ## 🐛 Bug Fixes
