@@ -71,7 +71,7 @@ export class VariableParser extends Parser {
    * Generates a new {@link VariableParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param  The  this parser belongs to.
+   * @param namespaceParentId The this parser belongs to.
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.DeclarationReflection, namespaceParentId: number | null): VariableParser {
