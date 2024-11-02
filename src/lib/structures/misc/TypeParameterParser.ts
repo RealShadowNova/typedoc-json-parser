@@ -58,7 +58,6 @@ export class TypeParameterParser {
    * Generates a new {@link TypeParameterParser} instance from the given data.
    * @since 1.0.0
    * @param reflection The reflection to generate the parser from.
-   * @param project The project this parser belongs to.
    * @returns The generated parser.
    */
   public static generateFromTypeDoc(reflection: JSONOutput.TypeParameterReflection): TypeParameterParser {
