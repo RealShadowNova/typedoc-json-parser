@@ -129,13 +129,13 @@ export class ClassParser extends Parser {
     } = reflection;
 
     if (kind !== ReflectionKind.Class) {
-      throw new Error(`Expected Project (${ReflectionKind.Project}), but received ${reflectionKindToString(kind)} (${kind}) NAME=${name};ID=${id}`);
+      throw new Error(`Expected Class (${ReflectionKind.Class}), but received ${reflectionKindToString(kind)} (${kind}) NAME=${name};ID=${id}`);
     }
 
     const construct = children.find((child) => child.kind === ReflectionKind.Constructor);
 
     if (construct === undefined) {
-      throw new Error(`Expected Class (${ReflectionKind.Class}) with a constructor, but there was none`);
+      throw new Error(`Expected Class (${ReflectionKind.Class}) with a constructor, but there was none. NAME=${name};ID=${id}`);
     }
 
     const properties = children
