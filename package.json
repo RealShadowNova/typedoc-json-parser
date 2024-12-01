@@ -60,10 +60,10 @@
     "@sapphire/eslint-config": "^5.0.5",
     "@sapphire/ts-config": "^5.0.1",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.17.7",
+    "@types/node": "^20.17.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitest/coverage-v8": "^2.1.5",
+    "@vitest/coverage-v8": "^2.1.6",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -71,10 +71,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "pinst": "^3.0.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.1",
     "rimraf": "^5.0.10",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.6"
   },
   "repository": {
     "type": "git",
