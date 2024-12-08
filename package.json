@@ -63,7 +63,7 @@
     "@types/node": "^20.17.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitest/coverage-v8": "^2.1.6",
+    "@vitest/coverage-v8": "^2.1.8",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -71,10 +71,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "pinst": "^3.0.0",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "rimraf": "^5.0.10",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^2.1.6"
+    "vitest": "^2.1.8"
   },
   "repository": {
     "type": "git",
