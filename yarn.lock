@@ -1893,6 +1893,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "commander@npm:13.0.0"
+  checksum: 3981c8c197c93ceeb949f6e2250785ea319209c502b7c53d6dc36148347739c72b15de2e4bcad80bedc3f8e1e5544a89ca4e7d673b2f3238ac51b44292ad08d6
+  languageName: node
+  linkType: hard
+
 "commander@npm:^9.4.1":
   version: 9.5.0
   resolution: "commander@npm:9.5.0"
@@ -5179,7 +5186,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.18.0
     "@vitest/coverage-v8": ^2.1.8
     colorette: ^2.0.20
-    commander: ^12.1.0
+    commander: ^13.0.0
     eslint: ^8.57.1
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.2.1
