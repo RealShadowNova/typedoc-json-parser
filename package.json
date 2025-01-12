@@ -60,7 +60,7 @@
     "@sapphire/eslint-config": "^5.0.5",
     "@sapphire/ts-config": "^5.0.1",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.17.11",
+    "@types/node": "^20.17.12",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vitest/coverage-v8": "^2.1.8",
