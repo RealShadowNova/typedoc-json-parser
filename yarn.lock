@@ -5186,7 +5186,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.18.0
     "@vitest/coverage-v8": ^2.1.9
     colorette: ^2.0.20
-    commander: ^12.1.0
+    commander: ^13.1.0
     eslint: ^8.57.1
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.2.3
