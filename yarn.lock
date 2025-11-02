@@ -5032,7 +5032,7 @@ __metadata:
     tslib: ^2.6.3
     typedoc: ^0.26.4
     typescript: ^5.5.3
-    vite-tsconfig-paths: ^4.3.2
+    vite-tsconfig-paths: ^5.1.4
     vitest: ^2.1.9
   bin:
     typedoc-json-parser: ./dist/bin/index.js
@@ -5189,9 +5189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "vite-tsconfig-paths@npm:4.3.2"
+"vite-tsconfig-paths@npm:^5.1.4":
+  version: 5.1.4
+  resolution: "vite-tsconfig-paths@npm:5.1.4"
   dependencies:
     debug: ^4.1.1
     globrex: ^0.1.2
@@ -5201,7 +5201,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 7105ff641379f9f7055110f33067b236c8ee71b1390c0e6482412cdcc7a98c2e139c1c2a483d14fe9045d1977c14dc931e1ff302d6257ec919c70379db9d2419
+  checksum: 9d868fcad7ac59049c08ce60f65a0e1b1caebb3d849c60ebe6ed47645255007fd8275c22a42155666fd76ee947bc36481d83c0527b2d9fa45ccafac4dbf99722
   languageName: node
   linkType: hard
 
