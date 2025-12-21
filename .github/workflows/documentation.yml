@@ -24,7 +24,7 @@ jobs:
       SHA: ${{ steps.env.outputs.SHA }}
     steps:
       - name: Checkout Project
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           ref: ${{ github.event.inputs.ref || '' }}
       - name: Use Node.js v20
@@ -59,7 +59,7 @@ jobs:
       SHA: ${{ needs.build.outputs.SHA }}
     steps:
       - name: Checkout Project
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Use Node.js v20
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -74,7 +74,7 @@ jobs:
           name: docs
           path: docs
       - name: Checkout Documentation Project
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           repository: 'RealShadowNova/docs'
           token: ${{ secrets.NOVA_TOKEN }}
