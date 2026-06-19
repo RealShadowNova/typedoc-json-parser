@@ -3,8 +3,9 @@
   "compilerOptions": {
     "importHelpers": true,
     "noEmitHelpers": true,
-    "target": "ES2022",
-    "module": "Node16",
-    "lib": ["ESNext", "DOM"]
+    "target": "ES2025",
+    "module": "Node20",
+    "lib": ["ESNext", "DOM"],
+    "types": ["node"]
   }
 }

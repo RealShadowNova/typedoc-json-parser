@@ -48,9 +48,9 @@
     "colorette": "^2.0.20",
     "commander": "^12.1.0",
     "js-yaml": "^4.1.0",
-    "tslib": "^2.6.3",
-    "typedoc": "^0.26.4",
-    "typescript": "^5.5.3"
+    "tslib": "^2.8.1",
+    "typedoc": "^0.28.19",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -60,7 +60,7 @@
     "@sapphire/eslint-config": "^5.0.6",
     "@sapphire/ts-config": "^5.0.3",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.40",
+    "@types/node": "^26.0.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vitest/coverage-v8": "^2.1.9",
