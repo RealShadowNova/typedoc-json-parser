@@ -2232,14 +2232,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^9.1.2":
-  version: 9.1.2
-  resolution: "eslint-config-prettier@npm:9.1.2"
+"eslint-config-prettier@npm:^10.1.9":
+  version: 10.1.9
+  resolution: "eslint-config-prettier@npm:10.1.9"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: e786b767331094fd024cb1b0899964a9da0602eaf4ebd617d6d9794752ccd04dbe997e3c14c17f256c97af20bee1c83c9273f69b74cb2081b6f514580d62408f
+  checksum: 44b7dc82d4575e1375eabd8f2d3cda963ab65cff09492f7fc46a782f4a379729c2d98c3dfef0be68fddffd76e0e04b673cf96bf2ea3d749124fe74063cce7bb0
   languageName: node
   linkType: hard
 
@@ -5036,7 +5036,7 @@ __metadata:
     colorette: ^2.0.20
     commander: ^12.1.0
     eslint: ^8.57.1
-    eslint-config-prettier: ^9.1.2
+    eslint-config-prettier: ^10.1.9
     eslint-plugin-prettier: ^5.5.5
     gen-esm-wrapper: ^1.1.3
     husky: ^9.1.7
